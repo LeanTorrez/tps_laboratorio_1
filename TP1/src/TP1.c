@@ -55,6 +55,8 @@ int main(void) {
 	float porcentajeCAF=0;
 	float porcentajeAFC=0;
 
+	//hola cambio
+
 
 
 	do{
