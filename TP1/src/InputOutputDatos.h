@@ -9,6 +9,12 @@
 #define INPUTOUTPUTDATOS_H_
 #include <stdio.h>
 
+/**
+ * \fn char Confirmar()
+ * \brief Valida que el caracter sea S o N
+ *
+ * \return Devuelve el caracter solo si es S o N
+ */
 char Confirmar();
 
 int NumeroIngresadoEntero(char mensaje[]);

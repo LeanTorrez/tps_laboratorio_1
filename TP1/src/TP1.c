@@ -31,11 +31,11 @@ int main(void) {
 	int contadorMediocampistas=8;
 	int contadorDefensores=8;
 	//Contador Total de los jugadores ingresados hasta ahora
-	int contadorJugadores=0;
+	int contadorJugadores=22;
 	//Contador de las federaciones
 	int contadorCONMEBOL=2;
-	int contadroUEFA=2;
-	int contadorOFC=8;
+	int contadroUEFA=8;
+	int contadorOFC=2;
 	int contadorCONCACAF=6;
 	int contadorCAF=4;
 	int contadorAFC=0;
@@ -59,18 +59,20 @@ int main(void) {
 
 	do{
 		printf("\n                 Menu Principal               \n");
-		printf("1.Ingreso de los Costos de Mantenimiento\n");
-		printf("  Costo De Hospedaje ---> %.2f\n",costoHospedaje);
-		printf("  Costo De Comida ------> %.2f\n",costoComida);
-		printf("  Costo De Transporte --> %.2f\n",costoTransporte);
-		printf("2.Carga de Jugadores \n");
-		printf("  Arqueros -------------> %d\n",contadorArqueros);
-		printf("  Defensores -----------> %d\n",contadorDefensores);
-		printf("  Mediocampistas -------> %d\n",contadorMediocampistas);
-		printf("  Delanteros -----------> %d\n",contadorDelanteros);
-		printf("3.Realizar todos los calculos\n");
-		printf("4.Informar todos los resultados\n");
-		printf("5.Salir\n");
+		printf("1.Ingreso de los Costos de Mantenimiento\n"
+				"  Costo De Hospedaje ---> %.2f\n"
+				"  Costo De Comida ------> %.2f\n"
+				"  Costo De Transporte --> %.2f\n",
+				costoHospedaje,costoComida,costoTransporte);
+		printf("2.Carga de Jugadores \n"
+				"  Arqueros -------------> %d\n"
+				"  Defensores -----------> %d\n"
+				"  Mediocampistas -------> %d\n"
+				"  Delanteros -----------> %d\n",
+				contadorArqueros,contadorDefensores,contadorMediocampistas,contadorDelanteros);
+		printf("3.Realizar todos los calculos\n"
+				"4.Informar todos los resultados\n"
+				"5.Salir\n");
 		opcion = NumeroIngresadoEntero("\nIngrese la opcion que quiera ver: ");
 		switch(opcion){
 		case 1:
@@ -185,7 +187,7 @@ int main(void) {
 					porcentajeAFC = CalcularPorcentaje(contadorAFC,contadorJugadores);
 
 					//En caso de que UEFA tenga la mayor cantidad de jugadores
-					if(porcentajeUEFA > 50){
+					if(porcentajeUEFA > porcentajeCONMEBOL && porcentajeUEFA > porcentajeOFC && porcentajeUEFA > porcentajeCONCACAF && porcentajeUEFA > porcentajeCAF && porcentajeUEFA > porcentajeAFC ){
 						aumentoMantenimiento = CalcularMultiplicar(costoMantenimiento,0.35);
 						netoMantenimiento = CalcularSumarFloat(costoMantenimiento,aumentoMantenimiento,0);
 					}
@@ -196,18 +198,20 @@ int main(void) {
 			if(costoMantenimiento == 0){
 				printf("Para mostrar los datos es necesaria la OPCION 3...");
 			}else{
-				printf("\n                 INFORMAR LOS RESULTADOS               \n");
-				printf("Porcentaje CONMEBOL %.2f\n",porcentajeCONMEBOL);
-				printf("Porcentaje UEFA     %.2f\n",porcentajeUEFA);
-				printf("Porcentaje OFC      %.2f\n",porcentajeOFC);
-				printf("Porcentaje CONCACAF %.2f\n",porcentajeCONCACAF);
-				printf("Porcentaje CAF      %.2f\n",porcentajeCAF);
-				printf("Porcentaje AFC      %.2f\n",porcentajeAFC);
+				printf("\n                 INFORMAR LOS RESULTADOS               \n"
+						"Porcentaje CONMEBOL  %.2f\n"
+						"Porcentaje UEFA      %.2f\n"
+						"Porcentaje OFC       %.2f\n"
+						"Porcentaje CONCACAF  %.2f\n"
+						"Porcentaje CAF       %.2f\n"
+						"Porcentaje AFC       %.2f\n",
+						porcentajeCONMEBOL,porcentajeUEFA,porcentajeOFC,
+						porcentajeCONCACAF,porcentajeCAF,porcentajeAFC);
 
 				if(aumentoMantenimiento == 0){
 					printf("El costo de mantenimiento de la seleccion es de %.2f",costoMantenimiento);
 				}else{
-					printf("El costo del mantenimiento era de $%.2f, pero recibio un aumento de $%.2f, su nuevo costo es $%.2f",costoMantenimiento,aumentoMantenimiento,netoMantenimiento);
+					printf("El costo del mantenimiento era de $%.2f, pero recibio un aumento de $%.2f\nSu nuevo costo es $%.2f\n",costoMantenimiento,aumentoMantenimiento,netoMantenimiento);
 				}
 			}
 			break;
