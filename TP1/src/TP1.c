@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include "InputOutputDatos.h"
 #include "CalcularX.h"
+#include "UTNinputs.h"
+#include <windows.h> //Esta funcion es para darle tiempo para que el usuario pueda leer.
 #define SELECCION 22
 //
 //CAMBIAR LOS COSTOS A FLOAT Y LA FUNCION QUE TAMBIEN DE FLOAT
@@ -20,6 +22,7 @@ int main(void) {
 	setbuf(stdout,NULL);
 	int opcion;
 	int opcionesCostos;
+	int retornoFunciones;
 	//opcion 1
 	float costoHospedaje=250000;
 	float costoComida=150000;
@@ -39,10 +42,10 @@ int main(void) {
 	int contadorCONCACAF=6;
 	int contadorCAF=4;
 	int contadorAFC=0;
-	//Arrays de los datos pedidos
-	int camisetaJugador[SELECCION];//El tp no la pide usar en nada.
-	int confederacionJugador[SELECCION];
-	int posicionJugador[SELECCION];
+	//Los datos pedidos
+	//int camisetaJugador;//El tp no la pide usar en nada.
+	int confederacionJugador;
+	int posicionJugador;
 	//Opcion 3
 	float costoMantenimiento=0;
 	float aumentoMantenimiento=0;
@@ -56,8 +59,6 @@ int main(void) {
 	float porcentajeAFC=0;
 
 	//hola cambio
-
-
 
 	do{
 		printf("\n                 Menu Principal               \n");
@@ -75,22 +76,39 @@ int main(void) {
 		printf("3.Realizar todos los calculos\n"
 				"4.Informar todos los resultados\n"
 				"5.Salir\n");
-		opcion = NumeroIngresadoEntero("\nIngrese la opcion que quiera ver: ");
+
+		//opcion = NumeroIngresadoEntero("\nIngrese la opcion que quiera ver: \n");
+		retornoFunciones = utn_getNumeroINT(&opcion,"Ingrese la opcion que quiera ver: \n","Error/ Ingrese la opcion nuevamente\n",0,6,10);
+		if(retornoFunciones == -1){
+			printf("Se reintento todas las veces posibles... se ingresa Opcion 2 por default.\n");
+			opcion = 2;
+		}
 		switch(opcion){
 		case 1:
-			printf("1.Costo de Hospedaje\n2.Costo De Comida\n3.Costo De Transporte\n");
-			opcionesCostos = NumeroIngresadoVerificar("Ingrese el numero de la opcion","ERROR/ Reingrese el numero de la opcion (1,2,3)",1,3);
+			printf("1.Costo de Hospedaje\n"
+					"2.Costo De Comida\n"
+					"3.Costo De Transporte\n");
+			//opcionesCostos = NumeroIngresadoVerificar("Ingrese el numero de la opcion\n","ERROR/ Reingrese el numero de la opcion (1,2,3)\n",1,3);
+			retornoFunciones = utn_getNumeroINT(&opcionesCostos,"Ingrese la opcion que quiera ver: \n","Error/ Ingrese la opcion nuevamente\n",0,4,15);
+			if(retornoFunciones == -1){
+				printf("Se reintento todas las veces posibles...Regresando al MENU.\n");
+				break;
+			}
+
 			switch(opcionesCostos){
 			case 1:
-				costoHospedaje = NumeroIngresadoPositivoFloat("Ingrese el costo de Hospedaje","ERROR/ El costo no puede ser negativo");
+				utn_getNumeroFLOAT(&costoHospedaje,"Ingrese el costo de Hospedaje\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
+				costoHospedaje = NumeroIngresadoPositivoFloat("Ingrese el costo de Hospedaje","ERROR/ El costo no puede ser negativo\n");
 				break;
 
 			case 2:
-				costoComida = NumeroIngresadoPositivoFloat("Ingrese el costo de Comida","ERROR/ El costo no puede ser negativo");
+				utn_getNumeroFLOAT(&costoComida,"Ingrese el costo de Comida\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
+				costoComida = NumeroIngresadoPositivoFloat("Ingrese el costo de Comida","ERROR/ El costo no puede ser negativo\n");
 				break;
 
 			case 3:
-				costoTransporte = NumeroIngresadoPositivoFloat("Ingrese el costo de Transporte","ERROR/ El costo no puede ser negativo");
+				utn_getNumeroFLOAT(&costoTransporte,"Ingrese el costo de Transporte\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
+				costoTransporte = NumeroIngresadoPositivoFloat("Ingrese el costo de Transporte","ERROR/ El costo no puede ser negativo\n");
 				break;
 			}
 			break;
@@ -98,32 +116,35 @@ int main(void) {
 			if(contadorJugadores != SELECCION){
 
 				do{
-					posicionJugador[contadorJugadores] = NumeroIngresadoVerificar("Ingrese el numero de la posicion\n1.Arquero\n2.Defensor\n3.Mediocampista\n4.Delantero","Error/Vuelva ingresar la el numero de al opcion: ",1,4);
 
-					if((posicionJugador[contadorJugadores] == 1) && (contadorArqueros == 2)){
+					utn_getNumeroINT(&posicionJugador,"Ingrese el numero de la posicion\n1.Arquero\n2.Defensor\n3.Mediocampista\n4.Delantero\n","Error/Vuelva ingresar la el numero de al opcion: \n",0,5,15);
+					posicionJugador = NumeroIngresadoVerificar("Ingrese el numero de la posicion\n1.Arquero\n2.Defensor\n3.Mediocampista\n4.Delantero","Error/Vuelva ingresar la el numero de al opcion: ",1,4);
+
+					if((posicionJugador == 1) && (contadorArqueros == 2)){
 						printf("\nSe han ingresado la maxima cantidad de Arqueros...Regresando al MENU\n");
 						break;
 					}else{
-						if((posicionJugador[contadorJugadores] == 2) && (contadorDefensores == 8)){
+						if((posicionJugador == 2) && (contadorDefensores == 8)){
 							printf("\nSe han ingresado la maxima cantidad de Defensores...Regresando al MENU\n");
 							break;
 						}else{
-							if((posicionJugador[contadorJugadores] == 3) && (contadorMediocampistas == 8)){
+							if((posicionJugador == 3) && (contadorMediocampistas == 8)){
 								printf("\nSe han ingresado la maxima cantidad de Mediocampistas...Regresando al MENU\n");
 								break;
 							}else{
-								if((posicionJugador[contadorJugadores] == 4) && (contadorDelanteros == 4)){
+								if((posicionJugador == 4) && (contadorDelanteros == 4)){
 									printf("\nSe han ingresado la maxima cantidad de Delanteros...Regresando al MENU\n");
 									break;
 								}
 							}
 						}
 					}
+					//utn_getNumeroINT(&camisetaJugador,"Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC\n","Error/ Opcion invalida, vuelva a escribir el numero:\n",0,101,15);
+					//camisetaJugador = NumeroIngresadoPositivoEntero("Ingrese el numero de camiseta: ","Error/ Vuelva a ingresar el numero de camiseta: ");
+					utn_getNumeroINT(&confederacionJugador,"Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC\n","Error/ Opcion invalida, vuelva a escribir el numero: \n",0,7,15);
+					confederacionJugador = NumeroIngresadoVerificar("Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC","Error/ Opcion invalida, vuelva a escribir el numero: ",1,6);
 
-					camisetaJugador[contadorJugadores] = NumeroIngresadoPositivoEntero("Ingrese el numero de camiseta: ","Error/ Vuelva a ingresar el numero de camiseta: ");
-					confederacionJugador[contadorJugadores] = NumeroIngresadoVerificar("Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC","Error/ Opcion invalida, vuelva a escribir el numero: ",1,6);
-
-					switch(confederacionJugador[contadorJugadores]){
+					switch(confederacionJugador){
 					case 1:
 						contadorCONMEBOL++;
 						break;
@@ -144,7 +165,7 @@ int main(void) {
 						break;
 					}
 
-					switch(posicionJugador[contadorJugadores]){
+					switch(posicionJugador){
 					case 1:
 						contadorArqueros++;
 						break;
@@ -166,16 +187,16 @@ int main(void) {
 				}while((Confirmar())=='S');
 
 			}else{
-				printf("Ya se ingresaron todos los jugadores posibles.");
+				printf("Ya se ingresaron todos los jugadores posibles.\n");
 			}
 
 			break;
 		case 3:
 			if(costoHospedaje == 0 || costoComida == 0 || costoTransporte == 0){
-				printf("Para hacer el calculo es necesario rellenar la OPCION 1...");
+				printf("Para hacer el calculo es necesario rellenar la OPCION 1...\n");
 			}else{
 				if(contadorArqueros != 2 && contadorDefensores != 8 && contadorDelanteros != 4 && contadorMediocampistas != 8){
-					printf("Para hacer el calculo es necesario rellenar toda la OPCION 2...");
+					printf("Para hacer el calculo es necesario rellenar toda la OPCION 2...\n");
 				}
 				else{
 					//Calculo Mantenimiento
@@ -187,7 +208,6 @@ int main(void) {
 					porcentajeCONCACAF = CalcularPorcentaje(contadorCONCACAF,contadorJugadores);
 					porcentajeCAF = CalcularPorcentaje(contadorCAF,contadorJugadores);
 					porcentajeAFC = CalcularPorcentaje(contadorAFC,contadorJugadores);
-
 					//En caso de que UEFA tenga la mayor cantidad de jugadores
 					if(porcentajeUEFA > porcentajeCONMEBOL && porcentajeUEFA > porcentajeOFC && porcentajeUEFA > porcentajeCONCACAF && porcentajeUEFA > porcentajeCAF && porcentajeUEFA > porcentajeAFC ){
 						aumentoMantenimiento = CalcularMultiplicar(costoMantenimiento,0.35);
@@ -198,7 +218,7 @@ int main(void) {
 			break;
 		case 4:
 			if(costoMantenimiento == 0){
-				printf("Para mostrar los datos es necesaria la OPCION 3...");
+				printf("Para mostrar los datos es necesaria la OPCION 3...\n");
 			}else{
 				printf("\n                 INFORMAR LOS RESULTADOS               \n"
 						"Porcentaje CONMEBOL  %.2f\n"
@@ -211,13 +231,18 @@ int main(void) {
 						porcentajeCONCACAF,porcentajeCAF,porcentajeAFC);
 
 				if(aumentoMantenimiento == 0){
-					printf("El costo de mantenimiento de la seleccion es de %.2f",costoMantenimiento);
+					printf("El costo de mantenimiento de la seleccion es de %.2f\n",costoMantenimiento);
 				}else{
 					printf("El costo del mantenimiento era de $%.2f, pero recibio un aumento de $%.2f\nSu nuevo costo es $%.2f\n",costoMantenimiento,aumentoMantenimiento,netoMantenimiento);
 				}
 			}
 			break;
 		}
+		//Espera 5 segundos
+		sleep(5);
+		//Esta funcion proviene de la biblioteca <windows.h> y la funcion sleep(); pone un timer
+		//que especificas entre los parentesis, es por segundos
+
 	}while(opcion!=5);
 	return EXIT_SUCCESS;
 }
