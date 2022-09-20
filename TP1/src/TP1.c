@@ -21,23 +21,23 @@ int main(void) {
 	int opcionesCostos;
 	int retornoFunciones;
 	//OPCION 1
-	float costoHospedaje=250000;
-	float costoComida=150000;
-	float costoTransporte=100000;
+	float costoHospedaje=0;
+	float costoComida=0;
+	float costoTransporte=0;
 	//OPCION 2
 	//Contador para las posiciones de los jugadores
-	int contadorDelanteros=4;
-	int contadorArqueros=2;
-	int contadorMediocampistas=8;
-	int contadorDefensores=8;
+	int contadorDelanteros=0;
+	int contadorArqueros=0;
+	int contadorMediocampistas=0;
+	int contadorDefensores=0;
 	//Contador Total de los jugadores ingresados hasta ahora
-	int contadorJugadores=22;
+	int contadorJugadores=0;
 	//Contador de las federaciones
-	int contadorCONMEBOL=2;
-	int contadroUEFA=8;
-	int contadorOFC=2;
-	int contadorCONCACAF=6;
-	int contadorCAF=4;
+	int contadorCONMEBOL=0;
+	int contadroUEFA=0;
+	int contadorOFC=0;
+	int contadorCONCACAF=0;
+	int contadorCAF=0;
 	int contadorAFC=0;
 	//Los datos pedidos
 	int camisetaJugador;
