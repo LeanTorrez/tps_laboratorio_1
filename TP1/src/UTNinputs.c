@@ -43,7 +43,7 @@ int utn_getNumeroINT(int* pResultado,char* mensaje,char* mensajeError,int minimo
 }
 
 /**
- * \fn float utn_getNumeroFLOAT(float*, char*, char*, float, float, int)
+ * \fn int utn_getNumeroFLOAT(float*, char*, char*, float, float, int)
  * \brief Pide un numero float y verifica que el numero que se ingresa sea un numero entre los limites
  * y que el mismo no sea un caracter
  * \param pResultado puntero a la variable donde se guardara el numero
@@ -54,7 +54,7 @@ int utn_getNumeroINT(int* pResultado,char* mensaje,char* mensajeError,int minimo
  * \param reintentos la cantidad de veces que el usuario puede fallar el ingreso del numero
  * \return devuelve -1 en caso de fallar la carga o 0 en caso de guardar el numero con exito
  */
-float utn_getNumeroFLOAT(float* pResultado,char* mensaje,char* mensajeError,float minimo,float maximo,int reintentos){
+int utn_getNumeroFLOAT(float* pResultado,char* mensaje,char* mensajeError,float minimo,float maximo,int reintentos){
 	int retorno;
 	float numero;
 	printf(mensaje);

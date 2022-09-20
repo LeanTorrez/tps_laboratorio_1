@@ -16,7 +16,7 @@ int utn_getNumeroINT(int* pResultado,
 		int minimo,int maximo,
 		int reintentos);
 
-float utn_getNumeroFLOAT(float* pResultado,
+int utn_getNumeroFLOAT(float* pResultado,
 		char* mensaje,
 		char* mensajeError,
 		float minimo,float maximo,

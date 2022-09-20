@@ -10,7 +10,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "InputOutputDatos.h"
 #include "CalcularX.h"
 #include "UTNinputs.h"
 #include <windows.h> //Esta funcion es para darle tiempo para que el usuario pueda leer.
@@ -98,18 +97,28 @@ int main(void) {
 
 			switch(opcionesCostos){
 			case 1:
-				utn_getNumeroFLOAT(&costoHospedaje,"Ingrese el costo de Hospedaje\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
-				//costoHospedaje = NumeroIngresadoPositivoFloat("Ingrese el costo de Hospedaje","ERROR/ El costo no puede ser negativo\n");
+				retornoFunciones = utn_getNumeroFLOAT(&costoHospedaje,"Ingrese el costo de Hospedaje\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
+				if(retornoFunciones == -1){
+					printf("Se reintento todas las veces posibles...Regresando al MENU.\n");
+					costoHospedaje = 0;
+				}
 				break;
 
 			case 2:
-				utn_getNumeroFLOAT(&costoComida,"Ingrese el costo de Comida\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
-				//costoComida = NumeroIngresadoPositivoFloat("Ingrese el costo de Comida","ERROR/ El costo no puede ser negativo\n");
+				retornoFunciones = utn_getNumeroFLOAT(&costoComida,"Ingrese el costo de Comida\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
+				if(retornoFunciones == -1){
+					printf("Se reintento todas las veces posibles...Regresando al MENU.\n");
+					costoComida = 0;
+				}
 				break;
 
 			case 3:
-				utn_getNumeroFLOAT(&costoTransporte,"Ingrese el costo de Transporte\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
-				//costoTransporte = NumeroIngresadoPositivoFloat("Ingrese el costo de Transporte","ERROR/ El costo no puede ser negativo\n");
+				retornoFunciones = utn_getNumeroFLOAT(&costoTransporte,"Ingrese el costo de Transporte\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
+				if(retornoFunciones == -1){
+					printf("Se reintento todas las veces posibles...Regresando al MENU.\n");
+					costoTransporte = 0;
+				}
+
 				break;
 			}
 			break;
@@ -119,32 +128,37 @@ int main(void) {
 
 				do{
 
-					utn_getNumeroINT(&posicionJugador,"Ingrese el numero de la posicion\n1.Arquero\n2.Defensor\n3.Mediocampista\n4.Delantero\n","Error/Vuelva ingresar la el numero de al opcion: \n",0,5,15);
-					posicionJugador = NumeroIngresadoVerificar("Ingrese el numero de la posicion\n1.Arquero\n2.Defensor\n3.Mediocampista\n4.Delantero","Error/Vuelva ingresar la el numero de al opcion: ",1,4);
+					do{
+						retornoFunciones = utn_getNumeroINT(&posicionJugador,"Ingrese el numero de la posicion\n1.Arquero\n2.Defensor\n3.Mediocampista\n4.Delantero\n","Error/Vuelva ingresar la el numero de al opcion: \n",0,5,15);
+					}while(retornoFunciones == -1);
 
 					if((posicionJugador == 1) && (contadorArqueros == 2)){
-						printf("\nSe han ingresado la maxima cantidad de Arqueros...Regresando al MENU\n");
+						printf("Se han ingresado la maxima cantidad de Arqueros...Regresando al MENU\n");
 						break;
 					}else{
 						if((posicionJugador == 2) && (contadorDefensores == 8)){
-							printf("\nSe han ingresado la maxima cantidad de Defensores...Regresando al MENU\n");
+							printf("Se han ingresado la maxima cantidad de Defensores...Regresando al MENU\n");
 							break;
 						}else{
 							if((posicionJugador == 3) && (contadorMediocampistas == 8)){
-								printf("\nSe han ingresado la maxima cantidad de Mediocampistas...Regresando al MENU\n");
+								printf("Se han ingresado la maxima cantidad de Mediocampistas...Regresando al MENU\n");
 								break;
 							}else{
 								if((posicionJugador == 4) && (contadorDelanteros == 4)){
-									printf("\nSe han ingresado la maxima cantidad de Delanteros...Regresando al MENU\n");
+									printf("Se han ingresado la maxima cantidad de Delanteros...Regresando al MENU\n");
 									break;
 								}
 							}
 						}
 					}
-					//utn_getNumeroINT(&camisetaJugador,"Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC\n","Error/ Opcion invalida, vuelva a escribir el numero:\n",0,101,15);
-					//camisetaJugador = NumeroIngresadoPositivoEntero("Ingrese el numero de camiseta: ","Error/ Vuelva a ingresar el numero de camiseta: ");
-					utn_getNumeroINT(&confederacionJugador,"Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC\n","Error/ Opcion invalida, vuelva a escribir el numero: \n",0,7,15);
-					confederacionJugador = NumeroIngresadoVerificar("Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC","Error/ Opcion invalida, vuelva a escribir el numero: ",1,6);
+					/*
+					do{
+						retornoFunciones = utn_getNumeroINT(&camisetaJugador,"Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC\n","Error/ Opcion invalida, vuelva a escribir el numero:\n",0,101,15);
+					}while(retornoFunciones == -1);*/
+
+					do{
+						retornoFunciones = utn_getNumeroINT(&confederacionJugador,"Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC\n","Error/ Opcion invalida, vuelva a escribir el numero: \n",0,7,15);
+					}while(retornoFunciones == -1);
 
 					switch(confederacionJugador){
 					case 1:
