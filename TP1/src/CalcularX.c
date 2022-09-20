@@ -25,6 +25,21 @@ float CalcularPorcentaje(int numeroPorcentaje, int contadorTotal){
 	return resultado;
 }
 
+/**
+ * \fn float CalcularPromedio(int, int)
+ * \brief Ingresa dos numero de los cuales uno de ellos sera el acumalador que sera el divisor, por el cual sera divido con
+ *  contadorTotal que sera el dividendo
+ *
+ * \param acumulador El numero que sera divisor
+ * \param contadorTotal El numero que sera el dividendo
+ * \return devuelve el resultado del promedio
+ */
+float CalcularPromedio(int acumulador,int contadorTotal){
+	float resultado;
+	resultado = (float) acumulador / contadorTotal;
+	return resultado;
+}
+
 float CalcularMultiplicar(float num1,float num2){
 	float resultado;
 	resultado = num1 * num2;

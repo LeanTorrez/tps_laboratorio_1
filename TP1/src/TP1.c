@@ -78,18 +78,18 @@ int main(void) {
 				"5.Salir\n");
 
 		//opcion = NumeroIngresadoEntero("\nIngrese la opcion que quiera ver: \n");
-		retornoFunciones = utn_getNumeroINT(&opcion,"Ingrese la opcion que quiera ver: \n","Error/ Ingrese la opcion nuevamente\n",0,6,10);
+		retornoFunciones = utn_getNumeroINT(&opcion,"Ingrese la opcion que quiera ver: \n","Error/ Ingrese la opcion nuevamente\n",0,6,15);
 		if(retornoFunciones == -1){
 			printf("Se reintento todas las veces posibles... se ingresa Opcion 2 por default.\n");
 			opcion = 2;
 		}
 		switch(opcion){
 		case 1:
-			printf("Menu Costos\n"
+			printf("             MENU DE COSTOS\n"
 					"1.Costo de Hospedaje\n"
 					"2.Costo De Comida\n"
 					"3.Costo De Transporte\n");
-			//opcionesCostos = NumeroIngresadoVerificar("Ingrese el numero de la opcion\n","ERROR/ Reingrese el numero de la opcion (1,2,3)\n",1,3);
+
 			retornoFunciones = utn_getNumeroINT(&opcionesCostos,"Ingrese la opcion que quiera ver: \n","Error/ Ingrese la opcion nuevamente\n",0,4,15);
 			if(retornoFunciones == -1){
 				printf("Se reintento todas las veces posibles...Regresando al MENU.\n");
@@ -99,22 +99,22 @@ int main(void) {
 			switch(opcionesCostos){
 			case 1:
 				utn_getNumeroFLOAT(&costoHospedaje,"Ingrese el costo de Hospedaje\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
-				costoHospedaje = NumeroIngresadoPositivoFloat("Ingrese el costo de Hospedaje","ERROR/ El costo no puede ser negativo\n");
+				//costoHospedaje = NumeroIngresadoPositivoFloat("Ingrese el costo de Hospedaje","ERROR/ El costo no puede ser negativo\n");
 				break;
 
 			case 2:
 				utn_getNumeroFLOAT(&costoComida,"Ingrese el costo de Comida\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
-				costoComida = NumeroIngresadoPositivoFloat("Ingrese el costo de Comida","ERROR/ El costo no puede ser negativo\n");
+				//costoComida = NumeroIngresadoPositivoFloat("Ingrese el costo de Comida","ERROR/ El costo no puede ser negativo\n");
 				break;
 
 			case 3:
 				utn_getNumeroFLOAT(&costoTransporte,"Ingrese el costo de Transporte\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
-				costoTransporte = NumeroIngresadoPositivoFloat("Ingrese el costo de Transporte","ERROR/ El costo no puede ser negativo\n");
+				//costoTransporte = NumeroIngresadoPositivoFloat("Ingrese el costo de Transporte","ERROR/ El costo no puede ser negativo\n");
 				break;
 			}
 			break;
 		case 2:
-			printf("Ingreso de Jugadores\n");
+			printf("            INGRESO DE JUGADORES\n");
 			if(contadorJugadores != SELECCION){
 
 				do{
@@ -186,7 +186,7 @@ int main(void) {
 					if(contadorJugadores == SELECCION){
 						break;
 					}
-				}while((Confirmar())=='S');
+				}while(ConfirmarChar("¿Quiere seguir ingresando jugadores? [S/N]\n","Por favor ingrese solamente S o N (No son necesarias las mayusculas)\n",'S','N')=='S');
 
 			}else{
 				printf("Ya se ingresaron todos los jugadores posibles.\n");
@@ -197,20 +197,20 @@ int main(void) {
 			if(costoHospedaje == 0 && costoComida == 0 && costoTransporte == 0){
 				printf("Para hacer el calculo es necesario rellenar algo de la OPCION 1...\n");
 			}else{
-				if(contadorArqueros != 0 && contadorDefensores != 0 && contadorDelanteros != 0 && contadorMediocampistas != 0){
+				if(contadorArqueros == 0 && contadorDefensores == 0 && contadorDelanteros == 0 && contadorMediocampistas == 0){
 					printf("Para hacer el calculo es necesario ingresar a por lo menos 1 jugador de la OPCION 2...\n");
 				}
 				else{
-					printf("Calcular Datos\n");
+					printf("              CALCULANDO DATOS\n");
 					//Calculo Mantenimiento
 					costoMantenimiento = CalcularSumarFloat(costoComida,costoHospedaje,costoTransporte);
 					//Porcentajes confederaciones
-					porcentajeCONMEBOL = CalcularPorcentaje(contadorCONMEBOL,contadorJugadores);
-					porcentajeUEFA = CalcularPorcentaje(contadroUEFA,contadorJugadores);
-					porcentajeOFC = CalcularPorcentaje(contadorOFC,contadorJugadores);
-					porcentajeCONCACAF = CalcularPorcentaje(contadorCONCACAF,contadorJugadores);
-					porcentajeCAF = CalcularPorcentaje(contadorCAF,contadorJugadores);
-					porcentajeAFC = CalcularPorcentaje(contadorAFC,contadorJugadores);
+					porcentajeCONMEBOL = CalcularPromedio(contadorCONMEBOL,contadorJugadores);
+					porcentajeUEFA = CalcularPromedio(contadroUEFA,contadorJugadores);
+					porcentajeOFC = CalcularPromedio(contadorOFC,contadorJugadores);
+					porcentajeCONCACAF = CalcularPromedio(contadorCONCACAF,contadorJugadores);
+					porcentajeCAF = CalcularPromedio(contadorCAF,contadorJugadores);
+					porcentajeAFC = CalcularPromedio(contadorAFC,contadorJugadores);
 					//En caso de que UEFA tenga la mayor cantidad de jugadores
 					if(porcentajeUEFA > porcentajeCONMEBOL && porcentajeUEFA > porcentajeOFC && porcentajeUEFA > porcentajeCONCACAF && porcentajeUEFA > porcentajeCAF && porcentajeUEFA > porcentajeAFC ){
 						aumentoMantenimiento = CalcularMultiplicar(costoMantenimiento,0.35);
@@ -224,27 +224,29 @@ int main(void) {
 				printf("Para mostrar los datos es necesaria la OPCION 3...\n");
 			}else{
 				printf("\n                 INFORMAR LOS RESULTADOS               \n"
-						"Porcentaje CONMEBOL  %.2f\n"
-						"Porcentaje UEFA      %.2f\n"
-						"Porcentaje OFC       %.2f\n"
-						"Porcentaje CONCACAF  %.2f\n"
-						"Porcentaje CAF       %.2f\n"
-						"Porcentaje AFC       %.2f\n",
+						"Promedio  CONMEBOL  %.2f\n"
+						"Promedio  UEFA      %.2f\n"
+						"Promedio  OFC       %.2f\n"
+						"Promedio  CONCACAF  %.2f\n"
+						"Promedio  CAF       %.2f\n"
+						"Promedio  AFC       %.2f\n",
 						porcentajeCONMEBOL,porcentajeUEFA,porcentajeOFC,
 						porcentajeCONCACAF,porcentajeCAF,porcentajeAFC);
 
 				if(aumentoMantenimiento == 0){
 					printf("El costo de mantenimiento de la seleccion es de %.2f\n",costoMantenimiento);
 				}else{
-					printf("El costo del mantenimiento era de $%.2f, pero recibio un aumento de $%.2f\nSu nuevo costo es $%.2f\n",costoMantenimiento,aumentoMantenimiento,netoMantenimiento);
+					printf("El costo del mantenimiento era de $%.2f, pero recibio un aumento de $%.2f\n"
+							"Su nuevo costo es $%.2f\n",
+							costoMantenimiento,aumentoMantenimiento,netoMantenimiento);
 				}
 			}
 			break;
 		case 5:
-			printf("Salir");
+			printf("TERMINANDO PROGRAMA");
 		}
 		//Espera 5 segundos
-		sleep(5);
+		sleep(4);
 		//Esta funcion proviene de la biblioteca <windows.h> y la funcion sleep(); pone un timer
 		//que especificas entre los parentesis, es en segundos
 
