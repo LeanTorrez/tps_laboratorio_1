@@ -85,7 +85,8 @@ int main(void) {
 		}
 		switch(opcion){
 		case 1:
-			printf("1.Costo de Hospedaje\n"
+			printf("Menu Costos\n"
+					"1.Costo de Hospedaje\n"
 					"2.Costo De Comida\n"
 					"3.Costo De Transporte\n");
 			//opcionesCostos = NumeroIngresadoVerificar("Ingrese el numero de la opcion\n","ERROR/ Reingrese el numero de la opcion (1,2,3)\n",1,3);
@@ -113,6 +114,7 @@ int main(void) {
 			}
 			break;
 		case 2:
+			printf("Ingreso de Jugadores\n");
 			if(contadorJugadores != SELECCION){
 
 				do{
@@ -192,13 +194,14 @@ int main(void) {
 
 			break;
 		case 3:
-			if(costoHospedaje == 0 || costoComida == 0 || costoTransporte == 0){
-				printf("Para hacer el calculo es necesario rellenar la OPCION 1...\n");
+			if(costoHospedaje == 0 && costoComida == 0 && costoTransporte == 0){
+				printf("Para hacer el calculo es necesario rellenar algo de la OPCION 1...\n");
 			}else{
-				if(contadorArqueros != 2 && contadorDefensores != 8 && contadorDelanteros != 4 && contadorMediocampistas != 8){
-					printf("Para hacer el calculo es necesario rellenar toda la OPCION 2...\n");
+				if(contadorArqueros != 0 && contadorDefensores != 0 && contadorDelanteros != 0 && contadorMediocampistas != 0){
+					printf("Para hacer el calculo es necesario ingresar a por lo menos 1 jugador de la OPCION 2...\n");
 				}
 				else{
+					printf("Calcular Datos\n");
 					//Calculo Mantenimiento
 					costoMantenimiento = CalcularSumarFloat(costoComida,costoHospedaje,costoTransporte);
 					//Porcentajes confederaciones
@@ -237,11 +240,13 @@ int main(void) {
 				}
 			}
 			break;
+		case 5:
+			printf("Salir");
 		}
 		//Espera 5 segundos
 		sleep(5);
 		//Esta funcion proviene de la biblioteca <windows.h> y la funcion sleep(); pone un timer
-		//que especificas entre los parentesis, es por segundos
+		//que especificas entre los parentesis, es en segundos
 
 	}while(opcion!=5);
 	return EXIT_SUCCESS;
