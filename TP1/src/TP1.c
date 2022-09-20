@@ -12,21 +12,19 @@
 #include <stdlib.h>
 #include "CalcularX.h"
 #include "UTNinputs.h"
-#include <windows.h> //Esta funcion es para darle tiempo para que el usuario pueda leer.
+#include <unistd.h> //biblioteca para la funcion sleep();
 #define SELECCION 22
-//
-//CAMBIAR LOS COSTOS A FLOAT Y LA FUNCION QUE TAMBIEN DE FLOAT
-//
+
 int main(void) {
 	setbuf(stdout,NULL);
 	int opcion;
 	int opcionesCostos;
 	int retornoFunciones;
-	//opcion 1
+	//OPCION 1
 	float costoHospedaje=250000;
 	float costoComida=150000;
 	float costoTransporte=100000;
-	//opcion 2
+	//OPCION 2
 	//Contador para las posiciones de los jugadores
 	int contadorDelanteros=4;
 	int contadorArqueros=2;
@@ -42,22 +40,24 @@ int main(void) {
 	int contadorCAF=4;
 	int contadorAFC=0;
 	//Los datos pedidos
-	//int camisetaJugador;//El tp no la pide usar en nada.
+	int camisetaJugador;
 	int confederacionJugador;
 	int posicionJugador;
-	//Opcion 3
+	//OPCION 3
 	float costoMantenimiento=0;
 	float aumentoMantenimiento=0;
 	float netoMantenimiento;
 
-	float porcentajeCONMEBOL=0;
-	float porcentajeUEFA=0;
-	float porcentajeOFC=0;
-	float porcentajeCONCACAF=0;
-	float porcentajeCAF=0;
-	float porcentajeAFC=0;
+	float promedioCONMEBOL=0;
+	float promedioUEFA=0;
+	float promedioOFC=0;
+	float promedioCONCACAF=0;
+	float promedioCAF=0;
+	float promedioAFC=0;
 
-	//hola cambio
+	//VARIABLE PARA QUE LAS CAMISETAS DE LOS JUGADORES NO DE WARNING
+	int acumuladorCamisetas = 0;
+	//
 
 	do{
 		printf("\n                 Menu Principal               \n");
@@ -151,10 +151,10 @@ int main(void) {
 							}
 						}
 					}
-					/*
+
 					do{
-						retornoFunciones = utn_getNumeroINT(&camisetaJugador,"Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC\n","Error/ Opcion invalida, vuelva a escribir el numero:\n",0,101,15);
-					}while(retornoFunciones == -1);*/
+						retornoFunciones = utn_getNumeroINT(&camisetaJugador,"Ingrese el numero de camiseta\n","Error/ Opcion invalida, la misma no puede ser menor a 1 o mayor 100\n",0,101,15);
+					}while(retornoFunciones == -1);
 
 					do{
 						retornoFunciones = utn_getNumeroINT(&confederacionJugador,"Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC\n","Error/ Opcion invalida, vuelva a escribir el numero: \n",0,7,15);
@@ -196,6 +196,10 @@ int main(void) {
 						break;
 					}
 
+					//ESTO ES SOLO PARA QUE LA VARIABLE DE CAMISETAS NO DE WARNING DE NO USO
+					acumuladorCamisetas += camisetaJugador;
+					//
+
 					contadorJugadores++;
 					if(contadorJugadores == SELECCION){
 						break;
@@ -208,8 +212,8 @@ int main(void) {
 
 			break;
 		case 3:
-			if(costoHospedaje == 0 && costoComida == 0 && costoTransporte == 0){
-				printf("Para hacer el calculo es necesario rellenar algo de la OPCION 1...\n");
+			if(costoHospedaje == 0 || costoComida == 0 || costoTransporte == 0){
+				printf("Para hacer el calculo es necesario rellenar toda la OPCION 1...\n");
 			}else{
 				if(contadorArqueros == 0 && contadorDefensores == 0 && contadorDelanteros == 0 && contadorMediocampistas == 0){
 					printf("Para hacer el calculo es necesario ingresar a por lo menos 1 jugador de la OPCION 2...\n");
@@ -219,14 +223,14 @@ int main(void) {
 					//Calculo Mantenimiento
 					costoMantenimiento = CalcularSumarFloat(costoComida,costoHospedaje,costoTransporte);
 					//Porcentajes confederaciones
-					porcentajeCONMEBOL = CalcularPromedio(contadorCONMEBOL,contadorJugadores);
-					porcentajeUEFA = CalcularPromedio(contadroUEFA,contadorJugadores);
-					porcentajeOFC = CalcularPromedio(contadorOFC,contadorJugadores);
-					porcentajeCONCACAF = CalcularPromedio(contadorCONCACAF,contadorJugadores);
-					porcentajeCAF = CalcularPromedio(contadorCAF,contadorJugadores);
-					porcentajeAFC = CalcularPromedio(contadorAFC,contadorJugadores);
+					promedioCONMEBOL = CalcularPromedio(contadorCONMEBOL,contadorJugadores);
+					promedioUEFA = CalcularPromedio(contadroUEFA,contadorJugadores);
+					promedioOFC = CalcularPromedio(contadorOFC,contadorJugadores);
+					promedioCONCACAF = CalcularPromedio(contadorCONCACAF,contadorJugadores);
+					promedioCAF = CalcularPromedio(contadorCAF,contadorJugadores);
+					promedioAFC = CalcularPromedio(contadorAFC,contadorJugadores);
 					//En caso de que UEFA tenga la mayor cantidad de jugadores
-					if(porcentajeUEFA > porcentajeCONMEBOL && porcentajeUEFA > porcentajeOFC && porcentajeUEFA > porcentajeCONCACAF && porcentajeUEFA > porcentajeCAF && porcentajeUEFA > porcentajeAFC ){
+					if(contadroUEFA > contadorCONMEBOL  && contadroUEFA  > contadorOFC   && contadroUEFA > contadorCONCACAF && contadroUEFA  > contadorCAF  && contadroUEFA > contadorAFC ){
 						aumentoMantenimiento = CalcularMultiplicar(costoMantenimiento,0.35);
 						netoMantenimiento = CalcularSumarFloat(costoMantenimiento,aumentoMantenimiento,0);
 					}
@@ -244,8 +248,8 @@ int main(void) {
 						"Promedio  CONCACAF  %.2f\n"
 						"Promedio  CAF       %.2f\n"
 						"Promedio  AFC       %.2f\n",
-						porcentajeCONMEBOL,porcentajeUEFA,porcentajeOFC,
-						porcentajeCONCACAF,porcentajeCAF,porcentajeAFC);
+						promedioCONMEBOL,promedioUEFA,promedioOFC,
+						promedioCONCACAF,promedioCAF,promedioAFC);
 
 				if(aumentoMantenimiento == 0){
 					printf("El costo de mantenimiento de la seleccion es de %.2f\n",costoMantenimiento);
@@ -259,11 +263,16 @@ int main(void) {
 		case 5:
 			printf("TERMINANDO PROGRAMA");
 		}
-		//Espera 5 segundos
+
+		//Espera 4 segundos
 		sleep(4);
-		//Esta funcion proviene de la biblioteca <windows.h> y la funcion sleep(); pone un timer
-		//que especificas entre los parentesis, es en segundos
+		//Esta funcion proviene de la biblioteca <unistd.h> y la funcion sleep(); pone un timer
+		//que especificas entre los parentesis en segundos.
 
 	}while(opcion!=5);
+
+	//ESTO ES SOLO PARA QUE LA VARIABLE DE CAMISETAS NO DE WARNING DE NO USO
+	printf("\n%d",acumuladorCamisetas);
+
 	return EXIT_SUCCESS;
 }
