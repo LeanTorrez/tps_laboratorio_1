@@ -76,8 +76,7 @@ int main(void) {
 				"4.Informar todos los resultados\n"
 				"5.Salir\n");
 
-		//opcion = NumeroIngresadoEntero("\nIngrese la opcion que quiera ver: \n");
-		retornoFunciones = utn_getNumeroINT(&opcion,"Ingrese la opcion que quiera ver: \n","Error/ Ingrese la opcion nuevamente\n",0,6,15);
+		retornoFunciones = utn_getNumeroINT(&opcion,"Ingrese la opcion que quiera ver(1,2,3,4,5)\n","Error/ Ingrese la opcion nuevamente(1,2,3,4,5)\n",0,6,15);
 		if(retornoFunciones == -1){
 			printf("Se reintento todas las veces posibles... se ingresa Opcion 2 por default.\n");
 			opcion = 2;
@@ -129,7 +128,7 @@ int main(void) {
 				do{
 
 					do{
-						retornoFunciones = utn_getNumeroINT(&posicionJugador,"Ingrese el numero de la posicion\n1.Arquero\n2.Defensor\n3.Mediocampista\n4.Delantero\n","Error/Vuelva ingresar la el numero de al opcion: \n",0,5,15);
+						retornoFunciones = utn_getNumeroINT(&posicionJugador,"Ingrese el numero de la posicion(1,2,3,4)\n1.Arquero\n2.Defensor\n3.Mediocampista\n4.Delantero\n","Error/Vuelva ingresar la el numero la posicion (1,2,3,4) \n",0,5,15);
 					}while(retornoFunciones == -1);
 
 					if((posicionJugador == 1) && (contadorArqueros == 2)){
@@ -157,7 +156,7 @@ int main(void) {
 					}while(retornoFunciones == -1);
 
 					do{
-						retornoFunciones = utn_getNumeroINT(&confederacionJugador,"Ingrese el numero de la confederacion\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC\n","Error/ Opcion invalida, vuelva a escribir el numero: \n",0,7,15);
+						retornoFunciones = utn_getNumeroINT(&confederacionJugador,"Ingrese el numero de la confederacion(1,2,3,4,5,6)\n1.CONMEBOL\n2.UEFA\n3.OFC\n4.CONCACAF\n5.CAF\n6.AFC\n","Error/ Opcion invalida, vuelva a escribir el numero(1,2,3,4,5,6)\n",0,7,15);
 					}while(retornoFunciones == -1);
 
 					switch(confederacionJugador){
@@ -215,7 +214,7 @@ int main(void) {
 			if(costoHospedaje == 0 || costoComida == 0 || costoTransporte == 0){
 				printf("Para hacer el calculo es necesario rellenar toda la OPCION 1...\n");
 			}else{
-				if(contadorArqueros == 0 && contadorDefensores == 0 && contadorDelanteros == 0 && contadorMediocampistas == 0){
+				if(contadorJugadores == 0){
 					printf("Para hacer el calculo es necesario ingresar a por lo menos 1 jugador de la OPCION 2...\n");
 				}
 				else{
@@ -264,8 +263,8 @@ int main(void) {
 			printf("TERMINANDO PROGRAMA");
 		}
 
-		//Espera 4 segundos
-		sleep(4);
+		//Espera 3 segundos
+		sleep(3);
 		//Esta funcion proviene de la biblioteca <unistd.h> y la funcion sleep(); pone un timer
 		//que especificas entre los parentesis en segundos.
 
