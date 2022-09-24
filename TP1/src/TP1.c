@@ -85,6 +85,7 @@ int main(void) {
 			printf("Se reintento todas las veces posibles... se ingresa Opcion 2 por default.\n");
 			opcion = 2;
 		}
+
 		switch(opcion){
 		case 1:
 			printf("<-----------MENU DE COSTOS----------->\n"
@@ -100,7 +101,7 @@ int main(void) {
 
 			switch(opcionesCostos){
 			case 1:
-				retornoFunciones = utn_getNumeroFLOAT(&costoHospedaje,"Ingrese el costo de Hospedaje\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
+				retornoFunciones = utn_getNumeroFLOAT(&costoHospedaje,"Ingrese el costo de Hospedaje\n","ERROR/ El costo no puede ser negativo y no debe superar los $100.000.000 \n",0,100000000,15);
 				if(retornoFunciones == -1){
 					printf("Se reintento todas las veces posibles...Regresando al MENU.\n");
 					costoHospedaje = 0;
@@ -108,7 +109,7 @@ int main(void) {
 				break;
 
 			case 2:
-				retornoFunciones = utn_getNumeroFLOAT(&costoComida,"Ingrese el costo de Comida\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
+				retornoFunciones = utn_getNumeroFLOAT(&costoComida,"Ingrese el costo de Comida\n","ERROR/ El costo no puede ser negativo y no debe superar los $100.000.000\n",0,100000000,15);
 				if(retornoFunciones == -1){
 					printf("Se reintento todas las veces posibles...Regresando al MENU.\n");
 					costoComida = 0;
@@ -116,7 +117,7 @@ int main(void) {
 				break;
 
 			case 3:
-				retornoFunciones = utn_getNumeroFLOAT(&costoTransporte,"Ingrese el costo de Transporte\n","ERROR/ El costo no puede ser negativo\n",0,1000000,15);
+				retornoFunciones = utn_getNumeroFLOAT(&costoTransporte,"Ingrese el costo de Transporte\n","ERROR/ El costo no puede ser negativo y no debe superar los $100.000.000\n",0,100000000,15);
 				if(retornoFunciones == -1){
 					printf("Se reintento todas las veces posibles...Regresando al MENU.\n");
 					costoTransporte = 0;
