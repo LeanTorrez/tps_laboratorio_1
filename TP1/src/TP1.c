@@ -12,7 +12,8 @@
 #include <stdlib.h>
 #include "CalcularX.h"
 #include "UTNinputs.h"
-#include <unistd.h> //biblioteca para la funcion sleep();
+#include <unistd.h> //biblioteca para la funcion sleep() pone un timer que
+//                    especificas entre los parentesis en segundos.
 #define SELECCION 22
 
 int main(void) {
@@ -30,6 +31,8 @@ int main(void) {
 	int contadorArqueros=0;
 	int contadorMediocampistas=0;
 	int contadorDefensores=0;
+
+	int flagJugadoresMaximos;
 	//Contador Total de los jugadores ingresados hasta ahora
 	int contadorJugadores=0;
 	//Contador de las federaciones
@@ -60,7 +63,7 @@ int main(void) {
 	//
 
 	do{
-		printf("\n                 Menu Principal               \n");
+		printf("\n<-------------Menu Principal------------->\n");
 		printf("1.Ingreso de los Costos de Mantenimiento\n"
 				"  Costo De Hospedaje ---> %.2f\n"
 				"  Costo De Comida ------> %.2f\n"
@@ -74,16 +77,17 @@ int main(void) {
 				contadorArqueros,contadorDefensores,contadorMediocampistas,contadorDelanteros);
 		printf("3.Realizar todos los calculos\n"
 				"4.Informar todos los resultados\n"
-				"5.Salir\n");
+				"5.Salir\n"
+				"<---------------------------------------->\n");
 
-		retornoFunciones = utn_getNumeroINT(&opcion,"Ingrese la opcion que quiera ver(1,2,3,4,5)\n","Error/ Ingrese la opcion nuevamente(1,2,3,4,5)\n",0,6,15);
+		retornoFunciones = utn_getNumeroINT(&opcion,"\nIngrese la opcion que quiera ver(1,2,3,4,5)\n","Error/ Ingrese la opcion nuevamente(1,2,3,4,5)\n",0,6,15);
 		if(retornoFunciones == -1){
 			printf("Se reintento todas las veces posibles... se ingresa Opcion 2 por default.\n");
 			opcion = 2;
 		}
 		switch(opcion){
 		case 1:
-			printf("             MENU DE COSTOS\n"
+			printf("<-----------MENU DE COSTOS----------->\n"
 					"1.Costo de Hospedaje\n"
 					"2.Costo De Comida\n"
 					"3.Costo De Transporte\n");
@@ -120,36 +124,43 @@ int main(void) {
 
 				break;
 			}
+			sleep(1);
 			break;
 		case 2:
-			printf("            INGRESO DE JUGADORES\n");
+			printf("<-----------INGRESO DE JUGADORES----------->\n");
 			if(contadorJugadores != SELECCION){
 
 				do{
 
 					do{
-						retornoFunciones = utn_getNumeroINT(&posicionJugador,"Ingrese el numero de la posicion(1,2,3,4)\n1.Arquero\n2.Defensor\n3.Mediocampista\n4.Delantero\n","Error/Vuelva ingresar la el numero la posicion (1,2,3,4) \n",0,5,15);
-					}while(retornoFunciones == -1);
+						flagJugadoresMaximos = 0;
 
-					if((posicionJugador == 1) && (contadorArqueros == 2)){
-						printf("Se han ingresado la maxima cantidad de Arqueros...Regresando al MENU\n");
-						break;
-					}else{
-						if((posicionJugador == 2) && (contadorDefensores == 8)){
-							printf("Se han ingresado la maxima cantidad de Defensores...Regresando al MENU\n");
-							break;
+						do{
+							retornoFunciones = utn_getNumeroINT(&posicionJugador,"Ingrese el numero de la posicion(1,2,3,4)\n1.Arquero\n2.Defensor\n3.Mediocampista\n4.Delantero\n","Error/Vuelva ingresar la el numero la posicion (1,2,3,4) \n",0,5,15);
+						}while(retornoFunciones == -1);
+
+						//Condicionales para que no sobrepasar el maximo de cada posicion en la selecion
+						if((posicionJugador == 1) && (contadorArqueros == 2)){
+							printf("Se han ingresado la maxima cantidad de Arqueros...Reingrese nuevamente la posicion\n");
+							flagJugadoresMaximos = 1;
 						}else{
-							if((posicionJugador == 3) && (contadorMediocampistas == 8)){
-								printf("Se han ingresado la maxima cantidad de Mediocampistas...Regresando al MENU\n");
-								break;
+							if((posicionJugador == 2) && (contadorDefensores == 8)){
+								printf("Se han ingresado la maxima cantidad de Defensores...Reingrese nuevamente la posicion\n");
+								flagJugadoresMaximos = 1;
 							}else{
-								if((posicionJugador == 4) && (contadorDelanteros == 4)){
-									printf("Se han ingresado la maxima cantidad de Delanteros...Regresando al MENU\n");
-									break;
+								if((posicionJugador == 3) && (contadorMediocampistas == 8)){
+									printf("Se han ingresado la maxima cantidad de Mediocampistas...Reingrese nuevamente la posicion\n");
+									flagJugadoresMaximos = 1;
+								}else{
+									if((posicionJugador == 4) && (contadorDelanteros == 4)){
+										printf("Se han ingresado la maxima cantidad de Delanteros...Reingrese nuevamente la posicion\n");
+										flagJugadoresMaximos = 1;
+									}
 								}
 							}
 						}
-					}
+
+					}while(flagJugadoresMaximos == 1);
 
 					do{
 						retornoFunciones = utn_getNumeroINT(&camisetaJugador,"Ingrese el numero de camiseta\n","Error/ Opcion invalida, la misma no puede ser menor a 1 o mayor 100\n",0,101,15);
@@ -208,7 +219,7 @@ int main(void) {
 			}else{
 				printf("Ya se ingresaron todos los jugadores posibles.\n");
 			}
-
+			sleep(1);
 			break;
 		case 3:
 			if(costoHospedaje == 0 || costoComida == 0 || costoTransporte == 0){
@@ -218,10 +229,10 @@ int main(void) {
 					printf("Para hacer el calculo es necesario ingresar a por lo menos 1 jugador de la OPCION 2...\n");
 				}
 				else{
-					printf("              CALCULANDO DATOS\n");
+					printf("<-----------CALCULANDO DATOS----------->\n");
 					//Calculo Mantenimiento
 					costoMantenimiento = CalcularSumarFloat(costoComida,costoHospedaje,costoTransporte);
-					//Porcentajes confederaciones
+					//Promedio confederaciones
 					promedioCONMEBOL = CalcularPromedio(contadorCONMEBOL,contadorJugadores);
 					promedioUEFA = CalcularPromedio(contadroUEFA,contadorJugadores);
 					promedioOFC = CalcularPromedio(contadorOFC,contadorJugadores);
@@ -235,12 +246,13 @@ int main(void) {
 					}
 				}
 			}
+			sleep(1);
 			break;
 		case 4:
 			if(costoMantenimiento == 0){
 				printf("Para mostrar los datos es necesaria la OPCION 3...\n");
 			}else{
-				printf("\n                 INFORMAR LOS RESULTADOS               \n"
+				printf("\n<-----------INFORMAR LOS RESULTADOS----------->\n"
 						"Promedio  CONMEBOL  %.2f\n"
 						"Promedio  UEFA      %.2f\n"
 						"Promedio  OFC       %.2f\n"
@@ -258,16 +270,11 @@ int main(void) {
 							costoMantenimiento,aumentoMantenimiento,netoMantenimiento);
 				}
 			}
+			sleep(4);
 			break;
 		case 5:
 			printf("TERMINANDO PROGRAMA");
 		}
-
-		//Espera 3 segundos
-		sleep(3);
-		//Esta funcion proviene de la biblioteca <unistd.h> y la funcion sleep(); pone un timer
-		//que especificas entre los parentesis en segundos.
-
 	}while(opcion!=5);
 
 	//ESTO ES SOLO PARA QUE LA VARIABLE DE CAMISETAS NO DE WARNING DE NO USO
