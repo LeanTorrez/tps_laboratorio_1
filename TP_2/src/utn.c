@@ -201,6 +201,24 @@ int utn_getNumeroFLOAT(float* pResultado,char* mensaje,char* mensajeError,float 
 	return retorno;
 }
 
+int utn_getNumeroShort(short* pResultado,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos){
+	int retorno = 0;
+	int bufferShort;
+	printf(mensaje);
+	while(reintentos > 0){
+		if(getInt(&bufferShort)==1){
+			if(bufferShort >= minimo && bufferShort <= maximo){
+				*pResultado = bufferShort;
+				retorno = 1;
+				break;
+			}
+		}
+		reintentos--;
+		printf(mensajeError);
+	}
+	return retorno;
+}
+
 char ConfirmarChar(char mensaje[],char mensajeError[],char validacion1,char validacion2){
 	char letra;
 	printf(mensaje);

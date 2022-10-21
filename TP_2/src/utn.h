@@ -65,6 +65,12 @@ int utn_getNumeroFLOAT(float* pResultado,
 		float minimo,float maximo,
 		int reintentos);
 
+int utn_getNumeroShort(short* pResultado,
+		char* mensaje,
+		char* mensajeError,
+		int minimo,int maximo,
+		int reintentos);
+
 /**
  * \fn char ConfirmarChar(char[], char[], char, char)
  * \brief Pide un caracter al usuario entre los dos que se piden a valirdar
