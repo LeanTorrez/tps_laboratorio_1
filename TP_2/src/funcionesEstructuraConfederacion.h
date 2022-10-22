@@ -4,7 +4,6 @@
  *  Created on: 20 oct. 2022
  *      Author: leand
  */
-
 #include "utn.h"
 
 #ifndef FUNCIONESESTRUCTURACONFEDERACION_H_

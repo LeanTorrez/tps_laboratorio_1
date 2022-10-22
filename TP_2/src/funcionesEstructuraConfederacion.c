@@ -4,7 +4,7 @@
  *  Created on: 20 oct. 2022
  *      Author: leand
  */
-#include "funcionesEstructuraJugador.h"
+#include "funcionesEstructuraConfederacion.h"
 
 void MostrarStructConfederaciones(eConfederacion confederacion[],int tamConfederacion){
 	printf("\n-------------------->Lista De Confederaciones<-------------------\n"

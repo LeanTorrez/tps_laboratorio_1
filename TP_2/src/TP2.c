@@ -28,6 +28,7 @@ int main(void) {
 									 {103,"CAF     ","AFRICA                ",1957},
 									 {104,"CONCACAF","NORTE Y CENTRO AMERICA",1961},
 									 {105,"OFC     ","OCEANIA               ",1966}};
+	InicializacionStructJugadores(jugador,TAMJUGADORES);
 
 	do{
 		utn_getNumeroINT(&menuOpciones,"\n1.Alta de Jugador\n"
@@ -44,7 +45,9 @@ int main(void) {
 		case 2:
 			printf("\n--------->BAJA DE JUGADOR<---------\n");
 			if(BuscarStructIndiceLLENO(jugador,TAMJUGADORES)){
-
+				if(BajaStructJugador(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION)==0){
+					printf("No se pudo encontrar al jugador con esa ID... Regresando al Menu");
+				}
 			}else{
 				printf("Es Necesario que se ingrese al menos un jugador para entrar en esta opcion\n");
 			}
@@ -52,7 +55,9 @@ int main(void) {
 		case 3:
 			printf("\n--------->MODIFICACION DE JUGADOR<---------\n");
 			if(BuscarStructIndiceLLENO(jugador,TAMJUGADORES)){
-
+				if(ModificacionStructJugador(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION)==0){
+					printf("No se pudo encontrar al jugador con esa ID... Regresando al Menu");
+				}
 			}else{
 				printf("Es Necesario que se ingrese al menos un jugador para entrar en esta opcion\n");
 			}
