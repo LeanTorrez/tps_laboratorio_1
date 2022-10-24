@@ -65,6 +65,19 @@ int utn_getNumeroFLOAT(float* pResultado,
 		float minimo,float maximo,
 		int reintentos);
 
+/**
+ * \fn int utn_getNumeroShort(short*, char*, char*, int, int, int)
+ * \brief Pide al usuario un numero Short, a diferencia del int este tiene un rango menor pero su peso en memoria
+ * es menor de igual manera.
+ *
+ * \param pResultado Puntero a la ubicacion de la variable adonde se guardara el numero Short ingresado
+ * \param mensaje mensaje que vera el usuario a la hora de ingresar los datos
+ * \param mensajeError Mensaje de error en caso que el usuario ingrese algun dato erroneo
+ * \param minimo el minimo que tiene que ser el numero pedido
+ * \param maximo el maximo que tiene que ser el numero pedido
+ * \param reintentos La cantidad de reintentos que tiene el usuario para ingresar el numero
+ * \return  1 en caso de exito, 0 en caso de fallo
+ */
 int utn_getNumeroShort(short* pResultado,
 		char* mensaje,
 		char* mensajeError,

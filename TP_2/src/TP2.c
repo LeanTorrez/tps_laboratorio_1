@@ -10,9 +10,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "utn.h"
-#include "funcionesEstructuraConfederacion.h"
-#include "funcionesEstructuraJugador.h"
+//Todas mis funciones recaen en Mostrar Informes
+#include "MostrarInformes.h"
 
 #define TAMCONFEDERACION 6
 #define TAMJUGADORES 3000
@@ -21,14 +20,26 @@ int main(void) {
 	setbuf(stdout,NULL);
 	int menuOpciones=0;
 	int idIncremental=1;
-	eJugador jugador[TAMJUGADORES];
-	eConfederacion confederacion[]= {{100,"CONMEBOL","SUDAMERICA            ",1916},
-									 {101,"UEFA    ","EUROPA                ",1954},
-									 {102,"AFC     ","ASIA                  ",1954},
-									 {103,"CAF     ","AFRICA                ",1957},
-									 {104,"CONCACAF","NORTE Y CENTRO AMERICA",1961},
-									 {105,"OFC     ","OCEANIA               ",1966}};
-	InicializacionStructJugadores(jugador,TAMJUGADORES);
+	//eJugador jugador[TAMJUGADORES];
+	eJugador jugador[TAMJUGADORES] = {{1,"Leonel Messi","Delantero",10,105,5000,5,1},
+									  {2,"Cristiano Ronaldo","Delantero",7,101,6054,3,1},
+									  {3,"Emiliano Martinez","Arquero",1,102,2312,2,1},
+									  {4,"Lautaro Martinez","Delantero",17,100,4123,15,1},
+									  {5,"Luis Suarez","Delantero",11,105,51531,3,1},
+									  {6,"Gianluigi Donnaruma","Arquero",1,101,12212,4,1},
+									  {7,"Kiliam Mbappe","Delantero",7,101,55454,2,1},
+									  {8,"Memo Ochoa","Arquero",1,104,7652,6,1},
+									  {9,"Leandro Paredes","Mediocampista",14,100,12341,1,1},
+									  {10,"Marcos Rojo","Defensor",5,101,5135,11,1},
+									  {11,"Cuti Romero","Defensor",3,103,87565,10,1}};
+
+	eConfederacion confederacion[]= {{100,"CONMEBOL","SUDAMERICA",1916,1},
+									 {101,"UEFA","EUROPA",1954,1},
+									 {102,"AFC","ASIA",1954,1},
+									 {103,"CAF","AFRICA",1957,1},
+									 {104,"CONCACAF","NORTE Y CENTRO AMERICA",1961,1},
+									 {105,"OFC","OCEANIA",1966,1}};
+	//InicializacionStructJugadores(jugador,TAMJUGADORES);
 
 	do{
 		utn_getNumeroINT(&menuOpciones,"\n1.Alta de Jugador\n"
@@ -40,13 +51,19 @@ int main(void) {
 		switch(menuOpciones){
 		case 1:
 			printf("\n--------->ALTA DE JUGADOR<---------\n");
-			AltaStructJugador(jugador,TAMJUGADORES,confederacion,TAMCONFEDERACION,&idIncremental);
+			if(AltaStructJugador(jugador,TAMJUGADORES,confederacion,TAMCONFEDERACION,&idIncremental)==0){
+				printf("Se ingresaron la maxima cantidad de jugadores");
+			}else{
+				printf("Alta de jugador Exitosa");
+			}
 			break;
 		case 2:
 			printf("\n--------->BAJA DE JUGADOR<---------\n");
 			if(BuscarStructIndiceLLENO(jugador,TAMJUGADORES)){
 				if(BajaStructJugador(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION)==0){
 					printf("No se pudo encontrar al jugador con esa ID... Regresando al Menu");
+				}else{
+					printf("Baja de jugador Exitosa");
 				}
 			}else{
 				printf("Es Necesario que se ingrese al menos un jugador para entrar en esta opcion\n");
@@ -57,6 +74,8 @@ int main(void) {
 			if(BuscarStructIndiceLLENO(jugador,TAMJUGADORES)){
 				if(ModificacionStructJugador(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION)==0){
 					printf("No se pudo encontrar al jugador con esa ID... Regresando al Menu");
+				}else{
+					printf("Modificacion de jugador Exitosa");
 				}
 			}else{
 				printf("Es Necesario que se ingrese al menos un jugador para entrar en esta opcion\n");
@@ -65,6 +84,40 @@ int main(void) {
 		case 4:
 			printf("\n--------->INFORMES<---------\n");
 			if(BuscarStructIndiceLLENO(jugador,TAMJUGADORES)){
+				//111111111
+				//OrdenamientoStructJugadorConfederacionNombre(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION);
+				//MostrarStructJugador(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION);
+
+				//22222222
+				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,100);
+				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,101);
+				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,102);
+				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,103);
+				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,104);
+				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,105);
+
+				//3333333
+				//int  contador=0;
+				//float acumulador=0;
+				//float promedio;
+				//int contadorSuperan=0;
+				//AcumuladorSalarioStructJugador(jugador,TAMJUGADORES,&contador,&acumulador);
+				//printf("cantidad de jugadores es de %d",contador);
+				//promedio = acumulador / (float) contador;
+				//JugadorSalarioSuperanPromedio(jugador,TAMJUGADORES,promedio,&contadorSuperan);
+				//printf("Salarios acumulados es de %.f, el promedio es %.f, y la cantidad de jugadores que superan esto es de %d",acumulador,promedio,contadorSuperan);
+
+				//4444444
+				//short acumuladorAnios=0;
+				//ConfederacionConMasAniosContrato(jugador,TAMJUGADORES,102,&acumuladorAnios);
+				//printf("La cantidad de años de contrato es de %hi",acumuladorAnios);
+
+				//555555
+				//int contadorConmebol=0;
+				//int contadorUefa=0;
+				//PorcentajeConfederacionJugadores(jugador,TAMJUGADORES,100,&contadorConmebol);
+				//PorcentajeConfederacionJugadores(jugador,TAMJUGADORES,101,&contadorUefa);
+				//printf("\nCantidad conmebol %d, cantidad uefa %d",contadorConmebol,contadorUefa);
 
 			}else{
 				printf("Es Necesario que se ingrese al menos un jugador para entrar en esta opcion\n");
@@ -72,6 +125,10 @@ int main(void) {
 			break;
 		case 5:
 			printf("\n--------->SALIR<---------\n");
+			if(ConfirmarChar("¿Desea salir? Ingrese [s|n]","Error/ Ingrese s o n",'S','N')=='N'){
+				printf("Eligio regresar al Menu...");
+				menuOpciones = 0;
+			}
 			break;
 
 		}

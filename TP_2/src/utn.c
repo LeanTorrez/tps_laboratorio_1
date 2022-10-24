@@ -77,12 +77,31 @@ static int esNumerica(char* cadena){
 /**
  * \fn int getInt(int*)
  * \brief crea un buffer adonde se verificara si la cadena de numeros sea en numero y no letras signos, a
- * excepcion del - (negativo)
+ * excepcion del - (negativo), en este caso es un numero Int.
  *
  * \param pResultado Puntero adonde se guarda la cadena en caso exitoso
  * \return 1 en caso de exito, 0 en caso de error
  */
 static int getInt(int* pResultado){
+	int retorno = 0;
+	char buffer[64];
+	myGets(buffer,sizeof(buffer));
+	if(esNumerica(buffer)){
+		*pResultado = atoi(buffer);
+		retorno=1;
+	}
+	return retorno;
+}
+
+/**
+ * \fn int getShort(short*)
+ * \brief crea un buffer adonde se verificara si la cadena de numeros sea en numero y no letras signos, a
+ * excepcion del - (negativo), en este caso es un numero Short.
+ *
+ * \param pResultado Puntero adonde se guarda la cadena en caso exitoso
+ * \return 1 en caso de exito, 0 en caso de error
+ */
+static int getShort(short* pResultado){
 	int retorno = 0;
 	char buffer[64];
 	myGets(buffer,sizeof(buffer));
@@ -203,10 +222,10 @@ int utn_getNumeroFLOAT(float* pResultado,char* mensaje,char* mensajeError,float 
 
 int utn_getNumeroShort(short* pResultado,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos){
 	int retorno = 0;
-	int bufferShort;
+	short bufferShort;
 	printf(mensaje);
 	while(reintentos > 0){
-		if(getInt(&bufferShort)==1){
+		if(getShort(&bufferShort)==1){
 			if(bufferShort >= minimo && bufferShort <= maximo){
 				*pResultado = bufferShort;
 				retorno = 1;

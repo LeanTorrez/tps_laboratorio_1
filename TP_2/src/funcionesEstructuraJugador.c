@@ -49,7 +49,7 @@ int BuscarIDJugador(eJugador jugador[],int tamJugador,int* idJugador){
 	int retorno=0;
 	int IdAbuscar;
 	if(tamJugador > 0){
-		utn_getNumeroINT(&IdAbuscar,"Ingrese la ID del Jugador","Ingrese una ID valida",1,3000,10);
+		utn_getNumeroINT(&IdAbuscar,"Ingrese la ID del Jugador\n","Ingrese una ID valida\n",1,3000,10);
 		for(int i=0;i<tamJugador;i++){
 			if(jugador[i].idJugador == IdAbuscar){
 				*idJugador = i;
@@ -73,7 +73,7 @@ int AltaStructJugador(eJugador jugador[],int tamJugador,eConfederacion confedera
 			//Nombre
 			utn_getString(jugador[indiceVacio].nombre,sizeof(jugador[indiceVacio].nombre),"Ingrese el nombre del jugador","Error, Asegurese de ingresar algo",20);
 			//Posicion Jugador
-			utn_getNumeroINT(&opcionPosicionJugador,"1.Delantero\n2.MedioCampista\n3.Defensor\n4.Arquero\nIngrese el numero de las siguiente posiciones","Error/ Reingrese el numero",1,4,20);
+			utn_getNumeroINT(&opcionPosicionJugador,"1.Delantero\n2.MedioCampista\n3.Defensor\n4.Arquero\nIngrese el numero de las siguiente posiciones\n","Error/ Reingrese el numero\n",1,4,20);
 			switch(opcionPosicionJugador){
 			case 1:
 				strcpy(auxJugadorPosicion,"Delantero");
@@ -91,18 +91,18 @@ int AltaStructJugador(eJugador jugador[],int tamJugador,eConfederacion confedera
 
 			strcpy(jugador[indiceVacio].posicion,auxJugadorPosicion);
 			//Numero Camiseta
-			utn_getNumeroShort(&jugador[indiceVacio].numeroCamiseta,"Ingrese el numero de camiseta","Error/ La camiseta no puedo ser menor a 1 y mayor a 99",1,99,20);
+			utn_getNumeroShort(&jugador[indiceVacio].numeroCamiseta,"Ingrese el numero de camiseta\n","Error/ La camiseta no puedo ser menor a 1 y mayor a 99\n",1,99,20);
 			//Confederacion
 			MostrarStructConfederaciones(confederacion,tamConfederacion);
-			utn_getNumeroINT(&jugador[indiceVacio].idConfederacion,"Ingrese la ID de la confederacion del jugador","Error/ Ingrese una ID valida",100,105,20);
+			utn_getNumeroINT(&jugador[indiceVacio].idConfederacion,"Ingrese la ID de la confederacion del jugador\n","Error/ Ingrese una ID valida\n",100,105,20);
 			//Salario
-			utn_getNumeroFLOAT(&jugador[indiceVacio].salario,"Ingrese el Salario del jugador","Error/ El salario no puede ser menor a 1",1,100000000,20);
+			utn_getNumeroFLOAT(&jugador[indiceVacio].salario,"Ingrese el Salario del jugador\n","Error/ El salario no puede ser menor a 1\n",1,100000000,20);
 			//Años De Contrato
-			utn_getNumeroShort(&jugador[indiceVacio].aniosContrato,"Ingrese los Años de contrato del jugador","Error/ No puede ser menor a 1 y mayor 20",1,20,20);
+			utn_getNumeroShort(&jugador[indiceVacio].aniosContrato,"Ingrese los Años de contrato del jugador\n","Error/ No puede ser menor a 1 y mayor 20\n",1,20,20);
 			//IsEmpty
 			jugador[indiceVacio].isEmpty = 1;
 
-			*idAutoincremental = +1;
+			*idAutoincremental += 1;
 
 
 			retorno = 1;
@@ -116,6 +116,7 @@ int BajaStructJugador(eJugador jugador[],int tamJugador,eConfederacion confedera
 	int retorno=0;
 	int IdJugador;
 	if(tamJugador > 0){
+		OrdenarStructJugadorID(jugador,tamJugador);
 		MostrarStructJugador(jugador, tamJugador, confederacion, tamConfederacion);
 		if(BuscarIDJugador(jugador, tamJugador,&IdJugador)==1){
 			jugador[IdJugador].isEmpty = 0;
@@ -133,19 +134,20 @@ int ModificacionStructJugador(eJugador jugador[],int tamJugador,eConfederacion c
 	char auxJugadorPosicion[50];
 	int opcionesModificarJugador=0;
 	if(tamJugador > 0){
+		OrdenarStructJugadorID(jugador,tamJugador);
 		MostrarStructJugador(jugador, tamJugador, confederacion, tamConfederacion);
 		if(BuscarIDJugador(jugador, tamJugador,&IdJugador)==1){
 
 			utn_getNumeroINT(&opcionesModificarJugador,"\n1.Nombre\n2.Posicion\n3.Numero de Camiseta\n4.ID Confederacion\n5.Salario\n6.Años de contrato\n"
-					 	 	 	 	 	 	 	 	   "Ingresa el numero de la opcion que quiera Modificar","Error/ Ingrese una opcion valida",1,6,20);
+					 	 	 	 	 	 	 	 	   "Ingresa el numero de la opcion que quiera Modificar\n","Error/ Ingrese una opcion valida\n",1,6,20);
 			switch(opcionesModificarJugador){
 			case 1:
 				//Nombre
-				utn_getString(jugador[IdJugador].nombre,sizeof(jugador[IdJugador].nombre),"Ingrese el nombre del jugador","Error, Asegurese de ingresar algo",20);
+				utn_getString(jugador[IdJugador].nombre,sizeof(jugador[IdJugador].nombre),"Ingrese el nombre del jugador\n","Error, Asegurese de ingresar algo\n",20);
 				break;
 			case 2:
 				//Posicion Jugador
-				utn_getNumeroINT(&opcionPosicionJugador,"1.Delantero\n2.MedioCampista\n3.Defensor\n4.Arquero\nIngrese el numero de las siguiente posiciones","Error/ Reingrese el numero",1,4,20);
+				utn_getNumeroINT(&opcionPosicionJugador,"1.Delantero\n2.MedioCampista\n3.Defensor\n4.Arquero\nIngrese el numero de las siguiente posiciones\n","Error/ Reingrese una opcion valida\n",1,4,20);
 				switch(opcionPosicionJugador){
 				case 1:
 					strcpy(auxJugadorPosicion,"Delantero");
@@ -165,20 +167,20 @@ int ModificacionStructJugador(eJugador jugador[],int tamJugador,eConfederacion c
 				break;
 			case 3:
 				//Numero Camiseta
-				utn_getNumeroShort(&jugador[IdJugador].numeroCamiseta,"Ingrese el numero de camiseta","Error/ La camiseta no puedo ser menor a 1 y mayor a 99",1,99,20);
+				utn_getNumeroShort(&jugador[IdJugador].numeroCamiseta,"Ingrese el numero de camiseta\n","Error/ La camiseta no puedo ser menor a 1 y mayor a 99\n",1,99,20);
 				break;
 			case 4:
 				//Confederacion
 				MostrarStructConfederaciones(confederacion,tamConfederacion);
-				utn_getNumeroINT(&jugador[IdJugador].idConfederacion,"Ingrese la ID de la confederacion del jugador","Error/ Ingrese una ID valida",100,105,20);
+				utn_getNumeroINT(&jugador[IdJugador].idConfederacion,"Ingrese la ID de la confederacion del jugador\n","Error/ Ingrese una ID valida\n",100,105,20);
 				break;
 			case 5:
 				//Salario
-				utn_getNumeroFLOAT(&jugador[IdJugador].salario,"Ingrese el Salario del jugador","Error/ El salario no puede ser menor a 1",1,100000000,20);
+				utn_getNumeroFLOAT(&jugador[IdJugador].salario,"Ingrese el Salario del jugador\n","Error/ El salario no puede ser menor a 1\n",1,100000000,20);
 				break;
 			case 6:
 				//Años De Contrato
-				utn_getNumeroShort(&jugador[IdJugador].aniosContrato,"Ingrese los Años de contrato del jugador","Error/ No puede ser menor a 1 y mayor 20",1,20,20);
+				utn_getNumeroShort(&jugador[IdJugador].aniosContrato,"Ingrese los Años de contrato del jugador\n","Error/ No puede ser menor a 1 y mayor 20\n",1,20,20);
 				break;
 			}
 			retorno = 1;
@@ -207,8 +209,7 @@ void OrdenarStructJugadorID(eJugador jugador[],int tamJugador){
 void MostrarStructJugador(eJugador jugador[],int tamJugador,eConfederacion confederacion[],int tamConfederacion){
 	int auxIdConfederacion;
 	if(tamJugador > 0 && tamConfederacion > 0){
-		OrdenarStructJugadorID(jugador,tamJugador);
-		printf("|ID   |\tNombre\t|\tPosicion\t|Num. camiseta|\tConfederacion\t|\tSalario\t|\tAños de Contraro\t|");
+		printf("|ID |       Nombre       |    Posicion    | Num. camiseta |Confederacion|     Salario     |Años de Contraro|\n");
 		for(int i=0;i<tamJugador;i++){
 			if(jugador[i].isEmpty == 1){
 				for(int a=0;a<tamConfederacion;a++){
@@ -217,7 +218,7 @@ void MostrarStructJugador(eJugador jugador[],int tamJugador,eConfederacion confe
 						break;
 					}
 				}
-				printf("\n|%d|%s     |%s    |%hi   |%s    |%.f    |%hi   |",
+				printf("|%d | %.15s    | %.10s |%hi   | %.10s | %.2f | %hi |\n",
 												   jugador[i].idJugador,
 												   jugador[i].nombre,
 												   jugador[i].posicion,
