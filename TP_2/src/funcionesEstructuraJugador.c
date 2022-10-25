@@ -209,7 +209,9 @@ void OrdenarStructJugadorID(eJugador jugador[],int tamJugador){
 void MostrarStructJugador(eJugador jugador[],int tamJugador,eConfederacion confederacion[],int tamConfederacion){
 	int auxIdConfederacion;
 	if(tamJugador > 0 && tamConfederacion > 0){
-		printf("|ID |       Nombre       |    Posicion    | Num. camiseta |Confederacion|     Salario     |Años de Contraro|\n");
+		printf("|====================================================================================================================================|\n"
+			   "|  ID  |             Nombre             |       Posicion       |    Num. camiseta   |  Confederacion  |  Salario   |Años de Contrato |\n"
+			   "|====================================================================================================================================|\n");
 		for(int i=0;i<tamJugador;i++){
 			if(jugador[i].isEmpty == 1){
 				for(int a=0;a<tamConfederacion;a++){
@@ -218,7 +220,7 @@ void MostrarStructJugador(eJugador jugador[],int tamJugador,eConfederacion confe
 						break;
 					}
 				}
-				printf("|%d | %.15s    | %.10s |%hi   | %.10s | %.2f | %hi |\n",
+				printf("| %-4d | %-30s | %-20s | %-16hi   | %-15s | %-10.2f | %-15hi |\n",
 												   jugador[i].idJugador,
 												   jugador[i].nombre,
 												   jugador[i].posicion,
@@ -229,6 +231,7 @@ void MostrarStructJugador(eJugador jugador[],int tamJugador,eConfederacion confe
 			}
 
 		}
+		printf("|====================================================================================================================================|\n");
 	}
 
 }

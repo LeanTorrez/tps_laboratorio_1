@@ -18,8 +18,10 @@
 
 int main(void) {
 	setbuf(stdout,NULL);
+
 	int menuOpciones=0;
 	int idIncremental=1;
+
 	//eJugador jugador[TAMJUGADORES];
 	eJugador jugador[TAMJUGADORES] = {{1,"Leonel Messi","Delantero",10,105,5000,5,1},
 									  {2,"Cristiano Ronaldo","Delantero",7,101,6054,3,1},
@@ -42,7 +44,7 @@ int main(void) {
 	//InicializacionStructJugadores(jugador,TAMJUGADORES);
 
 	do{
-		utn_getNumeroINT(&menuOpciones,"\n1.Alta de Jugador\n"
+		utn_getNumeroINT(&menuOpciones,"\n\n1.Alta de Jugador\n"
 									   "2.Baja de Jugador\n"
 									   "3.Modificacion de Jugador\n"
 									   "4.Informes\n"
@@ -84,40 +86,7 @@ int main(void) {
 		case 4:
 			printf("\n--------->INFORMES<---------\n");
 			if(BuscarStructIndiceLLENO(jugador,TAMJUGADORES)){
-				//111111111
-				//OrdenamientoStructJugadorConfederacionNombre(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION);
-				//MostrarStructJugador(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION);
-
-				//22222222
-				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,100);
-				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,101);
-				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,102);
-				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,103);
-				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,104);
-				//MostrarJugadoresOrdenadosConfederacion(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION,105);
-
-				//3333333
-				//int  contador=0;
-				//float acumulador=0;
-				//float promedio;
-				//int contadorSuperan=0;
-				//AcumuladorSalarioStructJugador(jugador,TAMJUGADORES,&contador,&acumulador);
-				//printf("cantidad de jugadores es de %d",contador);
-				//promedio = acumulador / (float) contador;
-				//JugadorSalarioSuperanPromedio(jugador,TAMJUGADORES,promedio,&contadorSuperan);
-				//printf("Salarios acumulados es de %.f, el promedio es %.f, y la cantidad de jugadores que superan esto es de %d",acumulador,promedio,contadorSuperan);
-
-				//4444444
-				//short acumuladorAnios=0;
-				//ConfederacionConMasAniosContrato(jugador,TAMJUGADORES,102,&acumuladorAnios);
-				//printf("La cantidad de años de contrato es de %hi",acumuladorAnios);
-
-				//555555
-				//int contadorConmebol=0;
-				//int contadorUefa=0;
-				//PorcentajeConfederacionJugadores(jugador,TAMJUGADORES,100,&contadorConmebol);
-				//PorcentajeConfederacionJugadores(jugador,TAMJUGADORES,101,&contadorUefa);
-				//printf("\nCantidad conmebol %d, cantidad uefa %d",contadorConmebol,contadorUefa);
+				MostrarInformes(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION);
 
 			}else{
 				printf("Es Necesario que se ingrese al menos un jugador para entrar en esta opcion\n");

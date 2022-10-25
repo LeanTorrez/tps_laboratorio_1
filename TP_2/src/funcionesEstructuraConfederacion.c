@@ -129,14 +129,16 @@ int ModificacionStructConfederacion(eConfederacion confederacion[],int tamConfed
 
 void MostrarStructConfederaciones(eConfederacion confederacion[],int tamConfederacion){
 	printf("-------------------->Lista De Confederaciones<-------------------\n"
-		   "|ID   |\tNombre   |\t    Region\t\t|Año De Creacion|\n"
-		   "|---------------------------------------------------------------|\n");
+		   "|======================================================================================|\n"
+		   "| %-5s | %-30s | %-25s | %-15s |\n"
+		   "|======================================================================================|\n","ID","Nombre","Region","Año de creacion");
 	for(int i = 0;i<tamConfederacion;i++){
-			printf("|%d  |\t%s |\t %s |     %d      |\n",
+			printf("| %-5d | %-30s | %-25s | %-15d |\n",
 											confederacion[i].idConfederacion,
 											confederacion[i].nombre,
 											confederacion[i].region,
 											confederacion[i].anioCreacion);
 	}
+	printf("|======================================================================================|\n");
 }
 
