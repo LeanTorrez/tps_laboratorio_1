@@ -6,6 +6,30 @@
  */
 #include "funcionesEstructuraConfederacion.h"
 
+/**
+ * \fn int BuscarStructIndiceIsEmptyConfederacion(eConfederacion[], int, int*)
+ * \brief  Dentro de la misma se buscar el estado IsEmpty ,para la struct Confederacion, mas proximo que su numero sea 0 y devuelve el indice
+ * por puntero a la variable que entra por parametro
+ *
+ * \param confederacion Struct Confederacion
+ * \param tamConfederacion Tamaño de La struct Confederacion
+ * \param indice Puntero a la variable adonde se guardara el indice que se encontro, si es que existe
+ * \return Devuelve 1 en caso exitoso o 0 en caso de fallo
+ */
+static int BuscarStructIndiceIsEmptyConfederacion(eConfederacion confederacion[],int tamConfederacion,int* indice);
+
+/**
+ * \fn int BuscarIdConfederacion(eConfederacion[], int, int*)
+ * \brief Le pide al usuario que ingrese la id de la confederacion que quiere buscar, en caso de encontrarla la guardara
+ * en el puntero que viene por parametro, en caso de no existir esa id, la funcion devuelve 0
+ *
+ * \param confederacion Struct Confederacion
+ * \param tamConfederacion Tamaño de La struct Confederacion
+ * \param idConfederacion Puntero a la variable adonde se guardara el indice, en caso de existir
+ * \return Devuelve 1 en caso exitoso o 0 en caso de fallo
+ */
+static int BuscarIdConfederacion(eConfederacion confederacion[],int tamConfederacion,int* idConfederacion);
+
 int InicializacionStructConfederaciones(eConfederacion confederacion[],int tamConfederacion){
 	int retorno = 0;
 	if(tamConfederacion>0){
@@ -17,7 +41,7 @@ int InicializacionStructConfederaciones(eConfederacion confederacion[],int tamCo
 	return retorno;
 }
 
-int BuscarStructIndiceIsEmptyConfederacion(eConfederacion confederacion[],int tamConfederacion,int* indice){
+static int BuscarStructIndiceIsEmptyConfederacion(eConfederacion confederacion[],int tamConfederacion,int* indice){
 	int retorno=0;
 	if(tamConfederacion > 0){
 		for(int i=0;i<tamConfederacion;i++){
@@ -45,7 +69,7 @@ int BuscarStructIndiceLLENOConfederacion(eConfederacion confederacion[],int tamC
 	return retorno;
 }
 
-int BuscarIdConfederacion(eConfederacion confederacion[],int tamConfederacion,int* idConfederacion){
+static int BuscarIdConfederacion(eConfederacion confederacion[],int tamConfederacion,int* idConfederacion){
 	int retorno=0;
 	int IdAbuscar;
 	if(tamConfederacion > 0){

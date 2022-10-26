@@ -140,6 +140,7 @@ int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederaci
 			printf("------------------->Lista de Jugadores Alfabeticamente<-------------------\n");
 			OrdenamientoStructJugadorConfederacionNombre(jugador, tamJugador, confederacion, tamConfederacion);
 			MostrarStructJugador(jugador,tamJugador,confederacion,tamConfederacion);
+			retorno=1;
 			break;
 		case 2:
 			printf("------------------->Lista de Jugadores Por Confederacion<-------------------\n");
@@ -167,6 +168,7 @@ int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederaci
 				printf("|                          NO HAY NINGUN JUGADOR QUE PERTENEZCA A ESTA CONFEDERACION                             |\n"
 					   "|================================================================================================================|\n");
 			}
+			retorno=1;
 			break;
 		case 3:
 			printf("------------------->Total y Promedio de los salarios de los jugadores<-------------------\n");
@@ -181,7 +183,7 @@ int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederaci
 				printf("Los Salarios Acumulados de los jugadores es de %.2f, y el promedio del mismo es de %.2f\n"
 										"No existen jugadores que superen este promedio",acumulador,promedio);
 			}
-
+			retorno=1;
 			break;
 		case 4:
 			printf("------------------->Informe de la confederacion con mayor cantidad de años de contrato<-------------------\n");
@@ -227,7 +229,7 @@ int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederaci
 				}
 			}
 			printf("La confederacion con mas años en contrato es la %s, y el total de años que tiene es %hi\n",auxAniosContrato,auxAnios);
-
+			retorno=1;
 			break;
 		case 5:
 			printf("------------------->Informe de porcentaje de jugadores por confederacion<-------------------\n");
@@ -245,7 +247,7 @@ int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederaci
 				   "Porcentaje  CAF       %.2f\n"
 				   "Porcentaje  AFC       %.2f\n",porcentajeCONMEBOL,porcentajeUEFA,porcentajeOFC,
 				   	   	   	   	   	   	   	   	  porcentajeCONCACAF,porcentajeCAF,porcentajeAFC);
-
+			retorno=1;
 			break;
 		case 6:
 			printf("------------------->Informe cual es la Region con mas Jugadores<-------------------\n");
@@ -283,7 +285,7 @@ int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederaci
 					}
 				}
 			}
-
+			retorno=1;
 			break;
 		}
 	}

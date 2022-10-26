@@ -5,6 +5,29 @@
  *      Author: leand
  */
 #include "funcionesEstructuraJugador.h"
+/**
+ * \fn int BuscarIDJugador(eJugador[], int, int*)
+ * \brief Le pide al usuario que ingrese la id del jugador que quiere buscar, en caso de encontrarla la guardara
+ * en el puntero que viene por parametro, en caso de no existir esa id, la funcion devuelve 0
+ *
+ * \param jugador Struct Jugador
+ * \param tamJugador Tamaño de La struct Jugador
+ * \param idJugador Puntero a la variable adonde se guardara el indice, en caso de existir
+ * \return Devuelve 1 en caso exitoso o 0 en caso de fallo
+ */
+static int BuscarIDJugador(eJugador jugador[],int tamJugador,int* idJugador);
+
+/**
+ * \fn int BuscarStructIndiceIsEmpty(eJugador[], int, int*)
+ * \brief Dentro de la misma se buscar el estado IsEmpty ,para la struct jugador, mas proximo que su numero sea 0 y devuelve el indice
+ * por puntero a la variable que entra por parametro
+ *
+ * \param jugador Struct Jugador
+ * \param tamJugador  Tamaño de La struct Jugador
+ * \param indice Puntero a la variable adonde se guardara el indice que se encontro, si es que existe
+ * \return Devuelve 1 en caso exitoso o 0 en caso de fallo
+ */
+static int BuscarStructIndiceIsEmpty(eJugador jugador[],int tamJugador,int* indice);
 
 int InicializacionStructJugadores(eJugador jugador[],int tamJugador){
 	int retorno = 0;
@@ -17,7 +40,7 @@ int InicializacionStructJugadores(eJugador jugador[],int tamJugador){
 	return retorno;
 }
 
-int BuscarStructIndiceIsEmpty(eJugador jugador[],int tamJugador,int* indice){
+static int BuscarStructIndiceIsEmpty(eJugador jugador[],int tamJugador,int* indice){
 	int retorno=0;
 	if(tamJugador > 0){
 		for(int i=0;i<tamJugador;i++){
@@ -45,7 +68,7 @@ int BuscarStructIndiceLLENO(eJugador jugador[],int tamJugador){
 	return retorno;
 }
 
-int BuscarIDJugador(eJugador jugador[],int tamJugador,int* idJugador){
+static int BuscarIDJugador(eJugador jugador[],int tamJugador,int* idJugador){
 	int retorno=0;
 	int IdAbuscar;
 	if(tamJugador > 0){
