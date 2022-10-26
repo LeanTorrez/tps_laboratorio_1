@@ -25,7 +25,7 @@ int main(void) {
 	//eJugador jugador[TAMJUGADORES];
 	eJugador jugador[TAMJUGADORES] = {{1,"Leonel Messi","Delantero",10,105,5000,5,1},
 									  {2,"Cristiano Ronaldo","Delantero",7,101,6054,3,1},
-									  {3,"Emiliano Martinez","Arquero",1,102,2312,2,1},
+									  {3,"Emiliano Martinez","Arquero",1,100,2312,2,1},
 									  {4,"Lautaro Martinez","Delantero",17,100,4123,15,1},
 									  {5,"Luis Suarez","Delantero",11,105,51531,3,1},
 									  {6,"Gianluigi Donnaruma","Arquero",1,101,12212,4,1},
@@ -97,6 +97,8 @@ int main(void) {
 			if(ConfirmarChar("¿Desea salir? Ingrese [s|n]","Error/ Ingrese s o n",'S','N')=='N'){
 				printf("Eligio regresar al Menu...");
 				menuOpciones = 0;
+			}else{
+				printf("Cerrando Programa.");
 			}
 			break;
 

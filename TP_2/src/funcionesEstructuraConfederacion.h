@@ -26,7 +26,6 @@ int BuscarStructIndiceLLENOConfederacion(eConfederacion confederacion[],int tamC
 
 int BuscarIdConfederacion(eConfederacion confederacion[],int tamConfederacion,int* idConfederacion);
 
-
 int AltaStructConfederacion(eConfederacion confederacion[],int tamConfederacion,int* idAutoincremental);
 
 int BajaStructConfederacion(eConfederacion confederacion[],int tamConfederacion);

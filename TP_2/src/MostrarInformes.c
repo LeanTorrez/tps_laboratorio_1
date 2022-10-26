@@ -7,6 +7,80 @@
 
 #include "MostrarInformes.h"
 
+/**
+ * \fn int ContadorJugadoresTotal(eJugador[], int, int*)
+ * \brief Cuenta la cantidad de jugadores activos que se encuentran en al struct, y los suma
+ * al contador que entra por referencia
+ *
+ * \param jugador Parametro para Struct Jugador
+ * \param tamJugador El tamaño de Struct Jugador
+ * \param contadorJugadoresTotales Puntero al contador que sumara la cantidad de jugadores
+ * \return Retorna 1 en caso exitoso, 0 en caso de error en el programa
+ */
+static int ContadorJugadoresTotal(eJugador jugador[],int tamJugador,int* contadorJugadoresTotales);
+
+/**
+ * \fn int BuscarIndiceComparacion(eConfederacion[], int, int, int*)
+ * \brief Ingrese la id de la confederacion que desea ver, la funcion verifica en que posicion del indice de la struct
+ * confederacion esta y lo devuelve para su uso.
+ *
+ * \param confederacion Parametro para Struct Confederacion
+ * \param tamConfederacion El tamaño de Struct Confdederacion
+ * \param IdAbuscar Id de la confederacion que desea obtener el indice
+ * \param pIndice Puntero adonde se guarda el indice de donde se ubica la Id especifica
+ * \return 1 en caso exitoso, 0 en caso de error en el programa
+ */
+static int BuscarIndiceComparacion(eConfederacion confederacion[],int tamConfederacion,int IdAbuscar,int* pIndice);
+
+/**
+ * \fn int AcumuladorSalarioStructJugador(eJugador[], int, float*)
+ * \brief Acumula los salarios de los jugadores activos en Struct jugador
+ *
+ * \param jugador Parametro para Struct Jugador
+ * \param tamJugador El tamaño de Struct Jugador
+ * \param acumuladorSalario Puntero a la variable que acumulara los salarios
+ * \return 1 en caso exitoso, 0 en caso de error en el programa
+ */
+static int AcumuladorSalarioStructJugador(eJugador jugador[],int tamJugador,float* acumuladorSalario);
+
+/**
+ * \fn int JugadorSalarioSuperanPromedio(eJugador[], int, float, int*)
+ * \brief Itera dentro de la struct jugador, dentro los jugadores activos comparara el promedio de salarios, que entra por parametro , y si supera el mismo
+ * se lo sumara al contador
+ *
+ * \param jugador Parametro para Struct Jugador
+ * \param tamJugador El tamaño de Struct Jugador
+ * \param promedioSalario El promedio que entra por valor para ser comparado
+ * \param contadorJugadoresSuperanPromedio Puntero a la variable que sumara en caso de encontrar un jugadores que supere el mismo
+ * \return 1 en caso exitoso, 0 en caso de error en el programa
+ */
+static int JugadorSalarioSuperanPromedio(eJugador jugador[],int tamJugador,float promedioSalario,int* contadorJugadoresSuperanPromedio);
+
+/**
+ * fn int ConfederacionConMasAniosContrato(eJugador[], int, int, short*)
+ * \brief Compara por la id de la confederacion que entra por parametro, y acumula la cantidad de años de contrato que tenga la misma
+ * confederacion que ingreso por id
+ *
+ * \param jugador Parametro para Struct Jugador
+ * \param tamJugador El tamaño de Struct Jugador
+ * \param IdConfederacion Id de la confederacion que desea obtener los datos de los años de contratos
+ * \param acumuladorAnios Puntero a la variable que acumulara los años de contrato
+ * \return 1 en caso exitoso, 0 en caso de error en el programa
+ */
+static int ConfederacionConMasAniosContrato(eJugador jugador[],int tamJugador,int IdConfederacion,short* acumuladorAnios);
+
+/**
+ * \fn int ContadorConfederacionJugadores(eJugador[], int, int, int*)
+ * \brief Ingresa por valor la id de la confederacion que desea saber cuantos jugadores hay en la misma
+ *
+ * \param jugador Parametro para Struct Jugador
+ * \param tamJugador El tamaño de Struct Jugador
+ * \param idConfederacion Id de la confederacion que se usara como busqueda
+ * \param contadorJugadoresConfederacion Puntero a la variable contador que sumara los jugadores en caso de haberlos
+ * \return 1 en caso exitoso, 0 en caso de error en el programa
+ */
+static int ContadorConfederacionJugadores(eJugador jugador[],int tamJugador,int idConfederacion,int* contadorJugadoresConfederacion);
+
 int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederacion[],int tamConfederacion){
 	int retorno=0;
 	int opcionesInformes;
@@ -69,12 +143,30 @@ int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederaci
 			break;
 		case 2:
 			printf("------------------->Lista de Jugadores Por Confederacion<-------------------\n");
-			MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,100);
-			MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,101);
-			MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,102);
-			MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,103);
-			MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,104);
-			MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,105);
+			if(MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,100)==0){
+				printf("|                          NO HAY NINGUN JUGADOR QUE PERTENEZCA A ESTA CONFEDERACION                             |\n"
+					   "|================================================================================================================|\n");
+			}
+			if(MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,101)==0){
+				printf("|                          NO HAY NINGUN JUGADOR QUE PERTENEZCA A ESTA CONFEDERACION                             |\n"
+					   "|================================================================================================================|\n");
+			}
+			if(MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,102)==0){
+				printf("|                          NO HAY NINGUN JUGADOR QUE PERTENEZCA A ESTA CONFEDERACION                             |\n"
+					   "|================================================================================================================|\n");
+			}
+			if(MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,103)==0){
+				printf("|                          NO HAY NINGUN JUGADOR QUE PERTENEZCA A ESTA CONFEDERACION                             |\n"
+					   "|================================================================================================================|\n");
+			}
+			if(MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,104)==0){
+				printf("|                          NO HAY NINGUN JUGADOR QUE PERTENEZCA A ESTA CONFEDERACION                             |\n"
+					   "|================================================================================================================|\n");
+			}
+			if(MostrarJugadoresOrdenadosConfederacion(jugador,tamJugador,confederacion,tamConfederacion,105)==0){
+				printf("|                          NO HAY NINGUN JUGADOR QUE PERTENEZCA A ESTA CONFEDERACION                             |\n"
+					   "|================================================================================================================|\n");
+			}
 			break;
 		case 3:
 			printf("------------------->Total y Promedio de los salarios de los jugadores<-------------------\n");
@@ -198,7 +290,7 @@ int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederaci
 	return retorno;
 }
 
-int ContadorJugadoresTotal(eJugador jugador[],int tamJugador,int* contadorJugadoresTotales){
+static int ContadorJugadoresTotal(eJugador jugador[],int tamJugador,int* contadorJugadoresTotales){
 	int retorno=0;
 	if(tamJugador>0){
 		for(int i=0;i<tamJugador;i++){
@@ -210,7 +302,8 @@ int ContadorJugadoresTotal(eJugador jugador[],int tamJugador,int* contadorJugado
 	}
 	return retorno;
 }
-int BuscarIndiceComparacion(eConfederacion confederacion[],int tamConfederacion,int IdAbuscar,int* pIndice){
+
+static int BuscarIndiceComparacion(eConfederacion confederacion[],int tamConfederacion,int IdAbuscar,int* pIndice){
 	int retorno=0;
 	for(int i=0;tamConfederacion;i++){
 		if(confederacion[i].idConfederacion == IdAbuscar ){
@@ -279,7 +372,7 @@ int MostrarJugadoresOrdenadosConfederacion(eJugador jugador[],int tamJugador,eCo
 	return retorno;
 }
 
-int AcumuladorSalarioStructJugador(eJugador jugador[],int tamJugador,float* acumuladorSalario){
+static int AcumuladorSalarioStructJugador(eJugador jugador[],int tamJugador,float* acumuladorSalario){
 	int retorno=0;
 	if(tamJugador>0){
 		for(int i=0;i<tamJugador;i++){
@@ -292,7 +385,7 @@ int AcumuladorSalarioStructJugador(eJugador jugador[],int tamJugador,float* acum
 	return retorno;
 }
 
-int JugadorSalarioSuperanPromedio(eJugador jugador[],int tamJugador,float promedioSalario,int* contadorJugadoresSuperanPromedio){
+static int JugadorSalarioSuperanPromedio(eJugador jugador[],int tamJugador,float promedioSalario,int* contadorJugadoresSuperanPromedio){
 	int retorno=0;
 	if(tamJugador>0){
 		for(int i=0;i<tamJugador;i++){
@@ -307,7 +400,7 @@ int JugadorSalarioSuperanPromedio(eJugador jugador[],int tamJugador,float promed
 	return retorno;
 }
 
-int ConfederacionConMasAniosContrato(eJugador jugador[],int tamJugador,int IdConfederacion,short* acumuladorAnios){
+static int ConfederacionConMasAniosContrato(eJugador jugador[],int tamJugador,int IdConfederacion,short* acumuladorAnios){
 	int retorno=0;
 	if(tamJugador>0){
 		for(int i=0;i<tamJugador;i++){
@@ -322,7 +415,7 @@ int ConfederacionConMasAniosContrato(eJugador jugador[],int tamJugador,int IdCon
 	return retorno;
 }
 
-int ContadorConfederacionJugadores(eJugador jugador[],int tamJugador,int idConfederacion,int* contadorJugadoresConfederacion){
+static int ContadorConfederacionJugadores(eJugador jugador[],int tamJugador,int idConfederacion,int* contadorJugadoresConfederacion){
 	int retorno=0;
 	if(tamJugador>0){
 		for(int i=0;i<tamJugador;i++){
