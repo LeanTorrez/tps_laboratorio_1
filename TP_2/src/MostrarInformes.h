@@ -9,6 +9,7 @@
 #ifndef MOSTRARINFORMES_H_
 #define MOSTRARINFORMES_H_
 
+
 /**
  * \fn int MostrarInformes(eJugador[], int, eConfederacion[], int)
  * \brief Funcion principal que esta en main, Dentro de la misma esta toda la logica usada para la muestra
@@ -32,7 +33,7 @@ int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederaci
  * \param confederacion Parametro para Struct Confederacion
  * \param tamConfederacion El tamaño de Struct Confdederacion
  */
-void OrdenamientoStructJugadorConfederacionNombre(eJugador jugador[],int tamJugador,eConfederacion confederacion[],int tamConfederacion);
+int OrdenamientoStructJugadorConfederacionNombre(eJugador jugador[],int tamJugador,eConfederacion confederacion[],int tamConfederacion);
 
 /**
  * \fn int MostrarJugadoresOrdenadosConfederacion(eJugador[], int, eConfederacion[], int, int)
@@ -67,5 +68,6 @@ float CalcularPorcentaje(int numeroPorcentaje, int contadorTotal);
  * \return Devuelve el numero en float
  */
 float CalcularPromedio(float acumulador,int contadorTotal);
+
 
 #endif /* MOSTRARINFORMES_H_ */

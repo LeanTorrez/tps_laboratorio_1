@@ -21,27 +21,15 @@ int main(void) {
 
 	int menuOpciones=0;
 	int idIncremental=1;
-
-	//eJugador jugador[TAMJUGADORES];
-	eJugador jugador[TAMJUGADORES] = {{1,"Leonel Messi","Delantero",10,105,5000,5,1},
-									  {2,"Cristiano Ronaldo","Delantero",7,101,6054,3,1},
-									  {3,"Emiliano Martinez","Arquero",1,100,2312,2,1},
-									  {4,"Lautaro Martinez","Delantero",17,100,4123,15,1},
-									  {5,"Luis Suarez","Delantero",11,105,51531,3,1},
-									  {6,"Gianluigi Donnaruma","Arquero",1,101,12212,4,1},
-									  {7,"Kiliam Mbappe","Delantero",7,101,55454,2,1},
-									  {8,"Memo Ochoa","Arquero",1,104,7652,6,1},
-									  {9,"Leandro Paredes","Mediocampista",14,100,12341,1,1},
-									  {10,"Marcos Rojo","Defensor",5,101,5135,11,1},
-									  {11,"Cuti Romero","Defensor",3,103,87565,10,1}};
-
+	eJugador jugador[TAMJUGADORES];
 	eConfederacion confederacion[]= {{100,"CONMEBOL","SUDAMERICA",1916,1},
 									 {101,"UEFA","EUROPA",1954,1},
 									 {102,"AFC","ASIA",1954,1},
 									 {103,"CAF","AFRICA",1957,1},
 									 {104,"CONCACAF","NORTE Y CENTRO AMERICA",1961,1},
 									 {105,"OFC","OCEANIA",1966,1}};
-	//InicializacionStructJugadores(jugador,TAMJUGADORES);
+
+	InicializacionStructJugadores(jugador,TAMJUGADORES);
 
 	do{
 		utn_getNumeroINT(&menuOpciones,"\n\n1.Alta de Jugador\n"

@@ -138,7 +138,10 @@ int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederaci
 		switch(opcionesInformes){
 		case 1:
 			printf("------------------->Lista de Jugadores Alfabeticamente<-------------------\n");
+
 			OrdenamientoStructJugadorConfederacionNombre(jugador, tamJugador, confederacion, tamConfederacion);
+
+
 			MostrarStructJugador(jugador,tamJugador,confederacion,tamConfederacion);
 			retorno=1;
 			break;
@@ -308,25 +311,30 @@ static int ContadorJugadoresTotal(eJugador jugador[],int tamJugador,int* contado
 static int BuscarIndiceComparacion(eConfederacion confederacion[],int tamConfederacion,int IdAbuscar,int* pIndice){
 	int retorno=0;
 	for(int i=0;tamConfederacion;i++){
-		if(confederacion[i].idConfederacion == IdAbuscar ){
-			*pIndice = i;
-			retorno=1;
-			break;
+		if(confederacion[i].IsEmpty == 1){
+			if(confederacion[i].idConfederacion == IdAbuscar ){
+				*pIndice = i;
+				retorno=1;
+				break;
+			}
 		}
 	}
 	return retorno;
 }
 
 
-void OrdenamientoStructJugadorConfederacionNombre(eJugador jugador[],int tamJugador,eConfederacion confederacion[],int tamConfederacion){
+int OrdenamientoStructJugadorConfederacionNombre(eJugador jugador[],int tamJugador,eConfederacion confederacion[],int tamConfederacion){
+	int retorno=0;
 	int auxiliarDeConfederacionI;
 	int auxiliarDeConfederacionJ;
 	eJugador auxiliar;
+
 	for(int i=0;i<tamJugador -1;i++){
+		BuscarIndiceComparacion(confederacion, tamConfederacion,jugador[i].idConfederacion,&auxiliarDeConfederacionI);
 
 		for(int j=i+1;j<tamJugador;j++){
+
 			//Estas dos funciones me devuelven el Indice de la confederacion para poder hacer la comparacion de mejor manera
-			BuscarIndiceComparacion(confederacion, tamConfederacion,jugador[i].idConfederacion,&auxiliarDeConfederacionI);
 			BuscarIndiceComparacion(confederacion, tamConfederacion,jugador[j].idConfederacion,&auxiliarDeConfederacionJ);
 
 			if(stricmp(confederacion[auxiliarDeConfederacionI].nombre,confederacion[auxiliarDeConfederacionJ].nombre)>0){
@@ -342,9 +350,10 @@ void OrdenamientoStructJugadorConfederacionNombre(eJugador jugador[],int tamJuga
 					}
 				}
 			}
-
+			retorno=1;
 		}
 	}
+	return retorno;
 }
 
 int MostrarJugadoresOrdenadosConfederacion(eJugador jugador[],int tamJugador,eConfederacion confederacion[],int tamConfederacion,int IdConfederacion){
@@ -431,6 +440,7 @@ static int ContadorConfederacionJugadores(eJugador jugador[],int tamJugador,int 
 	}
 	return retorno;
 }
+
 
 float CalcularPorcentaje(int numeroPorcentaje, int contadorTotal){
 	float resultado;
