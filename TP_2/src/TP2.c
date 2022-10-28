@@ -29,6 +29,7 @@ int main(void) {
 									 {104,"CONCACAF","NORTE Y CENTRO AMERICA",1961,1},
 									 {105,"OFC","OCEANIA",1966,1}};
 
+
 	InicializacionStructJugadores(jugador,TAMJUGADORES);
 
 	do{
@@ -37,7 +38,7 @@ int main(void) {
 									   "3.Modificacion de Jugador\n"
 									   "4.Informes\n"
 									   "5.Salir\n"
-									   "Ingrese como numero, una de las opcines de arriba.","Error/ Las opcines van del 1 al 5" ,1,5,20);
+									   "Ingrese como numero, una de las opciones de arriba.","Error/ Las opcines van del 1 al 5" ,1,5,20);
 		switch(menuOpciones){
 		case 1:
 			printf("\n--------->ALTA DE JUGADOR<---------\n");

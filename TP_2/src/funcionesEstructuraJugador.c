@@ -74,10 +74,12 @@ static int BuscarIDJugador(eJugador jugador[],int tamJugador,int* idJugador){
 	if(tamJugador > 0){
 		utn_getNumeroINT(&IdAbuscar,"Ingrese la ID del Jugador\n","Ingrese una ID valida\n",1,3000,10);
 		for(int i=0;i<tamJugador;i++){
-			if(jugador[i].idJugador == IdAbuscar){
-				*idJugador = i;
-				retorno = 1;
-				break;
+			if(jugador[i].isEmpty == 1){
+				if(jugador[i].idJugador == IdAbuscar){
+					*idJugador = i;
+					retorno = 1;
+					break;
+				}
 			}
 		}
 	}
@@ -137,11 +139,12 @@ int AltaStructJugador(eJugador jugador[],int tamJugador,eConfederacion confedera
 
 int BajaStructJugador(eJugador jugador[],int tamJugador,eConfederacion confederacion[],int tamConfederacion){
 	int retorno=0;
-	int IdJugador;
+	int IdJugador=-1;
 	if(tamJugador > 0){
 		OrdenarStructJugadorID(jugador,tamJugador);
 		MostrarStructJugador(jugador, tamJugador, confederacion, tamConfederacion);
 		if(BuscarIDJugador(jugador, tamJugador,&IdJugador)==1){
+			printf("Libero el espacio del indice %d\n",IdJugador);
 			jugador[IdJugador].isEmpty = 0;
 			retorno=1;
 		}

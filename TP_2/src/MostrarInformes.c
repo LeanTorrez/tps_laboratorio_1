@@ -330,27 +330,34 @@ int OrdenamientoStructJugadorConfederacionNombre(eJugador jugador[],int tamJugad
 	eJugador auxiliar;
 
 	for(int i=0;i<tamJugador -1;i++){
-		BuscarIndiceComparacion(confederacion, tamConfederacion,jugador[i].idConfederacion,&auxiliarDeConfederacionI);
 
-		for(int j=i+1;j<tamJugador;j++){
+		if(jugador[i].isEmpty == 1){
 
-			//Estas dos funciones me devuelven el Indice de la confederacion para poder hacer la comparacion de mejor manera
-			BuscarIndiceComparacion(confederacion, tamConfederacion,jugador[j].idConfederacion,&auxiliarDeConfederacionJ);
+			BuscarIndiceComparacion(confederacion, tamConfederacion,jugador[i].idConfederacion,&auxiliarDeConfederacionI);
 
-			if(stricmp(confederacion[auxiliarDeConfederacionI].nombre,confederacion[auxiliarDeConfederacionJ].nombre)>0){
-				auxiliar = jugador[i];
-				jugador[i] = jugador[j];
-				jugador[j] = auxiliar;
-			}else{
-				if(stricmp(confederacion[auxiliarDeConfederacionI].nombre,confederacion[auxiliarDeConfederacionJ].nombre)==0){
-					if(stricmp(jugador[i].nombre,jugador[j].nombre)>0){
+			for(int j=i+1;j<tamJugador;j++){
+
+				if(jugador[j].isEmpty == 1){
+
+					BuscarIndiceComparacion(confederacion, tamConfederacion,jugador[j].idConfederacion,&auxiliarDeConfederacionJ);
+
+					if(strcmp(confederacion[auxiliarDeConfederacionI].nombre,confederacion[auxiliarDeConfederacionJ].nombre)>0){
 						auxiliar = jugador[i];
 						jugador[i] = jugador[j];
 						jugador[j] = auxiliar;
+					}else{
+						if(strcmp(confederacion[auxiliarDeConfederacionI].nombre,confederacion[auxiliarDeConfederacionJ].nombre)==0){
+							if(stricmp(jugador[i].nombre,jugador[j].nombre)>0){
+								auxiliar = jugador[i];
+								jugador[i] = jugador[j];
+								jugador[j] = auxiliar;
+							}
+						}
 					}
+					retorno=1;
+
 				}
 			}
-			retorno=1;
 		}
 	}
 	return retorno;

@@ -75,10 +75,12 @@ static int BuscarIdConfederacion(eConfederacion confederacion[],int tamConfedera
 	if(tamConfederacion > 0){
 		utn_getNumeroINT(&IdAbuscar,"Ingrese la ID de la confederacion\n","Ingrese una ID valida\n",1,3000,10);
 		for(int i=0;i<tamConfederacion;i++){
-			if(confederacion[i].idConfederacion == IdAbuscar){
-				*idConfederacion = i;
-				retorno = 1;
-				break;
+			if(confederacion[i].IsEmpty == 1){
+				if(confederacion[i].idConfederacion == IdAbuscar){
+					*idConfederacion = i;
+					retorno = 1;
+					break;
+				}
 			}
 		}
 	}
