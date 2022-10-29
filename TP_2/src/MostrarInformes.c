@@ -81,6 +81,19 @@ static int ConfederacionConMasAniosContrato(eJugador jugador[],int tamJugador,in
  */
 static int ContadorConfederacionJugadores(eJugador jugador[],int tamJugador,int idConfederacion,int* contadorJugadoresConfederacion);
 
+/**
+ * \fn int IdNombreConfederacion(eConfederacion[], int, int, char*)
+ * \brief Pasa por parametro la id de la confedereracion y guarda el nombre de la misma en la variable pasada por referencia
+ *
+ *
+ * \param confederacion Parametro para Struct Confederacion
+ * \param tamConfederacion El tamaño de Struct Confdederacion
+ * \param IdAbuscar Id de la confederacion que desea obtener el indice
+ * \param pNombre Puntero adonde se guarda el nombre de la confederacion
+ * \return 1 en caso exitoso, 0 en caso de error en el programa
+ */
+static int IdNombreConfederacion(eConfederacion confederacion[],int tamConfederacion,int IdAbuscar,char* pNombre);
+
 int MostrarInformes(eJugador jugador[],int tamJugador,eConfederacion confederacion[],int tamConfederacion){
 	int retorno=0;
 	int opcionesInformes;
@@ -325,28 +338,27 @@ static int BuscarIndiceComparacion(eConfederacion confederacion[],int tamConfede
 
 int OrdenamientoStructJugadorConfederacionNombre(eJugador jugador[],int tamJugador,eConfederacion confederacion[],int tamConfederacion){
 	int retorno=0;
-	int auxiliarDeConfederacionI;
-	int auxiliarDeConfederacionJ;
+	char AuxNombreConfederacionI[50];
+	char AuxNombreConfederacionJ[50];
 	eJugador auxiliar;
 
-	for(int i=0;i<tamJugador -1;i++){
+	for(int i=0;i<tamJugador-1;i++){
 
 		if(jugador[i].isEmpty == 1){
-
-			BuscarIndiceComparacion(confederacion, tamConfederacion,jugador[i].idConfederacion,&auxiliarDeConfederacionI);
 
 			for(int j=i+1;j<tamJugador;j++){
 
 				if(jugador[j].isEmpty == 1){
 
-					BuscarIndiceComparacion(confederacion, tamConfederacion,jugador[j].idConfederacion,&auxiliarDeConfederacionJ);
+					IdNombreConfederacion(confederacion, tamConfederacion,jugador[i].idConfederacion,AuxNombreConfederacionI);
+					IdNombreConfederacion(confederacion, tamConfederacion,jugador[j].idConfederacion,AuxNombreConfederacionJ);
 
-					if(strcmp(confederacion[auxiliarDeConfederacionI].nombre,confederacion[auxiliarDeConfederacionJ].nombre)>0){
+					if(stricmp(AuxNombreConfederacionI,AuxNombreConfederacionJ)>0){
 						auxiliar = jugador[i];
 						jugador[i] = jugador[j];
 						jugador[j] = auxiliar;
 					}else{
-						if(strcmp(confederacion[auxiliarDeConfederacionI].nombre,confederacion[auxiliarDeConfederacionJ].nombre)==0){
+						if(stricmp(AuxNombreConfederacionI,AuxNombreConfederacionJ)==0){
 							if(stricmp(jugador[i].nombre,jugador[j].nombre)>0){
 								auxiliar = jugador[i];
 								jugador[i] = jugador[j];
@@ -354,10 +366,9 @@ int OrdenamientoStructJugadorConfederacionNombre(eJugador jugador[],int tamJugad
 							}
 						}
 					}
-					retorno=1;
-
 				}
 			}
+			retorno=1;
 		}
 	}
 	return retorno;
@@ -442,6 +453,20 @@ static int ContadorConfederacionJugadores(eJugador jugador[],int tamJugador,int 
 					*contadorJugadoresConfederacion += 1;
 					retorno=1;
 				}
+			}
+		}
+	}
+	return retorno;
+}
+
+static int IdNombreConfederacion(eConfederacion confederacion[],int tamConfederacion,int IdAbuscar,char* pNombre){
+	int retorno=0;
+	for(int i=0;tamConfederacion;i++){
+		if(confederacion[i].IsEmpty == 1){
+			if(confederacion[i].idConfederacion == IdAbuscar ){
+				strcpy(pNombre,confederacion[i].nombre);
+				retorno=1;
+				break;
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 /*
  ============================================================================
  Name        : TP2.c
- Author      : 
+ Author      : Leandro Emanuel Torrez 1-K
  Version     :
  Copyright   : Your copyright notice
  Description : Hello World in C, Ansi-style
@@ -23,12 +23,11 @@ int main(void) {
 	int idIncremental=1;
 	eJugador jugador[TAMJUGADORES];
 	eConfederacion confederacion[]= {{100,"CONMEBOL","SUDAMERICA",1916,1},
-									 {101,"UEFA","EUROPA",1954,1},
-									 {102,"AFC","ASIA",1954,1},
-									 {103,"CAF","AFRICA",1957,1},
+									 {101,"UEFA    ","EUROPA",1954,1},
+									 {102,"AFC     ","ASIA",1954,1},
+									 {103,"CAF     ","AFRICA",1957,1},
 									 {104,"CONCACAF","NORTE Y CENTRO AMERICA",1961,1},
-									 {105,"OFC","OCEANIA",1966,1}};
-
+									 {105,"OFC     ","OCEANIA",1966,1}};
 
 	InicializacionStructJugadores(jugador,TAMJUGADORES);
 
@@ -75,8 +74,9 @@ int main(void) {
 		case 4:
 			printf("\n--------->INFORMES<---------\n");
 			if(BuscarStructIndiceLLENO(jugador,TAMJUGADORES)){
-				MostrarInformes(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION);
-
+				if(MostrarInformes(jugador,TAMJUGADORES, confederacion,TAMCONFEDERACION)==0){
+					printf("Se superaron los maximos reintentos... Regresando al Menu");
+				}
 			}else{
 				printf("Es Necesario que se ingrese al menos un jugador para entrar en esta opcion\n");
 			}
