@@ -107,6 +107,40 @@ int controller_removerJugador(LinkedList* pArrayListJugador)
 int controller_listarJugadores(LinkedList* pArrayListJugador)
 {
     int retorno=0;
+    Jugador* pListarJugador;
+    int i=0;
+
+    int auxID;
+    char auxNombre[100];
+    int auxEdad;
+    char auxPosicion[30];
+    char auxNacionalidad[30];
+    int auxIdSeleccion;
+
+    //Jugador* pJugador;
+    if(pArrayListJugador != NULL){
+    	printf("\n|===========================================================================================================|\n"
+    		     "|  ID  | %-30s | Edad | %-20s | %-20s | ID seleccion |\n"
+    		     "|===========================================================================================================|\n",
+				"Nombre Completo","posicion","Nacionalidad");
+    	while(i < ll_len(pArrayListJugador)){
+    		pListarJugador = (Jugador*) ll_get(pArrayListJugador,i);
+
+    		if(pListarJugador != NULL){
+    			jug_getId(pListarJugador, &auxID);
+				jug_getNombreCompleto(pListarJugador, auxNombre);
+				jug_getEdad(pListarJugador, &auxEdad);
+				jug_getPosicion(pListarJugador, auxPosicion);
+				jug_getNacionalidad(pListarJugador, auxNacionalidad);
+				jug_getSIdSeleccion(pListarJugador,&auxIdSeleccion);
+
+				printf("| %-4d | %-30s | %-4d | %-20s | %-20s | %-12d |\n",auxID,auxNombre,auxEdad,auxPosicion,auxNacionalidad,auxIdSeleccion);
+				retorno=1;
+    		}
+    		i++;
+    	}
+    	printf("|===========================================================================================================|\n");
+    }
     return retorno;
 }
 
@@ -177,13 +211,10 @@ int controller_cargarSeleccionesDesdeTexto(char* path , LinkedList* pArrayListSe
 			retornoFSCANF = fscanf(archivoSeleccion,"%[^,],%[^,],%[^,],%[^\n]\n",auxId,auxPais,auxConfederacion,auxConvocados);
 
 			if(retornoFSCANF == 4){
-				pSeleccion = selec_newParametros(auxId,auxPais,auxConfederacion,auxConvocados);
 
-				printf("%s,%s,%s,%s\n",auxId,auxPais,auxConfederacion,auxConvocados);
+				pSeleccion = selec_newParametros(auxId,auxPais,auxConfederacion,auxConvocados);
 				ll_add(pArrayListSeleccion,pSeleccion);
 				retorno=1;
-			}else{
-				printf("Error retorno retorno es %d",retornoFSCANF);
 			}
 		}
 		fclose(archivoSeleccion);
@@ -213,7 +244,36 @@ int controller_editarSeleccion(LinkedList* pArrayListSeleccion)
  */
 int controller_listarSelecciones(LinkedList* pArrayListSeleccion)
 {
-    return 1;
+    int retorno=0;
+    int i=0;
+    Seleccion* pListarSeleccion;
+    int auxId;
+    char auxPais[30];
+    char auxConfederacion[30];
+    int auxConvocados;
+
+    if(pArrayListSeleccion != NULL){
+    	printf("\n|================================================================================================|\n"
+    			"| %-5s | %-30s | %-30s | %-20s |\n"
+    		   "|================================================================================================|\n"
+    			,"ID","Pais","Confederacion","Convocados");
+    	while(i < ll_len(pArrayListSeleccion)){
+
+    		pListarSeleccion = (Seleccion*) ll_get(pArrayListSeleccion,i);
+
+    		if(pListarSeleccion != NULL){
+    			selec_getId(pListarSeleccion, &auxId);
+    			selec_getPais(pListarSeleccion, auxPais);
+    			selec_getConfederacion(pListarSeleccion, auxConfederacion);
+    			selec_getConvocados(pListarSeleccion, &auxConvocados);
+    			printf("| %-5d | %-30s | %-30s | %-20d |\n",auxId,auxPais,auxConfederacion,auxConvocados);
+    			retorno=1;
+    		}
+    		i++;
+    	}
+    	printf("|================================================================================================|\n");
+    }
+    return retorno;
 }
 
 /** \brief Ordenar selecciones

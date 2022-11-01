@@ -3,8 +3,17 @@
 
 Jugador* jug_new(){
 	Jugador* pJugador;
-
 	pJugador = (Jugador*) malloc(sizeof(Jugador));
+	//INICIALIZO LOS DATOS EN 0
+	if(pJugador != NULL){
+		jug_setId(pJugador,1);
+		jug_setNombreCompleto(pJugador,"1");
+		jug_setEdad(pJugador,1);
+		jug_setPosicion(pJugador,"0");
+		jug_setNacionalidad(pJugador,"0");
+		jug_setIdSeleccion(pJugador,0);
+		jug_setIsEmpty(pJugador,0);
+	}
 	return pJugador;
 }
 
@@ -137,7 +146,7 @@ int jug_getEdad(Jugador* this,int* edad){
 
 int jug_setIdSeleccion(Jugador* this,int idSeleccion){
 	int retorno=0;
-	if(this != NULL && idSeleccion > 0){
+	if(this != NULL && idSeleccion > -1){
 		this->idSeleccion = idSeleccion;
 		retorno=1;
 	}

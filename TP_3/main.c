@@ -4,6 +4,7 @@
 #include "Controller.h"
 #include "utn.h"
 #include "Jugador.h"
+#include "Seleccion.h"
 
 int main()
 {
@@ -44,6 +45,8 @@ int main()
             case 4:
             	break;
             case 5:
+            	controller_listarJugadores(listaJugadores);
+            	controller_listarSelecciones(listaSeleccion);
 				break;
 			case 6:
 				break;
