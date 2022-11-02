@@ -4,7 +4,8 @@
 #include "Jugador.h"
 #include "Seleccion.h"
 #include "LinkedList.h"
-
+#include "utn.h"
+#include "Controller.h"
 
 /** \brief Carga los datos de los jugadores desde el archivo jugadores.csv (modo texto).
  *
@@ -29,7 +30,7 @@ int controller_cargarJugadoresDesdeTexto(char* path , LinkedList* pArrayListJuga
 
 	archivoJugadores = fopen(path,"r");
 
-	if(archivoJugadores != NULL){
+	if(archivoJugadores != NULL && pArrayListJugador != NULL){
 
 		fscanf(archivoJugadores,"%s\n",auxNombreCompleto);//falsa lectura
 
@@ -58,7 +59,9 @@ int controller_cargarJugadoresDesdeTexto(char* path , LinkedList* pArrayListJuga
  */
 int controller_cargarJugadoresDesdeBinario(char* path , LinkedList* pArrayListJugador)
 {
-    return 1;
+	int retorno=0;
+
+    return retorno;
 }
 
 /** \brief Alta de jugadores
@@ -70,7 +73,38 @@ int controller_cargarJugadoresDesdeBinario(char* path , LinkedList* pArrayListJu
  */
 int controller_agregarJugador(LinkedList* pArrayListJugador)
 {
-    return 1;
+	int retorno=0;
+	Jugador* pJugador;
+
+	int auxId;
+	char auxNombre[100];
+	int auxEdad;
+	char auxPosicion[30];
+	char auxNacionalidad[30];
+
+	pJugador = jug_new();
+
+	if(pArrayListJugador != NULL && pJugador != NULL){
+		auxId = jug_IdAutoincremental();
+
+		utn_getString(auxNombre,sizeof(auxNombre),"Ingrese el nombre completo del jugador\n","Error/ asegurese de ingresar algo",20);
+		utn_getNumeroINT(&auxEdad,"Ingrese la edad del jugador\n","Error/ La edad no puede ser menor a 16 o mayor a 40",16,40,20);
+		utn_getString(auxPosicion,sizeof(auxPosicion),"Ingrese la posicion del jugador","Error/ asegures de ingresar algo",20);
+		utn_getString(auxNacionalidad, sizeof(auxNacionalidad),"Ingrese la nacionalidad del Jugador\n","Asegurese de ingresar algo",20);
+
+		jug_setId(pJugador, auxId);
+		jug_setNombreCompleto(pJugador, auxNombre);
+		jug_setEdad(pJugador, auxEdad);
+		jug_setPosicion(pJugador, auxPosicion);
+		jug_setNacionalidad(pJugador, auxNacionalidad);
+		jug_setIdSeleccion(pJugador, 0);
+		jug_setIsEmpty(pJugador, 1);
+
+		ll_add(pArrayListJugador,pJugador);
+
+		retorno=1;
+	}
+	return retorno;
 }
 
 /** \brief Modificar datos del jugador
@@ -82,7 +116,27 @@ int controller_agregarJugador(LinkedList* pArrayListJugador)
  */
 int controller_editarJugador(LinkedList* pArrayListJugador)
 {
-    return 1;
+	int retorno=0;
+	Jugador* pJugador;
+	int IdBuscar=-1;
+	int IndiceJugador=-1;
+
+	if(pArrayListJugador != NULL){
+
+		controller_listarJugadores(pArrayListJugador);
+		                                                                                                                                //maximo numero positivo int -1
+		utn_getNumeroINT(&IdBuscar,"Ingrese la ID del jugador que desea modificar\n","Error/ por favor ingrese un numero por encima de 0",1,2147483646,20);
+
+		if(jug_BuscarId(pArrayListJugador,IdBuscar,&IndiceJugador)==1){
+
+			pJugador = ll_get(pArrayListJugador, IndiceJugador);
+
+			if( jug_MenuEditarJugador(pJugador)==1){
+				retorno=1;
+			}
+		}
+	}
+	return retorno;
 }
 
 /** \brief Baja del jugador
@@ -94,7 +148,29 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
  */
 int controller_removerJugador(LinkedList* pArrayListJugador)
 {
-    return 1;
+	int retorno=0;
+	Jugador* pJugador;
+	int IdBuscar=-1;
+	int IndiceJugador=-1;
+
+	if(pArrayListJugador != NULL){
+
+		controller_listarJugadores(pArrayListJugador);
+																														//maximo numero positivo int -1
+		utn_getNumeroINT(&IdBuscar,"Ingrese la ID del jugador que desea dar de Baja\n","Error/ Por favor ingrese un numero por encima de 0",1,2147483646,20);
+
+		if(jug_BuscarId(pArrayListJugador,IdBuscar,&IndiceJugador)==1){
+
+			pJugador = ll_get(pArrayListJugador, IndiceJugador);
+
+			//Baja tanto en struct Jugador como Linkedlist
+			jug_delete(pJugador);
+			ll_remove(pArrayListJugador,IndiceJugador);
+
+			retorno=1;
+		}
+	}
+	return retorno;
 }
 
 /** \brief Listar jugadores
@@ -165,7 +241,40 @@ int controller_ordenarJugadores(LinkedList* pArrayListJugador)
  */
 int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJugador)
 {
-    return 1;
+	int retorno=0;
+	int i=0;
+	Jugador* pJugador;
+	FILE* archivoGuardar;
+
+	int auxID;
+	char auxNombre[100];
+	int auxEdad;
+	char auxPosicion[30];
+	char auxNacionalidad[30];
+	int auxIdSeleccion;
+
+	archivoGuardar = fopen(path,"w");
+
+	if(archivoGuardar != NULL && pArrayListJugador != NULL){
+		fprintf(archivoGuardar,"%s\n","id,nombreCompleto,edad,posicion,nacionalidad,idSelecion");
+		while(i < ll_len(pArrayListJugador)){
+
+			pJugador = (Jugador*) ll_get(pArrayListJugador, i);
+			jug_getId(pJugador,&auxID);
+			jug_getNombreCompleto(pJugador, auxNombre);
+			jug_getEdad(pJugador, &auxEdad);
+			jug_getPosicion(pJugador, auxPosicion);
+			jug_getNacionalidad(pJugador, auxNacionalidad);
+			jug_getSIdSeleccion(pJugador, &auxIdSeleccion);
+
+			fprintf(archivoGuardar,"%d,%s,%d,%s,%s,%d\n",auxID,auxNombre,auxEdad,auxPosicion,auxNacionalidad,auxIdSeleccion);
+
+			i++;
+			retorno=1;
+		}
+		fclose(archivoGuardar);
+	}
+	return retorno;
 }
 
 /** \brief Guarda los datos de los jugadores en el archivo binario.
@@ -177,7 +286,40 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
  */
 int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJugador)
 {
-    return 1;
+	int retorno=0;
+	int i=0;
+	Jugador* pJugador;
+	FILE* archivoGuardarBinario;
+
+	int auxID;
+	char auxNombre[100];
+	int auxEdad;
+	char auxPosicion[30];
+	char auxNacionalidad[30];
+	int auxIdSeleccion;
+
+	archivoGuardarBinario = fopen(path,"wb");
+
+	if(archivoGuardarBinario != NULL && pArrayListJugador != NULL){
+		fprintf(archivoGuardarBinario,"%s\n","id,nombreCompleto,edad,posicion,nacionalidad,idSelecion");
+		while(i < ll_len(pArrayListJugador)){
+
+			pJugador = (Jugador*) ll_get(pArrayListJugador, i);
+			jug_getId(pJugador,&auxID);
+			jug_getNombreCompleto(pJugador, auxNombre);
+			jug_getEdad(pJugador, &auxEdad);
+			jug_getPosicion(pJugador, auxPosicion);
+			jug_getNacionalidad(pJugador, auxNacionalidad);
+			jug_getSIdSeleccion(pJugador, &auxIdSeleccion);
+
+			fprintf(archivoGuardarBinario,"%d,%s,%d,%s,%s,%d\n",auxID,auxNombre,auxEdad,auxPosicion,auxNacionalidad,auxIdSeleccion);
+
+			i++;
+			retorno=1;
+		}
+		fclose(archivoGuardarBinario);
+	}
+	return retorno;
 }
 
 
@@ -203,7 +345,7 @@ int controller_cargarSeleccionesDesdeTexto(char* path , LinkedList* pArrayListSe
 	int retornoFSCANF;
 
 	archivoSeleccion = fopen(path,"r");
-	if(archivoSeleccion != NULL){
+	if(archivoSeleccion != NULL && pArrayListSeleccion != NULL){
 
 		fscanf(archivoSeleccion,"%s\n",auxConfederacion);//Falsa Lectura
 

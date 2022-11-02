@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "utn.h"
 
 typedef struct
 {
@@ -43,5 +44,26 @@ int jug_getSIdSeleccion(Jugador* this,int* idSeleccion);
 int jug_setIsEmpty(Jugador* this,int isEmpty);
 int jug_getIsEmpty(Jugador* this,int* isEmpty);
 
+/**
+ * \fn int jug_IdAutoincremental()
+ * \brief Id AutoIncremental autonomo
+ *
+ * \return retorno la id incremental que se le asignara al jugador, o 0 en caso de error
+ */
+int jug_IdAutoincremental();
+
+/**
+ * \fn int jug_BuscarId(LinkedList*, int, Jugador*)
+ * \brief Se entrega la linkedlist y la id del jugador a buscar, se comparan las ids hasta encontrar el jugador
+ * , una vez encontrado se devolvera el indice del jugador, en caso de no encontrar la ID se devolvera 0
+ *
+ * \param this
+ * \param idBuscar
+ * \param pJugador
+ * \return Devuelve 1 en caso exitoso o 0 en caso de error
+ */
+int jug_BuscarId(LinkedList* this,int idBuscar,int* IndiceEncontrado);
+
+int jug_MenuEditarJugador(Jugador* pJugador);
 
 #endif // jug_H_INCLUDED

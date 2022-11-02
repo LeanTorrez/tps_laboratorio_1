@@ -45,6 +45,14 @@ int ll_remove(LinkedList* this,int index);
 int ll_clear(LinkedList* this);
 int ll_deleteLinkedList(LinkedList* this);
 int ll_indexOf(LinkedList* this, void* pElement);
+
+/**
+ * \fn int ll_isEmpty(LinkedList*)
+ * \brief  Devuelve 1 si la likedlist esta vacia y 0 si contiene algun elemento
+ *
+ * \param this
+ * \return
+ */
 int ll_isEmpty(LinkedList* this);
 int ll_push(LinkedList* this, int index, void* pElement);
 void* ll_pop(LinkedList* this,int index);
