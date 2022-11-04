@@ -442,4 +442,58 @@ int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSe
     return 1;
 }
 
+int controller_convocarJugadores(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion){
+	int retorno=0;
+	int idBuscarJugador;
+	int indiceJugador;
+	Jugador* pJugador = jug_new();
+	int jugadorConvocado;
+
+	//Seleccion
+	int idBuscarSeleccion;
+	int indiceSeleccion;
+	Seleccion* pSeleccion = selec_new();
+	int seleccionSuperaVeintiDos;
+
+	if(pArrayListJugador != NULL && pArrayListSeleccion != NULL && pJugador != NULL && pSeleccion != NULL){
+
+		controller_listarJugadores(pArrayListJugador);																						//maximo numero positivo int -1
+		utn_getNumeroINT(&idBuscarJugador,"Ingrese la ID del jugador que desea convocar\n","Error/ Por favor ingrese un numero por encima de 0",1,2147483646,20);
+
+		if(jug_BuscarId(pArrayListJugador,idBuscarJugador,&indiceJugador)==1){
+
+			pJugador = (Jugador*) ll_get(pArrayListJugador,indiceJugador);
+			jug_getSIdSeleccion(pJugador, &jugadorConvocado);
+			printf("paso id de la seleccion del jugador %d\n",jugadorConvocado);
+			//Verifico que el jugador que se eligio no este convocado a una seleccion
+			if(0 == jugadorConvocado){
+
+				controller_listarSelecciones(pArrayListSeleccion);
+				utn_getNumeroINT(&idBuscarSeleccion,"Ingrese la ID de la seleccion que desea convocar al jugador\n","Error/ Por favor ingrese el numero de las posibles selecciones(1 al 32)",1,32,20);
+
+				if(selec_BuscarId(pArrayListSeleccion,idBuscarSeleccion,&indiceSeleccion)){
+
+					pSeleccion = (Seleccion*) ll_get(pArrayListSeleccion,indiceSeleccion);
+					selec_getConvocados(pSeleccion, &seleccionSuperaVeintiDos);
+					if(seleccionSuperaVeintiDos < 22){
+						//Le asigno al jugador el pais
+						jug_setIdSeleccion(pJugador,idBuscarSeleccion);
+						//le sumo el contador a la confederacion;
+						selec_setConvocados(pSeleccion, seleccionSuperaVeintiDos + 1);
+						retorno=1;
+					}else{
+						retorno=5;
+					}
+				}else{
+					retorno=4;
+				}
+			}else{
+				retorno=3;
+			}
+		}else{
+			retorno=2;
+		}
+	}
+	return retorno;
+}
 

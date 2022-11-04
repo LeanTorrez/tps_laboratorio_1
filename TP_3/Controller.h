@@ -14,3 +14,4 @@ int controller_listarSelecciones(LinkedList* pArrayListSeleccion);
 int controller_ordenarSelecciones(LinkedList* pArrayListSeleccion);
 int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSeleccion);
 
+int controller_convocarJugadores(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion);

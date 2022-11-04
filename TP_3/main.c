@@ -70,11 +70,19 @@ int main()
             case 5:
             	printf(" %-60s \n","LISTADOS");
             	controller_listarJugadores(listaJugadores);
-            	//controller_listarSelecciones(listaSeleccion);
+            	controller_listarSelecciones(listaSeleccion);
 				break;
 			case 6:
 				printf(" %-60s \n","CONVOCAR JUGADORES");
-				//jug_IdAutoincremental();
+				if(ll_isEmpty(listaJugadores)==1){
+					printf("Debe ingresar primero a la opcion 1 para poder empezar a modificar a los jugadores.\n");
+				}else{
+					if(controller_convocarJugadores(listaJugadores, listaSeleccion)==1){
+						printf("Convocacion de jugador a pais Exitosa\n");
+					}else{
+						printf("Error en la convocion\n");
+					}
+				}
 				break;
 			case 7:
 				printf(" %-60s \n","ORDERNAR Y LISTAR");

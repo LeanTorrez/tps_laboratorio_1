@@ -15,11 +15,16 @@ Seleccion* selec_newParametros(char* idStr,char* paisStr,char* confederacionStr,
 		auxId = atoi(idStr);
 		auxConvocados = atoi(convocadosStr);
 
-		selec_setId(pSeleccion,auxId);
-		selec_setPais(pSeleccion,paisStr);
-		selec_setConfederacion(pSeleccion,confederacionStr);
+		if(auxId > 0){
+			pSeleccion->id = auxId;
+		}
+		if(paisStr != NULL){
+			strcpy(pSeleccion->pais,paisStr);
+		}
+		if(confederacionStr != NULL){
+			strcpy(pSeleccion->confederacion,confederacionStr);
+		}
 		selec_setConvocados(pSeleccion,auxConvocados);
-		selec_setIsEmpty(pSeleccion,1);
 	}
 	return pSeleccion;
 }
@@ -27,16 +32,6 @@ void selec_delete(Seleccion* this){
 	free(this);
 }
 
-
-
-int selec_setId(Seleccion* this,int id){
-	int retorno=0;
-	if(this != NULL && id > 0){
-		this->id = id;
-		retorno=1;
-	}
-	return retorno;
-}
 int selec_getId(Seleccion* this,int* id){
 	int retorno=0;
 	if(this != NULL && id != NULL){
@@ -47,14 +42,6 @@ int selec_getId(Seleccion* this,int* id){
 }
 
 
-int selec_setPais(Seleccion* this,char* pais){
-	int retorno=0;
-	if(this != NULL && pais != NULL){
-		strcpy(this->pais,pais);
-		retorno=1;
-	}
-	return retorno;
-}
 int selec_getPais(Seleccion* this,char* pais){
 	int retorno=0;
 	if(this != NULL && pais != NULL){
@@ -64,15 +51,6 @@ int selec_getPais(Seleccion* this,char* pais){
 	return retorno;
 }
 
-
-int selec_setConfederacion(Seleccion* this,char* confederacion){
-	int retorno=0;
-	if(this != NULL && confederacion != NULL){
-		strcpy(this->confederacion,confederacion);
-		retorno=1;
-	}
-	return retorno;
-}
 int selec_getConfederacion(Seleccion* this,char* confederacion){
 	int retorno=0;
 	if(this != NULL && confederacion != NULL){
@@ -101,19 +79,26 @@ int selec_getConvocados(Seleccion* this,int* convocados){
 }
 
 
-int selec_setIsEmpty(Seleccion* this,int isEmpty){
+int selec_BuscarId(LinkedList* this,int idBuscar,int* indiceEncontrado){
 	int retorno=0;
-	if(this != NULL && isEmpty > -1){
-		this->isEmpty = isEmpty;
-		retorno=1;
-	}
-	return retorno;
-}
-int selec_getIsEmpty(Seleccion* this,int* isEmpty){
-	int retorno=0;
-	if(this != NULL && isEmpty != NULL){
-		*isEmpty = this->isEmpty;
-		retorno=1;
+	Seleccion* pAuxSeleccion = selec_new();
+	int auxIdBuscar;
+	int i=0;
+
+	if(this != NULL && pAuxSeleccion != NULL){
+		printf("\n\nEntro al buscar ID\n\n");
+		while(i < ll_len(this)){
+
+			pAuxSeleccion = (Seleccion*) ll_get(this, i);
+			selec_getId(pAuxSeleccion,&auxIdBuscar);
+
+			if(auxIdBuscar == idBuscar){
+				*indiceEncontrado = i;
+				retorno=1;
+				break;
+			}
+			i++;
+		}
 	}
 	return retorno;
 }

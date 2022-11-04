@@ -208,11 +208,11 @@ int jug_IdAutoincremental(){
 
 int jug_BuscarId(LinkedList* this,int idBuscar,int* IndiceEncontrado){
 	int retorno=0;
-	Jugador* pAuxJugador;
+	Jugador* pAuxJugador = jug_new();
 	int auxIdBuscar;
 	int i=0;
 
-	if(this != NULL){
+	if(this != NULL && pAuxJugador != NULL){
 		printf("\n\nEntro al buscar ID\n\n");
 		while(i < ll_len(this)){
 
