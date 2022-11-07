@@ -78,6 +78,24 @@ int selec_getConvocados(Seleccion* this,int* convocados){
 	return retorno;
 }
 
+int selec_ListarUnaSeleccion(Seleccion* this){
+	int retorno=0;
+
+	int auxId;
+	char auxPais[30];
+	char auxConfederacion[30];
+	int auxConvocados;
+
+	if(this != NULL){
+		selec_getId(this, &auxId);
+		selec_getPais(this, auxPais);
+		selec_getConfederacion(this, auxConfederacion);
+		selec_getConvocados(this, &auxConvocados);
+		printf("| %-5d | %-30s | %-30s | %-20d |\n",auxId,auxPais,auxConfederacion,auxConvocados);
+		retorno=1;
+	}
+	return retorno;
+}
 
 int selec_BuscarId(LinkedList* this,int idBuscar,int* indiceEncontrado){
 	int retorno=0;
@@ -86,7 +104,6 @@ int selec_BuscarId(LinkedList* this,int idBuscar,int* indiceEncontrado){
 	int i=0;
 
 	if(this != NULL && pAuxSeleccion != NULL){
-		printf("\n\nEntro al buscar ID\n\n");
 		while(i < ll_len(this)){
 
 			pAuxSeleccion = (Seleccion*) ll_get(this, i);
@@ -100,5 +117,33 @@ int selec_BuscarId(LinkedList* this,int idBuscar,int* indiceEncontrado){
 			i++;
 		}
 	}
+	return retorno;
+}
+
+int selec_OrdernarPorConfederacion(void* seleccionUno,void* seleccionDos){
+	int retorno=0;
+	Seleccion* pSeleccionUno;
+	Seleccion* pSeleccionDos;
+	char confeSeleccionUno[30];
+	char confeSeleccionDos[30];
+
+	pSeleccionUno = (Seleccion*) seleccionUno;
+	pSeleccionDos = (Seleccion*) seleccionDos;
+
+	selec_getConfederacion(pSeleccionUno,confeSeleccionUno);
+	selec_getConfederacion(pSeleccionDos,confeSeleccionDos);
+
+	if(stricmp(confeSeleccionUno,confeSeleccionDos) > 0){
+
+		retorno = 1;
+
+	}else{
+		if(stricmp(confeSeleccionUno,confeSeleccionDos) < 0){
+
+			retorno = -1;
+		}
+
+	}
+
 	return retorno;
 }

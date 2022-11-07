@@ -250,5 +250,6 @@ char ConfirmarChar(char mensaje[],char mensajeError[],char validacion1,char vali
 		scanf("%c",&letra);
 		letra = toupper(letra);
 	}
+	fflush(stdin);
 	return letra;
 }

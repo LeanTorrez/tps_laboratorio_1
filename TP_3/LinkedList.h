@@ -60,4 +60,14 @@ int ll_contains(LinkedList* this, void* pElement);
 int ll_containsAll(LinkedList* this,LinkedList* this2);
 LinkedList* ll_subList(LinkedList* this,int from,int to);
 LinkedList* ll_clone(LinkedList* this);
+
+/**
+ * \fn int ll_sort(LinkedList*, int(*)(void*, void*), int)
+ * \brief el order es 1 para ordenamiento ascendente o 0 para ordenamiento descente
+ *
+ * \param this
+ * \param pFunc
+ * \param order
+ * \return
+ */
 int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order);

@@ -15,7 +15,6 @@ typedef struct
 	char posicion[30];
 	char nacionalidad[30];
 	int idSeleccion;
-	int isEmpty;
 }Jugador;
 
 Jugador* jug_new();
@@ -41,9 +40,7 @@ int jug_getEdad(Jugador* this,int* edad);
 int jug_setIdSeleccion(Jugador* this,int idSeleccion);
 int jug_getSIdSeleccion(Jugador* this,int* idSeleccion);
 
-int jug_setIsEmpty(Jugador* this,int isEmpty);
-int jug_getIsEmpty(Jugador* this,int* isEmpty);
-
+int jug_ListarUnJugador(Jugador* this);
 /**
  * \fn int jug_IdAutoincremental()
  * \brief Id AutoIncremental autonomo
@@ -65,5 +62,11 @@ int jug_IdAutoincremental();
 int jug_BuscarId(LinkedList* this,int idBuscar,int* IndiceEncontrado);
 
 int jug_MenuEditarJugador(Jugador* pJugador);
+
+int jug_OrdenarPorNacionalidad(void* jugadorUno,void* jugadorDos);
+
+int jug_OrdenarPorEdad(void* jugadorUno,void* jugadorDos);
+
+int jug_OrdenarPorNombre(void* jugadorUno,void* jugadorDos);
 
 #endif // jug_H_INCLUDED

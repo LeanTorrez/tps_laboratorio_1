@@ -12,7 +12,6 @@ Jugador* jug_new(){
 		jug_setPosicion(pJugador,"0");
 		jug_setNacionalidad(pJugador,"0");
 		jug_setIdSeleccion(pJugador,0);
-		jug_setIsEmpty(pJugador,0);
 	}
 	return pJugador;
 }
@@ -42,7 +41,6 @@ Jugador* jug_newParametros(char* idStr,
 		jug_setPosicion(pJugador,posicionStr);
 		jug_setNacionalidad(pJugador,nacionalidadStr);
 		jug_setIdSeleccion(pJugador,auxIdSeleccion);
-		jug_setIsEmpty(pJugador,1);
 	}
 
 	return pJugador;
@@ -162,18 +160,23 @@ int jug_getSIdSeleccion(Jugador* this,int* idSeleccion){
 }
 
 
-int jug_setIsEmpty(Jugador* this,int isEmpty){
+int jug_ListarUnJugador(Jugador* this){
 	int retorno=0;
-	if(this != NULL && isEmpty > -1){
-		this->isEmpty = isEmpty;
-		retorno=1;
-	}
-	return retorno;
-}
-int jug_getIsEmpty(Jugador* this,int* isEmpty){
-	int retorno=0;
-	if(this != NULL && isEmpty != NULL){
-		*isEmpty = this->isEmpty;
+	int auxID;
+	char auxNombre[100];
+	int auxEdad;
+	char auxPosicion[30];
+	char auxNacionalidad[30];
+	int auxIdSeleccion;
+
+	if(this != NULL){
+		jug_getId(this, &auxID);
+		jug_getNombreCompleto(this, auxNombre);
+		jug_getEdad(this, &auxEdad);
+		jug_getPosicion(this, auxPosicion);
+		jug_getNacionalidad(this, auxNacionalidad);
+		jug_getSIdSeleccion(this,&auxIdSeleccion);
+		printf("| %-4d | %-30s | %-4d | %-20s | %-20s | %-12d |\n",auxID,auxNombre,auxEdad,auxPosicion,auxNacionalidad,auxIdSeleccion);
 		retorno=1;
 	}
 	return retorno;
@@ -213,7 +216,6 @@ int jug_BuscarId(LinkedList* this,int idBuscar,int* IndiceEncontrado){
 	int i=0;
 
 	if(this != NULL && pAuxJugador != NULL){
-		printf("\n\nEntro al buscar ID\n\n");
 		while(i < ll_len(this)){
 
 			pAuxJugador = (Jugador*) ll_get(this, i);
@@ -272,5 +274,85 @@ int jug_MenuEditarJugador(Jugador* pJugador){
 		break;
 
 	}
+	return retorno;
+}
+
+int jug_OrdenarPorNacionalidad(void* jugadorUno,void* jugadorDos){
+	int retorno=0;
+	char nacionalidadJugador1[30];
+	char nacionalidadJugador2[30];
+	Jugador* pJugadorUno;
+	Jugador* pJugadorDos;
+
+	pJugadorUno = (Jugador*) jugadorUno;
+	pJugadorDos = (Jugador*) jugadorDos;
+
+	jug_getNacionalidad(pJugadorUno, nacionalidadJugador1);
+	jug_getNacionalidad(pJugadorDos, nacionalidadJugador2);
+
+	if(stricmp(nacionalidadJugador1,nacionalidadJugador2) > 0){
+
+		retorno = 1;
+	}else{
+		if(stricmp(nacionalidadJugador1,nacionalidadJugador2) < 0){
+
+			retorno = -1;
+		}
+
+	}
+
+	return retorno;
+}
+
+int jug_OrdenarPorEdad(void* jugadorUno,void* jugadorDos){
+	int retorno=0;
+	int edadJugador1;
+	int edadJugador2;
+	Jugador* pJugadorUno;
+	Jugador* pJugadorDos;
+
+	pJugadorUno = (Jugador*) jugadorUno;
+	pJugadorDos = (Jugador*) jugadorDos;
+
+	jug_getEdad(pJugadorUno, &edadJugador1);
+	jug_getEdad(pJugadorDos, &edadJugador2);
+
+	if(edadJugador1 > edadJugador2){
+
+		retorno = 1;
+	}else{
+		if(edadJugador1 < edadJugador2){
+
+			retorno = -1;
+		}
+
+	}
+	return retorno;
+}
+
+int jug_OrdenarPorNombre(void* jugadorUno,void* jugadorDos){
+	int retorno=0;
+	char nombreJugador1[100];
+	char nombreJugador2[100];
+	Jugador* pJugadorUno;
+	Jugador* pJugadorDos;
+
+	pJugadorUno = (Jugador*) jugadorUno;
+	pJugadorDos = (Jugador*) jugadorDos;
+
+	jug_getNombreCompleto(pJugadorUno, nombreJugador1);
+	jug_getNombreCompleto(pJugadorDos, nombreJugador2);
+
+	if(stricmp(nombreJugador1,nombreJugador2) > 0){
+
+		retorno = 1;
+	}else{
+		if(stricmp(nombreJugador1,nombreJugador2) < 0){
+
+			retorno = -1;
+		}
+
+	}
+
 	return retorno;
 }

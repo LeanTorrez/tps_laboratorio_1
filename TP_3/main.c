@@ -11,8 +11,11 @@ int main()
 	setbuf(stdout,NULL);
     int option = 0;
     int retornoOpcion;
+    int flagGuardar=1;
     LinkedList* listaJugadores = ll_newLinkedList();
     LinkedList* listaSeleccion = ll_newLinkedList();
+
+    LinkedList* listaJugadoresBinario = ll_newLinkedList();
 
     do{
     	retornoOpcion = utn_getNumeroINT(&option,"\n1.Carga de Archivos\n"
@@ -36,6 +39,7 @@ int main()
         {
             case 1:
             	printf(" %-60s \n","CARGA DE ARCHIVOS");
+
             	if(controller_cargarJugadoresDesdeTexto("jugadores.csv",listaJugadores)){
             		printf("Carga de Jugadores exitosa\n");
             	}
@@ -43,74 +47,134 @@ int main()
             		printf("Carga de Selecciones exitosa\n");
             	}
                 break;
+
             case 2:
             	printf(" %-60s \n","ALTA JUGADOR");
+
             	if(ll_isEmpty(listaJugadores)==1){
             		printf("Debe ingresar primero a la opcion 1 para poder empezar a dar de alta a jugadores.\n");
             	}else{
             		controller_agregarJugador(listaJugadores);
+            		flagGuardar = 0;
             	}
             	break;
+
             case 3:
             	printf(" %-60s \n","MODIFICACION DE JUGADOR");
+
             	if(ll_isEmpty(listaJugadores)==1){
 					printf("Debe ingresar primero a la opcion 1 para poder empezar a modificar a los jugadores.\n");
 				}else{
-					controller_editarJugador(listaJugadores);
+					if(controller_editarJugador(listaJugadores)==0){
+						printf("Error al ejecutar la modificacion... regresando al Menu\n");
+					}else{
+						printf("Jugador Editado Exitosamente\n");
+						flagGuardar = 0;
+					}
 				}
             	break;
+
             case 4:
             	printf(" %-60s \n","BAJA DE JUGADOR");
+
             	if(ll_isEmpty(listaJugadores)==1){
-					printf("Debe ingresar primero a la opcion 1 para poder empezar a modificar a los jugadores.\n");
+					printf("Debe ingresar primero a la opcion 1 para dar de baja a los jugadores.\n");
 				}else{
-					controller_removerJugador(listaJugadores);
+					if(controller_removerJugador(listaJugadores)==1){
+						printf("Se ha dado baja exitosamente\n");
+						flagGuardar = 0;
+					}else{
+						printf("Error/ Id no encontrado... regresando al menu\n");
+					}
 				}
             	break;
+
             case 5:
             	printf(" %-60s \n","LISTADOS");
-            	controller_listarJugadores(listaJugadores);
-            	controller_listarSelecciones(listaSeleccion);
-				break;
-			case 6:
-				printf(" %-60s \n","CONVOCAR JUGADORES");
-				if(ll_isEmpty(listaJugadores)==1){
-					printf("Debe ingresar primero a la opcion 1 para poder empezar a modificar a los jugadores.\n");
+            	if(ll_isEmpty(listaJugadores)==1 && ll_isEmpty(listaSeleccion)==1){
+					printf("Debe ingresar primero a la opcion 1 para poder ver las listas.\n");
 				}else{
-					if(controller_convocarJugadores(listaJugadores, listaSeleccion)==1){
-						printf("Convocacion de jugador a pais Exitosa\n");
+					if(controller_menuListar(listaJugadores,listaSeleccion)){
 					}else{
-						printf("Error en la convocion\n");
+						printf("Error al mostrar las listas... Regresando al menu\n");
 					}
 				}
 				break;
+
+			case 6:
+				printf(" %-60s \n","CONVOCAR JUGADORES");
+
+				if(ll_isEmpty(listaJugadores)==1){
+					printf("Debe ingresar primero a la opcion 1 para poder convocar a los jugadores.\n");
+				}else{
+					if(controller_convocarJugadores(listaJugadores, listaSeleccion)==1){
+						printf("Convocacion de jugador a pais Exitosa\n");
+						flagGuardar = 0;
+					}else{
+						printf("Error en la convocacion del jugador\n");
+					}
+				}
+				break;
+
 			case 7:
 				printf(" %-60s \n","ORDERNAR Y LISTAR");
+				if(ll_isEmpty(listaJugadores)==1){
+					printf("Debe ingresar primero a la opcion 1 para para poder ordenar las listas.\n");
+				}else{
+					if(controller_menuOrdernar(listaJugadores,listaSeleccion)==0){
+						printf("Ocurrio un error... regresando al menu\n");
+					}
+				}
 				break;
+
 			case 8:
 				printf(" %-60s \n","GENERAR ARCHIVO BINARIO");
+
 				if(ll_isEmpty(listaJugadores)==1){
-					printf("Debe ingresar primero a la opcion 1 para poder empezar a dar de alta a jugadores.\n");
+					printf("Debe ingresar primero a la opcion 1 para poder crear el archivo binario.\n");
 				}else{
 					controller_guardarJugadoresModoBinario("jugadoresBinario.bin",listaJugadores);
 				}
 				break;
+
 			case 9:
 				printf(" %-60s \n","CARGAR ARCHIVO BINARIO");
+				controller_cargarJugadoresDesdeBinario("jugadoresBinario.bin",listaJugadoresBinario);
+				//controller_listarJugadores(listaJugadoresBinario);
+				//Jugador* pJugador = (Jugador*) ll_get(listaJugadoresBinario, 0);
+				//printf("%d,%s,%d,%s,%s,%d\n",pJugador->id,pJugador->nombreCompleto,pJugador->edad,pJugador->posicion,pJugador->nacionalidad,pJugador->idSeleccion);
 				break;
+
 			case 10:
 				printf(" %-60s \n","GUARDAR ARCHIVO .CSV");
+
 				if(ll_isEmpty(listaJugadores)==1){
 					printf("Debe ingresar primero a la opcion 1 para poder empezar a dar de alta a jugadores.\n");
 				}else{
 					controller_guardarJugadoresModoTexto("jugadoresNuevos.csv",listaJugadores);
+					controller_guardarSeleccionesModoTexto("SeleccionesNuevos.csv",listaSeleccion);
+					flagGuardar = 1;
 				}
 				break;
+
 			case 11:
 				printf(" %-60s \n","SALIR");
+				if(flagGuardar != 1){
+					if(ConfirmarChar("No guardo los archivos en la opcion 10... Esta seguro que quiere salir [s/n]","Error/ ingrese 's' para salir o 'n' para volver al menu",'S','N')=='N'){
+						option = 0;
+						printf("Regresando al Menu");
+					}
+				}else{
+					if(ConfirmarChar("Esta seguro que quiere salir [s/n]","Error/ ingrese 's' para salir o 'n' para volver al menu",'S','N')=='N'){
+						option = 0;
+						printf("Regresando al Menu");
+					}
+				}
 				ll_deleteLinkedList(listaSeleccion);
 				ll_deleteLinkedList(listaJugadores);
+				ll_deleteLinkedList(listaJugadoresBinario);
 				break;
+
 
         }
     }while(option != 11);
