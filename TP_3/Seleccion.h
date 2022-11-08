@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "utn.h"
 
 typedef struct
 {
@@ -32,5 +33,7 @@ int selec_ListarUnaSeleccion(Seleccion* this);
 int selec_BuscarId(LinkedList* this,int idBuscar,int* indiceEncontrado);
 
 int selec_OrdernarPorConfederacion(void* seleccionUno,void* seleccionDos);
+
+int selec_elegirConfederacion(char* pConfederacionElegida);
 
 #endif // selec_H_INCLUDED

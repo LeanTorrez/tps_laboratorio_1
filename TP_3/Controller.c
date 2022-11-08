@@ -243,7 +243,7 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
 {
 	int retorno=0;
 	int i=0;
-	Jugador* pJugador;
+	Jugador* pJugador = NULL;
 	FILE* archivoGuardar;
 
 	int auxID;
@@ -257,6 +257,7 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
 
 	if(archivoGuardar != NULL && pArrayListJugador != NULL){
 		fprintf(archivoGuardar,"%s\n","id,nombreCompleto,edad,posicion,nacionalidad,idSelecion");
+
 		while(i < ll_len(pArrayListJugador)){
 
 			pJugador = (Jugador*) ll_get(pArrayListJugador, i);
@@ -284,23 +285,49 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
  * \return int
  *
  */
-int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJugador)
+int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion)
 {
 	int retorno=0;
 	int i=0;
-	Jugador* pJugador;
+	Jugador* pJugador = NULL;
+	Seleccion* pSeleccion = NULL;
 	FILE* archivoGuardarBinario;
+
+	char auxNombreConfederacion[30];
+	int idSeleccion;
+
+	int indiceSeleccion;
+	char nombreConfederacion[30];
+
+
 
 	archivoGuardarBinario = fopen(path,"wb");
 
-	if(archivoGuardarBinario != NULL && pArrayListJugador != NULL){
+	if(archivoGuardarBinario != NULL && pArrayListJugador != NULL && pArrayListSeleccion){
 
-		while(i < ll_len(pArrayListJugador)){
+		if(selec_elegirConfederacion(auxNombreConfederacion)==1){
 
-			pJugador = (Jugador*) ll_get(pArrayListJugador, i);
-			fwrite(pJugador,sizeof(Jugador),1,archivoGuardarBinario);
-			i++;
-			retorno=1;
+			while(i < ll_len(pArrayListJugador)){
+
+				pJugador = (Jugador*) ll_get(pArrayListJugador, i);
+				jug_getSIdSeleccion(pJugador,&idSeleccion);
+
+				if(idSeleccion > 0){
+
+					if(selec_BuscarId(pArrayListSeleccion,idSeleccion,&indiceSeleccion)==1){
+
+						pSeleccion = (Seleccion*) ll_get(pArrayListSeleccion, indiceSeleccion);
+						selec_getConfederacion(pSeleccion,nombreConfederacion);
+
+						if(stricmp(nombreConfederacion,auxNombreConfederacion)==0){
+
+							fwrite(pJugador,sizeof(Jugador),1,archivoGuardarBinario);
+							retorno=1;
+						}
+					}
+				}
+				i++;
+			}
 		}
 		fclose(archivoGuardarBinario);
 	}
@@ -410,7 +437,7 @@ int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSe
 {
 	int retorno=0;
 	int i=0;
-	Seleccion* pSeleccion;
+	Seleccion* pSeleccion = NULL;
 	FILE* archivoGuardar;
 
 	int auxID;
@@ -593,7 +620,7 @@ int controller_menuListar(LinkedList* pArrayListJugador,LinkedList* pArrayListSe
 
 		switch(opciones){
 		case 1:
-			controller_ListarJugadoresConvocados(pArrayListJugador);
+			controller_listarJugadores(pArrayListJugador);
 			retorno = 1;
 			break;
 		case 2:
@@ -611,4 +638,5 @@ int controller_menuListar(LinkedList* pArrayListJugador,LinkedList* pArrayListSe
 	}
 	return retorno;
 }
+
 

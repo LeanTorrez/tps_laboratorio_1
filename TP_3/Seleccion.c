@@ -147,3 +147,38 @@ int selec_OrdernarPorConfederacion(void* seleccionUno,void* seleccionDos){
 
 	return retorno;
 }
+
+int selec_elegirConfederacion(char* pConfederacionElegida){
+	int retorno=0;
+	int opcion=0;
+	char AuxNombreConfe[30];
+	if( utn_getNumeroINT(&opcion,"1.AFC\n"
+								 "2.CAF\n"
+								 "3.CONCACAF\n"
+								 "4.CONMEBOL\n"
+								 "5.UEFA\n"
+								 "Elija el numero de la confederacion que quiera generar una lista de jugadores convocados\n","Error/ Las opciones van de 1 al 5",1,5,30)==1)
+	{
+
+		switch(opcion){
+		case 1:
+			strcpy(AuxNombreConfe,"AFC");
+			break;
+		case 2:
+			strcpy(AuxNombreConfe,"CAF");
+			break;
+		case 3:
+			strcpy(AuxNombreConfe,"CONCACAF");
+			break;
+		case 4:
+			strcpy(AuxNombreConfe,"CONMEBOL");
+			break;
+		case 5:
+			strcpy(AuxNombreConfe,"UEFA");
+			break;
+		}
+		strcpy(pConfederacionElegida,AuxNombreConfe);
+		retorno=1;
+	}
+	return retorno;
+}

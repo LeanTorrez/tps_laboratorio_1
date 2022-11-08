@@ -53,27 +53,20 @@ int parser_JugadorFromText(FILE* pFile , LinkedList* pArrayListJugador)
 int parser_JugadorFromBinary(FILE* pFile , LinkedList* pArrayListJugador)
 {
 	int retorno=0;
-//	int i=0;
-//	int auxId;
-//	char auxNombreCompleto[100];
-//	int auxEdad;
-//	char auxPosicion[30];
-//	char auxNacionalidad[30];
-//	int auxIdSeleccion;
 
 	Jugador* pJugador= jug_new();
-	//Jugador* pJugador2 = jug_new();
 
     if(pFile != NULL && pArrayListJugador != NULL ){
-
+    	printf("\n|===========================================================================================================|\n"
+    	    		     "|  ID  | %-30s | Edad | %-20s | %-20s | ID seleccion |\n"
+    	    		     "|===========================================================================================================|\n",
+    					"Nombre Completo","posicion","Nacionalidad");
     	while(fread(pJugador,sizeof(Jugador),1,pFile) != 0){
-    		//printf("%d,%s,%d,%s,%s,%d\n",pJugador->id,pJugador->nombreCompleto,pJugador->edad,pJugador->posicion,pJugador->nacionalidad,pJugador->idSeleccion);
-    		ll_add(pArrayListJugador,pJugador);
-    		//pJugador2 = (Jugador*)ll_get(pArrayListJugador, i);
-    		//printf("%d,%s,%d,%s,%s,%d\n",pJugador2->id,pJugador2->nombreCompleto,pJugador2->edad,pJugador2->posicion,pJugador2->nacionalidad,pJugador2->idSeleccion);
+    		jug_ListarUnJugador(pJugador);
+    		//ll_add(pArrayListJugador,pJugador);
     		retorno=1;
-    		//i++;
     	}
+    	printf("|===========================================================================================================|\n");
     }
     return retorno;
 }

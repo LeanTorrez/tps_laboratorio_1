@@ -40,10 +40,10 @@ int main()
             case 1:
             	printf(" %-60s \n","CARGA DE ARCHIVOS");
 
-            	if(controller_cargarJugadoresDesdeTexto("jugadores.csv",listaJugadores)){
+            	if(controller_cargarJugadoresDesdeTexto("jugadoresNuevos.csv",listaJugadores)){
             		printf("Carga de Jugadores exitosa\n");
             	}
-            	if(controller_cargarSeleccionesDesdeTexto("selecciones.csv",listaSeleccion)){
+            	if(controller_cargarSeleccionesDesdeTexto("SeleccionesNuevos.csv",listaSeleccion)){
             		printf("Carga de Selecciones exitosa\n");
             	}
                 break;
@@ -130,10 +130,14 @@ int main()
 			case 8:
 				printf(" %-60s \n","GENERAR ARCHIVO BINARIO");
 
-				if(ll_isEmpty(listaJugadores)==1){
+				if(ll_isEmpty(listaJugadores)==1 && ll_isEmpty(listaSeleccion)==1){
 					printf("Debe ingresar primero a la opcion 1 para poder crear el archivo binario.\n");
 				}else{
-					controller_guardarJugadoresModoBinario("jugadoresBinario.bin",listaJugadores);
+					if(controller_guardarJugadoresModoBinario("jugadoresBinario.bin",listaJugadores,listaSeleccion)==1){
+						printf("Creando de archivo binario exitoso\n");
+					}else{
+						printf("Erro en la creacion del archivo binario... Regresando al Menu\n");
+					}
 				}
 				break;
 
@@ -160,19 +164,17 @@ int main()
 			case 11:
 				printf(" %-60s \n","SALIR");
 				if(flagGuardar != 1){
-					if(ConfirmarChar("No guardo los archivos en la opcion 10... Esta seguro que quiere salir [s/n]","Error/ ingrese 's' para salir o 'n' para volver al menu",'S','N')=='N'){
-						option = 0;
-						printf("Regresando al Menu");
-					}
+					printf("Para poder salir primero guarde los cambios que hizo a los archivos en la opcion 10\n");
 				}else{
 					if(ConfirmarChar("Esta seguro que quiere salir [s/n]","Error/ ingrese 's' para salir o 'n' para volver al menu",'S','N')=='N'){
 						option = 0;
 						printf("Regresando al Menu");
+					}else{
+						ll_deleteLinkedList(listaSeleccion);
+						ll_deleteLinkedList(listaJugadores);
+						//ll_deleteLinkedList(listaJugadoresBinario);
 					}
 				}
-				ll_deleteLinkedList(listaSeleccion);
-				ll_deleteLinkedList(listaJugadores);
-				ll_deleteLinkedList(listaJugadoresBinario);
 				break;
 
 
