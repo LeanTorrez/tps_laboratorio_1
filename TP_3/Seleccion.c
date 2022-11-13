@@ -148,6 +148,61 @@ int selec_OrdernarPorConfederacion(void* seleccionUno,void* seleccionDos){
 	return retorno;
 }
 
+int selec_menuEditarSeleccion(Seleccion* pSeleccion){
+	int retorno=0;
+
+	char auxPais[30];
+
+	int opcionConfe=-1;
+	char auxConfederacion[30];
+
+	int menuOpciones = 0;
+
+	utn_getNumeroINT(&menuOpciones,"1.Pais\n"
+								   "2.Confederacion\n"
+								   "Ingrese el numero de la opcion que desea modificar\n","Error/ Ingrese una opcion valida (1 al 2)\n",1,2,20);
+	switch(menuOpciones){
+	case 1:
+		printf(" %-60s \n","Modificar Pais");
+		if(utn_getDescripcion(auxPais,sizeof(auxPais),"Ingrese el del pais\n","Error/ asegurese de ingresar algo\n",20)==0){
+			//ACA IRIA EL SETTER DE PAIS
+			retorno=1;
+		}
+		break;
+	case 2:
+		printf(" %-60s \n","Modificar Confederacion");
+		if(utn_getNumeroINT(&opcionConfe,"1.UEFA\n"
+									     "2.CONMEBOL\n"
+									     "3.AFC\n"
+									     "4.CONCACAF\n"
+									     "5.CAF\n"
+									     "Ingrese el numero de la confederacion\n","Error/ Ingrese un numero valido (1 al 5)\n",1,5,20)==1)
+		{
+			switch(opcionConfe){
+			case 1:
+				strcpy(auxConfederacion,"UEFA");
+				break;
+			case 2:
+				strcpy(auxConfederacion,"CONMEBOL");
+				break;
+			case 3:
+				strcpy(auxConfederacion,"AFC");
+				break;
+			case 4:
+				strcpy(auxConfederacion,"CONCACAF");
+				break;
+			case 5:
+				strcpy(auxConfederacion,"CAF");
+				break;
+			}
+			//ACA IRIA EL SETTER PARA CONFEDERACION
+			retorno=1;
+		}
+		break;
+	}
+	return retorno;
+}
+
 int selec_elegirConfederacion(char* pConfederacionElegida){
 	int retorno=0;
 	int opcion=0;
@@ -182,3 +237,118 @@ int selec_elegirConfederacion(char* pConfederacionElegida){
 	}
 	return retorno;
 }
+
+int selec_nombreSeleccion(int idSeleccion,char* pNombreSeleccion){
+	int retorno=0;
+
+	//Hice esta funcion porque la otra que pensaba resolver la nota 2 tenia que modificar muchos campos que habia ya hecho,
+	//y me generaba problemas asi que decidi resolver el problema de esta manera que no es la mas optima
+	//porque dado el caso que se agregen mas seleccion esto se volveria inservible
+	char auxNombreSeleccion[30];
+
+
+	if(idSeleccion > 0){
+
+		switch(idSeleccion){
+		case 1:
+			strcpy(auxNombreSeleccion,"Alemania");
+			break;
+		case 2:
+			strcpy(auxNombreSeleccion,"Arabia Saudita");
+			break;
+		case 3:
+			strcpy(auxNombreSeleccion,"Argentina");
+			break;
+		case 4:strcpy(auxNombreSeleccion,"Australia");
+			break;
+		case 5:
+			strcpy(auxNombreSeleccion,"Belgica");
+			break;
+		case 6:
+			strcpy(auxNombreSeleccion,"Brasil");
+			break;
+		case 7:
+			strcpy(auxNombreSeleccion,"Camerun");
+			break;
+		case 8:
+			strcpy(auxNombreSeleccion,"Canada");
+			break;
+		case 9:
+			strcpy(auxNombreSeleccion,"Corea del Sur");
+			break;
+		case 10:
+			strcpy(auxNombreSeleccion,"Costa Rica");
+			break;
+		case 11:
+			strcpy(auxNombreSeleccion,"Croacia");
+			break;
+		case 12:
+			strcpy(auxNombreSeleccion,"Dinamarca");
+			break;
+		case 13:
+			strcpy(auxNombreSeleccion,"Ecuador");
+			break;
+		case 14:
+			strcpy(auxNombreSeleccion,"Espana");
+			break;
+		case 15:
+			strcpy(auxNombreSeleccion,"Estados Unidos");
+			break;
+		case 16:
+			strcpy(auxNombreSeleccion,"Francia");
+			break;
+		case 17:
+			strcpy(auxNombreSeleccion,"Gales");
+			break;
+		case 18:
+			strcpy(auxNombreSeleccion,"Ghana");
+			break;
+		case 19:
+			strcpy(auxNombreSeleccion,"Holanda");
+			break;
+		case 20:
+			strcpy(auxNombreSeleccion,"Inglaterra");
+			break;
+		case 21:
+			strcpy(auxNombreSeleccion,"Iran");
+			break;
+		case 22:
+			strcpy(auxNombreSeleccion,"Japon");
+			break;
+		case 23:
+			strcpy(auxNombreSeleccion,"Marruecos");
+			break;
+		case 24:
+			strcpy(auxNombreSeleccion,"Mexico");
+			break;
+		case 25:
+			strcpy(auxNombreSeleccion,"Polonia");
+			break;
+		case 26:
+			strcpy(auxNombreSeleccion,"Portugal");
+			break;
+		case 27:
+			strcpy(auxNombreSeleccion,"Qatar");
+			break;
+		case 28:
+			strcpy(auxNombreSeleccion,"Senegal");
+			break;
+		case 29:
+			strcpy(auxNombreSeleccion,"Serbia");
+			break;
+		case 30:
+			strcpy(auxNombreSeleccion,"Suiza");
+			break;
+		case 31:
+			strcpy(auxNombreSeleccion,"Tunez");
+			break;
+		case 32:
+			strcpy(auxNombreSeleccion,"Uruguay");
+			break;
+		}
+		strcpy(pNombreSeleccion,auxNombreSeleccion);
+		retorno=1;
+	}
+	return retorno;
+}
+

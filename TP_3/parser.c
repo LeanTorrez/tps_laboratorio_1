@@ -54,19 +54,19 @@ int parser_JugadorFromBinary(FILE* pFile , LinkedList* pArrayListJugador)
 {
 	int retorno=0;
 
-	Jugador* pJugador= jug_new();
+	Jugador* pJugador = jug_new();
 
     if(pFile != NULL && pArrayListJugador != NULL ){
-    	printf("\n|===========================================================================================================|\n"
-    	    		     "|  ID  | %-30s | Edad | %-20s | %-20s | ID seleccion |\n"
-    	    		     "|===========================================================================================================|\n",
-    					"Nombre Completo","posicion","Nacionalidad");
+    	printf("\n|===================================================================================================================|\n"
+    	    		     "|  ID  | %-30s | Edad | %-20s | %-20s | %-20s |\n"
+    	    		     "|===================================================================================================================|\n",
+    					"Nombre Completo","posicion","Nacionalidad","Seleccion");
     	while(fread(pJugador,sizeof(Jugador),1,pFile) != 0){
+
     		jug_ListarUnJugador(pJugador);
-    		//ll_add(pArrayListJugador,pJugador);
     		retorno=1;
     	}
-    	printf("|===========================================================================================================|\n");
+    	printf("|===================================================================================================================|\n");
     }
     return retorno;
 }

@@ -7,6 +7,10 @@
 
 #include "utn.h"
 
+
+static int esDescripcion(char* cadena,int longitud);
+static int getDescripcion(char* pResultado, int longitud);
+
 /**
  * \fn int myGets(char*, int)
  * \brief Verifica que la cadena de caracteres no sea NULA y que no supere el maximo de caracteres pedidos
@@ -164,6 +168,77 @@ static int getFloat(float* pResultado){
 	if(esNumericaFloat(buffer)){
 		*pResultado = atof(buffer);
 		retorno=1;
+	}
+	return retorno;
+}
+
+/**
+ * \brief Obtiene un string valido como descripcion
+ * \param pResultado Puntero al espacio de memoria donde se dejara el resultado de la funcion
+ * \return Retorna 0 (EXITO) si se obtiene un numero flotante y -1 (ERROR) si no
+ *
+ */
+static int getDescripcion(char* pResultado, int longitud)
+{
+    int retorno=-1;
+    char buffer[4096];
+
+    if(pResultado != NULL)
+    {
+    	if(	getString(buffer,sizeof(buffer))==0 &&
+    		esDescripcion(buffer,sizeof(buffer))==1 &&
+			strnlen(buffer,sizeof(buffer))<longitud)
+    	{
+    		strncpy(pResultado,buffer,longitud);
+			retorno = 0;
+		}
+    }
+    return retorno;
+}
+
+/**
+ * \brief Verifica si la cadena ingresada es una descripcion valida
+ * \param cadena Cadena de caracteres a ser analizada
+ * \return Retorna 1 (verdadero) si la cadena es valida y 0 (falso) si no lo es
+ *
+ */
+static int esDescripcion(char* cadena,int longitud)
+{
+	int i=0;
+	int retorno = -1;
+	if(cadena != NULL && longitud > 0)
+	{
+		if(!(strlen(cadena) == 0 && cadena[0] == '\0'))
+		{
+			retorno =1;
+			for(i=0 ; cadena[i] != '\0' && i < longitud; i++)
+			{
+				if(cadena[i] != ' ' && (cadena[i] < 'A' || cadena[i] > 'Z' ) && (cadena[i] < 'a' || cadena[i] > 'z' ))
+				{
+					retorno = 0;
+					break;
+				}
+			}
+		}
+	}
+	return retorno;
+}
+
+int utn_getDescripcion(char* pResultado, int longitud,char* mensaje, char* mensajeError, int reintentos)
+{
+	char bufferString[4096];
+	int retorno = -1;
+	while(reintentos>=0)
+	{
+		reintentos--;
+		printf(mensaje);
+		if(getDescripcion(bufferString,sizeof(bufferString)) == 0 && strnlen(bufferString,sizeof(bufferString)) < longitud )
+		{
+			strncpy(pResultado,bufferString,longitud);
+			retorno = 0;
+			break;
+		}
+		printf(mensajeError);
 	}
 	return retorno;
 }

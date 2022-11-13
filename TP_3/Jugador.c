@@ -4,15 +4,6 @@
 Jugador* jug_new(){
 	Jugador* pJugador;
 	pJugador = (Jugador*) malloc(sizeof(Jugador));
-	//INICIALIZO LOS DATOS EN 0
-	if(pJugador != NULL){
-		jug_setId(pJugador,1);
-		jug_setNombreCompleto(pJugador,"1");
-		jug_setEdad(pJugador,1);
-		jug_setPosicion(pJugador,"0");
-		jug_setNacionalidad(pJugador,"0");
-		jug_setIdSeleccion(pJugador,0);
-	}
 	return pJugador;
 }
 
@@ -169,6 +160,11 @@ int jug_ListarUnJugador(Jugador* this){
 	char auxNacionalidad[30];
 	int auxIdSeleccion;
 
+	//Nombre de seleccion
+	char auxNombreSeleccion[30];
+
+
+
 	if(this != NULL){
 		jug_getId(this, &auxID);
 		jug_getNombreCompleto(this, auxNombre);
@@ -176,7 +172,15 @@ int jug_ListarUnJugador(Jugador* this){
 		jug_getPosicion(this, auxPosicion);
 		jug_getNacionalidad(this, auxNacionalidad);
 		jug_getSIdSeleccion(this,&auxIdSeleccion);
-		printf("| %-4d | %-30s | %-4d | %-20s | %-20s | %-12d |\n",auxID,auxNombre,auxEdad,auxPosicion,auxNacionalidad,auxIdSeleccion);
+
+		//En caso de que el jugador este en la seleccion el id sera reemplazado por el nombre de la misma
+		if(auxIdSeleccion == 0){
+			strcpy(auxNombreSeleccion,"No convocado");
+		}else{
+			selec_nombreSeleccion(auxIdSeleccion, auxNombreSeleccion);
+		}
+
+		printf("| %-4d | %-30s | %-4d | %-20s | %-20s | %-20s |\n",auxID,auxNombre,auxEdad,auxPosicion,auxNacionalidad,auxNombreSeleccion);
 		retorno=1;
 	}
 	return retorno;
@@ -188,7 +192,7 @@ int jug_IdAutoincremental(){
 
 	char auxIdJugador[10];
 	int nuevoIdJugador=0;
-
+	//Abro el archivo en lectura y escritura
 	IdAutoIncremental = fopen("IDAUTOINCREMENTAL.csv","r+");
 
 	if(IdAutoIncremental != NULL){
@@ -246,31 +250,34 @@ int jug_MenuEditarJugador(Jugador* pJugador){
 								   "2.Edad\n"
 								   "3.Posicion\n"
 								   "4.Nacionalidad\n"
-								   "Ingrese el numero de la opcion que desea modificar\n","Error/ Ingrese una opcion valida (1 al 4)",1,4,20);
+								   "Ingrese el numero de la opcion que desea modificar\n","Error/ Ingrese una opcion valida (1 al 4)\n",1,4,20);
 	switch(menuOpciones){
 	case 1:
 		printf(" %-60s \n","Modificar Nombre Completo");
-		utn_getString(auxNombre,sizeof(auxNombre),"Ingrese el nombre completo del jugador\n","Error/ asegurese de ingresar algo",20);
-		jug_setNombreCompleto(pJugador, auxNombre);
-		retorno=1;
+		if(utn_getDescripcion(auxNombre,sizeof(auxNombre),"Ingrese el nombre completo del jugador\n","Error/ asegurese de ingresar algo\n",20)==0){
+			jug_setNombreCompleto(pJugador, auxNombre);
+			retorno=1;
+		}
 		break;
 	case 2:
 		printf(" %-60s \n","Modificar Edad");
-		utn_getNumeroINT(&auxEdad,"Ingrese la edad del jugador\n","Error/ La edad no puede ser menor a 16 o mayor a 40",16,40,20);
+		utn_getNumeroINT(&auxEdad,"Ingrese la edad del jugador\n","Error/ La edad no puede ser menor a 16 o mayor a 40\n",16,40,20);
 		jug_setEdad(pJugador, auxEdad);
 		retorno=1;
 		break;
 	case 3:
 		printf(" %-60s \n","Modificar Posicion");
-		utn_getString(auxPosicion,sizeof(auxPosicion),"Ingrese la posicion del jugador","Error/ asegures de ingresar algo",20);
-		jug_setPosicion(pJugador, auxPosicion);
-		retorno=1;
+		if(utn_getDescripcion(auxPosicion,sizeof(auxPosicion),"Ingrese la posicion del jugador","Error/ asegures de ingresar algo\n",20) == 0){
+			jug_setPosicion(pJugador, auxPosicion);
+			retorno=1;
+		}
 		break;
 	case 4:
 		printf(" %-60s \n","Modificar Nacionalidad");
-		utn_getString(auxNacionalidad, sizeof(auxNacionalidad),"Ingrese la nacionalidad del Jugador\n","Asegurese de ingresar algo",20);
-		jug_setNacionalidad(pJugador, auxNacionalidad);
-		retorno=1;
+		if(utn_getString(auxNacionalidad, sizeof(auxNacionalidad),"Ingrese la nacionalidad del Jugador\n","Asegurese de ingresar algo\n",20) == 0){
+			jug_setNacionalidad(pJugador, auxNacionalidad);
+			retorno=1;
+		}
 		break;
 
 	}

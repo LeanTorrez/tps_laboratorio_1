@@ -85,6 +85,22 @@ int utn_getNumeroShort(short* pResultado,
 		int reintentos);
 
 /**
+ * \fn int utn_getDescripcion(char*, int, char*, char*, int)
+ * \brief Solicita una descripcion al usuario, luego de verificarlo devuelve el resultado
+ *
+ * \param pResultado pResultado Puntero al espacio de memoria donde se dejara el resultado de la funcion
+ * \param longitud Es la longitud del array resultado
+ * \param mensaje Es el mensaje a ser mostrado
+ * \param mensajeError Es el mensaje de Error a ser mostrado
+ * \param reintentos Cantidad de reintentos
+ * \return 0 si se obtuvo la cadena de caracteres y -1 si no
+ */
+int utn_getDescripcion(char* pResultado,
+					   int longitud,
+					   char* mensaje,
+					   char* mensajeError,
+					   int reintentos);
+/**
  * \fn char ConfirmarChar(char[], char[], char, char)
  * \brief Pide un caracter al usuario entre los dos que se piden a valirdar
  *
