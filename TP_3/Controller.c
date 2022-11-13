@@ -728,7 +728,7 @@ int controller_menuListar(LinkedList* pArrayListJugador,LinkedList* pArrayListSe
 			break;
 		case 3:
 			if(controller_ListarJugadoresConvocados(pArrayListJugador)==0){
-				printf("|                            No existen Jugadores convocados en ninguna Seleccion                           |\n"
+				printf("|                                 No existen Jugadores convocados en ninguna Seleccion                              |\n"
 					   "|===================================================================================================================|\n");
 			}
 			retorno = 1;

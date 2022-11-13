@@ -202,10 +202,12 @@ int jug_IdAutoincremental(){
 		//Devuelvo el ID autoincremental
 		retorno = atoi(auxIdJugador);
 
+		//Por la lectura anterior, devuelvo el puntero del archivo al principio del mismo
 		rewind(IdAutoIncremental);
 
 		nuevoIdJugador = retorno + 1;
 
+		//reescribo el archivo con la nueva id
 		fprintf(IdAutoIncremental,"%d",nuevoIdJugador);
 
 		fclose(IdAutoIncremental);
@@ -261,9 +263,10 @@ int jug_MenuEditarJugador(Jugador* pJugador){
 		break;
 	case 2:
 		printf(" %-60s \n","Modificar Edad");
-		utn_getNumeroINT(&auxEdad,"Ingrese la edad del jugador\n","Error/ La edad no puede ser menor a 16 o mayor a 40\n",16,40,20);
-		jug_setEdad(pJugador, auxEdad);
-		retorno=1;
+		if(utn_getNumeroINT(&auxEdad,"Ingrese la edad del jugador\n","Error/ La edad no puede ser menor a 16 o mayor a 40\n",16,40,20)==1){
+			jug_setEdad(pJugador, auxEdad);
+			retorno=1;
+		}
 		break;
 	case 3:
 		printf(" %-60s \n","Modificar Posicion");

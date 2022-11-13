@@ -53,21 +53,24 @@ int parser_JugadorFromText(FILE* pFile , LinkedList* pArrayListJugador)
 int parser_JugadorFromBinary(FILE* pFile , LinkedList* pArrayListJugador)
 {
 	int retorno=0;
-
 	Jugador* pJugador = jug_new();
 
-    if(pFile != NULL && pArrayListJugador != NULL ){
-    	printf("\n|===================================================================================================================|\n"
-    	    		     "|  ID  | %-30s | Edad | %-20s | %-20s | %-20s |\n"
-    	    		     "|===================================================================================================================|\n",
-    					"Nombre Completo","posicion","Nacionalidad","Seleccion");
+	Jugador* auxJugador = NULL;
+
+    if(pFile != NULL && pArrayListJugador != NULL && pJugador != NULL ){
+
     	while(fread(pJugador,sizeof(Jugador),1,pFile) != 0){
 
-    		jug_ListarUnJugador(pJugador);
-    		retorno=1;
+    		auxJugador = jug_new();
+    		if(auxJugador != NULL){
+
+    			*auxJugador = *pJugador;
+    			ll_add(pArrayListJugador,auxJugador);
+    			retorno=1;
+    		}
     	}
-    	printf("|===================================================================================================================|\n");
     }
+    jug_delete(pJugador);
     return retorno;
 }
 

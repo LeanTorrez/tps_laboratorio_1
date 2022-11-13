@@ -12,8 +12,10 @@ int main()
     int option = 0;
     int retornoOpcion;
     int flagGuardar=1;
+    int flagCreoArchivoBinario=0;
     LinkedList* listaJugadores = ll_newLinkedList();
     LinkedList* listaSeleccion = ll_newLinkedList();
+    LinkedList* listaJugadoresBinario = ll_newLinkedList();
 
     do{
     	retornoOpcion = utn_getNumeroINT(&option,"\n1.Carga de Archivos\n"
@@ -21,7 +23,7 @@ int main()
     												 "3.Modificacion de Jugador\n"
     												 "4.Baja de Jugador\n"
     												 "5.Listados\n"
-    												 "6.Convocar Jugadores\n"
+    												 "6.Convocar o Remover Jugadores de Seleccion\n"
     												 "7.Ordenar y Listar\n"
     												 "8.Generar Archivo Binario\n"
     												 "9.Cargar Archivo Binario\n"
@@ -141,7 +143,12 @@ int main()
 					printf("Debe ingresar primero a la opcion 1 para poder crear el archivo binario.\n");
 				}else{
 					if(controller_guardarJugadoresModoBinario("jugadoresBinario.bin",listaJugadores,listaSeleccion)==1){
-						printf("Creando de archivo binario exitoso\n");
+						printf("Creacion de archivo binario exitoso\n");
+
+						if(ll_isEmpty(listaJugadoresBinario) == 0){
+							ll_clear(listaJugadoresBinario);
+						}
+						flagCreoArchivoBinario=1;
 					}else{
 						printf("Erro en la creacion del archivo binario... Regresando al Menu\n");
 					}
@@ -150,7 +157,13 @@ int main()
 
 			case 9:
 				printf("%-60s \n","CARGAR ARCHIVO BINARIO");
-				controller_cargarJugadoresDesdeBinario("jugadoresBinario.bin",listaJugadores);
+				if(flagCreoArchivoBinario == 1){
+					if(controller_cargarJugadoresDesdeBinario("jugadoresBinario.bin",listaJugadoresBinario)==1){
+						controller_listarJugadores(listaJugadoresBinario);
+					}
+				}else{
+					printf("Es necesario que se ingrese a la opcion 8 para podeer leer el archivo binario \n");
+				}
 				break;
 
 			case 10:
@@ -175,8 +188,10 @@ int main()
 						option = 0;
 						printf("Regresando al Menu");
 					}else{
+						ll_clear(listaJugadoresBinario);
 						ll_clear(listaSeleccion);
 						ll_clear(listaJugadores);
+						ll_deleteLinkedList(listaJugadoresBinario);
 						ll_deleteLinkedList(listaSeleccion);
 						ll_deleteLinkedList(listaJugadores);
 					}
