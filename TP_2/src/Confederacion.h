@@ -19,7 +19,7 @@ typedef struct{
 #define FUNCIONESESTRUCTURACONFEDERACION_H_
 
 /**
- * \fn int InicializacionStructConfederaciones(eConfederacion[], int)
+ * \fn int confe_inicializacionStruct(eConfederacion[], int)
  * \brief Recibe por parametro la estructura, dentro de la misma
  *  el estado IsEmpty lo inicializa en 0
  *
@@ -27,12 +27,10 @@ typedef struct{
  * \param tamConfederacion Tamaño de La struct Confederacion
  * \return Devuelve 1 en caso exitoso o 0 en caso de fallo
  */
-int InicializacionStructConfederaciones(eConfederacion confederacion[],int tamConfederacion);
-
-//int BuscarStructIndiceIsEmptyConfederacion(eConfederacion confederacion[],int tamConfederacion,int* indice);
+int confe_inicializacionStruct(eConfederacion confederaciones[],int tamConfederacion);
 
 /**
- * \fn int BuscarStructIndiceLLENOConfederacion(eConfederacion[], int)
+ * \fn int confe_buscarIndiceLlENO(eConfederacion[], int)
  * \brief  Verifica que el parametro IsEmpty sea 1 que significa que existen datos guardados, retorno 1 en caso de
  * existir datos o 0 en caso de no existir ningun dato
  *
@@ -40,12 +38,10 @@ int InicializacionStructConfederaciones(eConfederacion confederacion[],int tamCo
  * \param tamConfederacion Tamaño de La struct Confederacion
  * \return Devuelve 1 en caso exitoso o 0 en caso de fallo
  */
-int BuscarStructIndiceLLENOConfederacion(eConfederacion confederacion[],int tamConfederacion);
-
-//int BuscarIdConfederacion(eConfederacion confederacion[],int tamConfederacion,int* idConfederacion);
+int confe_buscarIndiceLlENO(eConfederacion confederaciones[],int tamConfederacion);
 
 /**
- * \fn int AltaStructConfederacion(eConfederacion[], int, int*)
+ * \fn int confe_alta(eConfederacion[], int, int*)
  * \brief Funcion principal en el main de confederacion, dentro de la misma se ejecuta la logica de alta, pidiendo al usuario
  * el ingreso de los datos que se piden y guardandolos en la struct confederacion
  *
@@ -54,10 +50,10 @@ int BuscarStructIndiceLLENOConfederacion(eConfederacion confederacion[],int tamC
  * \param idAutoincremental
  * \return Devuelve 1 en caso exitoso o 0 en caso de fallo
  */
-int AltaStructConfederacion(eConfederacion confederacion[],int tamConfederacion,int* idAutoincremental);
+int confe_alta(eConfederacion confederaciones[],int tamConfederacion,int* idAutoincremental);
 
 /**
- * \fn int BajaStructConfederacion(eConfederacion[], int)
+ * \fn int confe_baja(eConfederacion[], int)
  * \brief Funcion principal en el main de confederacion, dentro de la misma le muestra al usuario una lista de las
  * conferaciones, despues de ello se le pide que ingrese la ID de la confederacion que desea dar de baja
  *
@@ -65,10 +61,10 @@ int AltaStructConfederacion(eConfederacion confederacion[],int tamConfederacion,
  * \param tamConfederacion Tamaño de La struct Confederacion
  * \return Devuelve 1 en caso exitoso o 0 en caso de fallo
  */
-int BajaStructConfederacion(eConfederacion confederacion[],int tamConfederacion);
+int confe_baja(eConfederacion confederaciones[],int tamConfederacion);
 
 /**
- * \fn int ModificacionStructConfederacion(eConfederacion[], int)
+ * \fn int confe_modificacion(eConfederacion[], int)
  * \brief Funcion principal en el main de confederacion, dentro de la misma muestra al usuario una lista de las
  * confederaciones, despues de ello se le pide que ingrese la Id de la confederacion que desea modificar, al ingresar
  * una id valida mostrara un menu de opciones con las diferentes opciones que se pueden modificar
@@ -77,17 +73,28 @@ int BajaStructConfederacion(eConfederacion confederacion[],int tamConfederacion)
  * \param tamConfederacion Tamaño de La struct Confederacion
  * \return Devuelve 1 en caso exitoso o 0 en caso de fallo
  */
-int ModificacionStructConfederacion(eConfederacion confederacion[],int tamConfederacion);
+int confe_modificacion(eConfederacion confederaciones[],int tamConfederacion);
 
 /**
- * \fn void MostrarStructConfederaciones(eConfederacion[], int)
+ * \fn void confe_mostrar(eConfederacion[], int)
  * \brief Muestra una lista de los datos que contiene dentro la struct confederacion
  *
  * \param confederacion Struct Confederacion
  * \param tamConfederacion Tamaño de La struct Confederacion
  */
-void MostrarStructConfederaciones(eConfederacion confederacion[],int tamConfederacion);
+void confe_mostrar(eConfederacion confederaciones[],int tamConfederacion);
 
+/**
+ * \fn int confe_buscarId(eConfederacion[], int, int, int*)
+ * \brief Busca el indice de una confederacion en base a su id
+ *
+ * \param confederaciones struct confederacion
+ * \param tamConfederacion Tamaño de La struct Confederacion
+ * \param idConfederacion id de la confederaciona buscar
+ * \param pIdConfederacion puntero adonde se guardara el indice de la confederacion en cuestion
+ * \return Devuelve 1 en caso exitoso o 0 en caso de fallo
+ */
+int confe_buscarId(eConfederacion confederaciones[],int tamConfederacion,int idConfederacion,int* pIdConfederacion);
 
 
 #endif /* FUNCIONESESTRUCTURACONFEDERACION_H_ */
