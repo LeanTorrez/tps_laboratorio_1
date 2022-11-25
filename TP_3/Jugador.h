@@ -48,10 +48,20 @@ int jug_getSIdSeleccion(Jugador* this,int* idSeleccion);
  * \brief Sub menu que permite al usuario la eleccion de la posicion en la que juega el
  * jugador
  *
- * \param pPosicion puntero a la variable donde se guarda dicha posicion
+ * \param pPosicion puntero a la variable donde se guardara dicha posicion
  * \return retorno 0 en caso de error, 1 en caso exitoso
  */
 int jug_elegirPosicion(char* pPosicion);
+
+/**
+ * \fn int jug_elegirNacionalidad(char*)
+ * \brief Sub menu que permite al usuario la eleccion de la seleccion en la que juega el
+ * jugador
+ *
+ * \param pNacionalidad puntero a la variable donde se guardara dicha nacionalidad
+ * \return retorno 0 en caso de error, 1 en caso exitoso
+ */
+int jug_elegirNacionalidad(char* pNacionalidad);
 
 /**
  * \fn int jug_ListarUnJugador(Jugador*)

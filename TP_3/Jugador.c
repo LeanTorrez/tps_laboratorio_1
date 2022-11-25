@@ -200,6 +200,28 @@ int jug_elegirPosicion(char* pPosicion){
 	return retorno;
 }
 
+int jug_elegirNacionalidad(char* pNacionalidad){
+	int retorno = 0;
+	char auxNacionalidad[50];
+	int opcion = -1;
+
+	if(utn_getNumeroINT(&opcion,"|================================================================================================|\n"
+								"|1.Alemania ||2.Arabia Saudita ||3.Argentina       ||4.Australia   ||5.Belgica    ||6.Brasil     |\n"
+								"|7.Camerun  ||8.Canada         ||9.Corea del Sur   ||10.Costa Rica ||11.Croacia   ||12.Dinamarca |\n"
+								"|13.Ecuador ||14.Espana        ||15.Estados Unidos ||16.Francia    ||17.Gales     ||18.Ghana     |\n"
+								"|19.Holanda ||20.Inglaterra    ||21.Iran           ||22.Japon      ||23.Marruecos ||24.Mexico    |\n"
+								"|25.Polonia ||26.Portugal      ||27.Qatar          ||28.Senegal    ||29.Serbia    ||30.Suiza     |\n"
+								"|==============================||31.Tunez          ||32.Uruguay    ||============================|\n"
+								"                               ||==================================||\n"
+								"Escriba el numero de la nacionalidad de su jugador\n","Error/ por favor ingrese un numero posible de nacionaldad (1 al 32)",1,32,20)==1)
+	{
+		if(selec_nombreSeleccion(opcion,auxNacionalidad)==1){
+			strcpy(pNacionalidad,auxNacionalidad);
+			retorno = 1;
+		}
+	}
+	return retorno;
+}
 int jug_ListarUnJugador(Jugador* this){
 	int retorno=0;
 	int auxID;
@@ -328,7 +350,8 @@ int jug_MenuEditarJugador(Jugador* pJugador){
 		break;
 	case 4:
 		printf("%-60s \n","Modificar Nacionalidad");
-		if(utn_getDescripcion(auxNacionalidad, sizeof(auxNacionalidad),"Ingrese la nacionalidad del Jugador\n","Asegurese de ingresar algo\n",20) == 0){
+		//utn_getDescripcion(auxNacionalidad, sizeof(auxNacionalidad),"Ingrese la nacionalidad del Jugador\n","Asegurese de ingresar algo\n",20) == 0
+		if(jug_elegirNacionalidad(auxNacionalidad)==1){
 			jug_setNacionalidad(pJugador, auxNacionalidad);
 			retorno=1;
 		}

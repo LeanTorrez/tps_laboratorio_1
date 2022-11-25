@@ -70,10 +70,12 @@ int controller_agregarJugador(LinkedList* pArrayListJugador)
 	if(pArrayListJugador != NULL && pJugador != NULL){
 		auxId = jug_IdAutoincremental();
 
+		//utn_getDescripcion(auxNacionalidad, sizeof(auxNacionalidad),"Ingrese la nacionalidad del Jugador\n","Asegurese de ingresar algo\n",20) == 0
+
 		if(utn_getDescripcion(auxNombre,sizeof(auxNombre),"Ingrese el nombre completo del jugador\n","Error/ asegurese de ingresar algo\n",1)==0 &&
 		   utn_getNumeroINT(&auxEdad,"Ingrese la edad del jugador\n","Error/ La edad no puede ser menor a 16 o mayor a 40\n",16,40,20) == 1 &&
 		   jug_elegirPosicion(auxPosicion)==1 &&
-		   utn_getDescripcion(auxNacionalidad, sizeof(auxNacionalidad),"Ingrese la nacionalidad del Jugador\n","Asegurese de ingresar algo\n",20) == 0)
+		   jug_elegirNacionalidad(auxNacionalidad)==1)
 		{
 			if(jug_setId(pJugador, auxId) == 1 &&
 			   jug_setNombreCompleto(pJugador, auxNombre) == 1 &&
@@ -106,8 +108,6 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
 	if(pArrayListJugador != NULL){
 
 		controller_listarJugadores(pArrayListJugador);
-		                                                                                                                                //maximo numero positivo int -1
-		utn_getNumeroINT(&IdBuscar,"Ingrese la ID del jugador que desea modificar\n","Error/ por favor ingrese un numero por encima de 0",1,2147483646,20);
 
 		if(utn_getNumeroINT(&IdBuscar,"Ingrese la ID del jugador que desea modificar\n",
 		   "Error/ por favor ingrese un numero por encima de 0",1,2147483646,20)==1 &&
