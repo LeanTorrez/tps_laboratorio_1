@@ -120,7 +120,7 @@ int main()
 						printf("Se llevo con exito la operacion\n");
 						flagGuardar = 0;
 					}else{
-						printf("Error en la operacion\n");
+						printf("\nError en la operacion\n");
 					}
 				}
 				break;
@@ -188,9 +188,6 @@ int main()
 						option = 0;
 						printf("Regresando al Menu");
 					}else{
-						ll_clear(listaJugadoresBinario);
-						ll_clear(listaSeleccion);
-						ll_clear(listaJugadores);
 						ll_deleteLinkedList(listaJugadoresBinario);
 						ll_deleteLinkedList(listaSeleccion);
 						ll_deleteLinkedList(listaJugadores);

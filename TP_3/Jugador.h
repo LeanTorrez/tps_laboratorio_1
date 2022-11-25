@@ -43,6 +43,15 @@ int jug_getSIdSeleccion(Jugador* this,int* idSeleccion);
 
 //---------------------------------------------------------------------------------------
 //Mis funciones
+/**
+ * \fn int jug_elegirPosicion(char*)
+ * \brief Sub menu que permite al usuario la eleccion de la posicion en la que juega el
+ * jugador
+ *
+ * \param pPosicion puntero a la variable donde se guarda dicha posicion
+ * \return retorno 0 en caso de error, 1 en caso exitoso
+ */
+int jug_elegirPosicion(char* pPosicion);
 
 /**
  * \fn int jug_ListarUnJugador(Jugador*)

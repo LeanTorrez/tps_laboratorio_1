@@ -70,26 +70,20 @@ int controller_agregarJugador(LinkedList* pArrayListJugador)
 	if(pArrayListJugador != NULL && pJugador != NULL){
 		auxId = jug_IdAutoincremental();
 
-		if(utn_getDescripcion(auxNombre,sizeof(auxNombre),"Ingrese el nombre completo del jugador\n","Error/ asegurese de ingresar algo\n",1)==0){
-
-			if(utn_getNumeroINT(&auxEdad,"Ingrese la edad del jugador\n","Error/ La edad no puede ser menor a 16 o mayor a 40\n",16,40,20) == 0){
-
-				if(utn_getDescripcion(auxPosicion,sizeof(auxPosicion),"Ingrese la posicion del jugador","Error/ asegures de ingresar algo\n",20) == 0){
-
-					if(utn_getDescripcion(auxNacionalidad, sizeof(auxNacionalidad),"Ingrese la nacionalidad del Jugador\n","Asegurese de ingresar algo\n",20) == 0){
-
-						if(jug_setId(pJugador, auxId) == 1 &&
-						   jug_setNombreCompleto(pJugador, auxNombre) == 1 &&
-						   jug_setEdad(pJugador, auxEdad) == 1 &&
-						   jug_setPosicion(pJugador, auxPosicion) == 1 &&
-						   jug_setNacionalidad(pJugador, auxNacionalidad) == 1 &&
-						   jug_setIdSeleccion(pJugador, 0) == 1)
-						{
-							ll_add(pArrayListJugador,pJugador);
-							retorno=1;
-						}
-					}
-				}
+		if(utn_getDescripcion(auxNombre,sizeof(auxNombre),"Ingrese el nombre completo del jugador\n","Error/ asegurese de ingresar algo\n",1)==0 &&
+		   utn_getNumeroINT(&auxEdad,"Ingrese la edad del jugador\n","Error/ La edad no puede ser menor a 16 o mayor a 40\n",16,40,20) == 1 &&
+		   jug_elegirPosicion(auxPosicion)==1 &&
+		   utn_getDescripcion(auxNacionalidad, sizeof(auxNacionalidad),"Ingrese la nacionalidad del Jugador\n","Asegurese de ingresar algo\n",20) == 0)
+		{
+			if(jug_setId(pJugador, auxId) == 1 &&
+			   jug_setNombreCompleto(pJugador, auxNombre) == 1 &&
+			   jug_setEdad(pJugador, auxEdad) == 1 &&
+			   jug_setPosicion(pJugador, auxPosicion) == 1 &&
+			   jug_setNacionalidad(pJugador, auxNacionalidad) == 1 &&
+			   jug_setIdSeleccion(pJugador, 0) == 1)
+			{
+				ll_add(pArrayListJugador,pJugador);
+				retorno=1;
 			}
 		}
 	}
@@ -115,8 +109,10 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
 		                                                                                                                                //maximo numero positivo int -1
 		utn_getNumeroINT(&IdBuscar,"Ingrese la ID del jugador que desea modificar\n","Error/ por favor ingrese un numero por encima de 0",1,2147483646,20);
 
-		if(jug_BuscarId(pArrayListJugador,IdBuscar,&IndiceJugador)==1){
-
+		if(utn_getNumeroINT(&IdBuscar,"Ingrese la ID del jugador que desea modificar\n",
+		   "Error/ por favor ingrese un numero por encima de 0",1,2147483646,20)==1 &&
+		  jug_BuscarId(pArrayListJugador,IdBuscar,&IndiceJugador)==1)
+		{
 			pJugador = ll_get(pArrayListJugador, IndiceJugador);
 
 			if( jug_MenuEditarJugador(pJugador)==1){
@@ -148,16 +144,18 @@ int controller_removerJugador(LinkedList* pArrayListJugador,LinkedList* pArrayLi
 	if(pArrayListJugador != NULL){
 
 		controller_listarJugadores(pArrayListJugador);
-																														//maximo numero positivo int -1
-		utn_getNumeroINT(&IdBuscar,"Ingrese la ID del jugador que desea dar de Baja\n","Error/ Por favor ingrese un numero por encima de 0",1,2147483646,20);
 
-		if(jug_BuscarId(pArrayListJugador,IdBuscar,&IndiceJugador)==1){
+		if(utn_getNumeroINT(&IdBuscar,"Ingrese la ID del jugador que desea dar de Baja\n"
+				,"Error/ Por favor ingrese un numero por encima de 0",1,2147483646,20)==1 &&
+		   jug_BuscarId(pArrayListJugador,IdBuscar,&IndiceJugador)==1)
+		{
 
 			pJugador = ll_get(pArrayListJugador, IndiceJugador);
 
-			jug_getSIdSeleccion(pJugador, &seleccionJugador);
+			if(jug_getSIdSeleccion(pJugador, &seleccionJugador)==1 &&
+			   seleccionJugador > 0)
+			{
 
-			if(seleccionJugador > 0){
 				//En caso de que el jugador que estoy dando de baja este en alguna seleccion
 				if(selec_BuscarId(pArrayListSeleccion, seleccionJugador, &indiceSeleccion)==1){
 
@@ -168,6 +166,7 @@ int controller_removerJugador(LinkedList* pArrayListJugador,LinkedList* pArrayLi
 
 				}
 			}
+
 			//Baja tanto en struct Jugador como Linkedlist
 			jug_delete(pJugador);
 			ll_remove(pArrayListJugador,IndiceJugador);
@@ -311,8 +310,6 @@ int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJu
 	int indiceSeleccion;
 	char nombreConfederacion[30];
 
-
-
 	archivoGuardarBinario = fopen(path,"wb");
 
 	if(archivoGuardarBinario != NULL && pArrayListJugador != NULL && pArrayListSeleccion){
@@ -385,10 +382,10 @@ int controller_editarSeleccion(LinkedList* pArrayListSeleccion)
 
 		controller_listarSelecciones(pArrayListSeleccion);
 
-		utn_getNumeroINT(&idBuscar,"Ingrese la ID de la seleccion\n","Error/ Por ingrese la id de la seleccion van de 1 al 32",1,32,20);
-
-		if(selec_BuscarId(pArrayListSeleccion,idBuscar,&indiceSeleccion)==1){
-
+		if(utn_getNumeroINT(&idBuscar,"Ingrese la ID de la seleccion\n",
+		   "Error/ Por ingrese la id de la seleccion van de 1 al 32",1,32,20)==1 &&
+		   selec_BuscarId(pArrayListSeleccion,idBuscar,&indiceSeleccion)==1)
+		{
 
 			pSeleccion = ll_get(pArrayListSeleccion, indiceSeleccion);
 
@@ -473,20 +470,24 @@ int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSe
 	archivoGuardar = fopen(path,"w");
 
 	if(archivoGuardar != NULL && pArrayListSeleccion != NULL){
+
 		fprintf(archivoGuardar,"%s\n","id,pais,confederacion,convocados");
+
 		while(i < ll_len(pArrayListSeleccion)){
 
 			pSeleccion = (Seleccion*) ll_get(pArrayListSeleccion, i);
 
-			selec_getId(pSeleccion, &auxID);
-			selec_getPais(pSeleccion, auxPais);
-			selec_getConfederacion(pSeleccion, auxConfederacion);
-			selec_getConvocados(pSeleccion, &auxConvocados);
-
-			fprintf(archivoGuardar,"%d,%s,%s,%d\n",auxID,auxPais,auxConfederacion,auxConvocados);
+			if(selec_getId(pSeleccion, &auxID)==1 &&
+			   selec_getPais(pSeleccion, auxPais)==1 &&
+			   selec_getConfederacion(pSeleccion, auxConfederacion)==1 &&
+			   selec_getConvocados(pSeleccion, &auxConvocados)==1)
+			{
+				fprintf(archivoGuardar,"%d,%s,%s,%d\n",auxID,auxPais,auxConfederacion,auxConvocados);
+				retorno=1;
+			}
 
 			i++;
-			retorno=1;
+
 		}
 		fclose(archivoGuardar);
 	}
@@ -511,14 +512,18 @@ int controller_ListarJugadoresConvocados(LinkedList* pArrayListJugador){
 				 "|===================================================================================================================|\n",
 				"Nombre Completo","posicion","Nacionalidad","Seleccion");
 		while(i < ll_len(pArrayListJugador)){
+
 			pJugador = (Jugador*) ll_get(pArrayListJugador, i);
-			jug_getSIdSeleccion(pJugador, &auxConvocar);
 
-			if(auxConvocar != 0){
+			if(jug_getSIdSeleccion(pJugador, &auxConvocar)==1){
 
-				jug_ListarUnJugador(pJugador);
-				retorno=1;
+				if(auxConvocar != 0){
+
+					jug_ListarUnJugador(pJugador);
+					retorno=1;
+				}
 			}
+
 			i++;
 		}
 		printf("|===================================================================================================================|\n");
@@ -549,31 +554,41 @@ int controller_convocarJugadores(LinkedList* pArrayListJugador,LinkedList* pArra
 
 	if(pArrayListJugador != NULL && pArrayListSeleccion != NULL && pJugador != NULL && pSeleccion != NULL){
 
-		controller_listarJugadores(pArrayListJugador);																						//maximo numero positivo int -1
-		utn_getNumeroINT(&idBuscarJugador,"Ingrese la ID del jugador que desea convocar\n","Error/ Por favor ingrese un numero por encima de 0",1,2147483646,20);
+		controller_listarJugadores(pArrayListJugador);
 
-		if(jug_BuscarId(pArrayListJugador,idBuscarJugador,&indiceJugador)==1){
+		if(utn_getNumeroINT(&idBuscarJugador,"Ingrese la ID del jugador que desea convocar\n",
+				"Error/ Por favor ingrese un numero por encima de 0",1,2147483646,20)==1 &&
+		   jug_BuscarId(pArrayListJugador,idBuscarJugador,&indiceJugador)==1){
 
 			pJugador = (Jugador*) ll_get(pArrayListJugador,indiceJugador);
-			jug_getSIdSeleccion(pJugador, &jugadorConvocado);
-			printf("paso id de la seleccion del jugador %d\n",jugadorConvocado);
-			//Verifico que el jugador que se eligio no este convocado a una seleccion
-			if(0 == jugadorConvocado){
+			if(jug_getSIdSeleccion(pJugador, &jugadorConvocado)==1){
 
-				controller_listarSelecciones(pArrayListSeleccion);
-				utn_getNumeroINT(&idBuscarSeleccion,"Ingrese la ID de la seleccion que desea convocar al jugador\n","Error/ Por favor ingrese el numero de las posibles selecciones(1 al 32)",1,32,20);
+				//Verifico que el jugador que se eligio no este convocado a una seleccion
+				retorno = 3;
+				if(0 == jugadorConvocado){
 
-				if(selec_BuscarId(pArrayListSeleccion,idBuscarSeleccion,&indiceSeleccion)){
+					controller_listarSelecciones(pArrayListSeleccion);
 
-					pSeleccion = (Seleccion*) ll_get(pArrayListSeleccion,indiceSeleccion);
-					selec_getConvocados(pSeleccion, &seleccionSuperaVeintiDos);
-					//verifico que la seleccion no supere los 22 jugadores
-					if(seleccionSuperaVeintiDos < 22){
-						//Le asigno al jugador el pais
-						jug_setIdSeleccion(pJugador,idBuscarSeleccion);
-						//le sumo el contador a la confederacion;
-						selec_setConvocados(pSeleccion, seleccionSuperaVeintiDos + 1);
-						retorno=1;
+					if(utn_getNumeroINT(&idBuscarSeleccion,"Ingrese la ID de la seleccion que desea convocar al jugador\n",
+							"Error/ Por favor ingrese el numero de las posibles selecciones(1 al 32)",1,32,20)==1)
+					{
+						if(selec_BuscarId(pArrayListSeleccion,idBuscarSeleccion,&indiceSeleccion)==1){
+
+							pSeleccion = (Seleccion*) ll_get(pArrayListSeleccion,indiceSeleccion);
+							selec_getConvocados(pSeleccion, &seleccionSuperaVeintiDos);
+
+							retorno = 2;
+							//verifico que la seleccion no supere los 22 jugadores
+							if(seleccionSuperaVeintiDos < 22){
+
+								//Le asigno al jugador el pais
+								if(jug_setIdSeleccion(pJugador,idBuscarSeleccion)==1 &&
+								   selec_setConvocados(pSeleccion, seleccionSuperaVeintiDos + 1)==1)
+								{
+									retorno=1;
+								}
+							}
+						}
 					}
 				}
 			}
@@ -605,24 +620,28 @@ int controller_quitarSeleccionJugador(LinkedList* pArrayListJugador,LinkedList* 
 
 		if(controller_ListarJugadoresConvocados(pArrayListJugador)==1){
 
-			utn_getNumeroINT(&IdJugador,"Ingrese la id del jugador que desea quitar de una seleccion\n","Error asegurese de ingresar numeros y que no sea menores a 1\n",1,2147483646,20);
-
-			if(jug_BuscarId(pArrayListJugador,IdJugador,&indiceJugador)==1){
+			if(utn_getNumeroINT(&IdJugador,"Ingrese la id del jugador que desea quitar de una seleccion\n",
+			   "Error asegurese de ingresar numeros y que no sea menores a 1\n",1,2147483646,20)==1 &&
+			   jug_BuscarId(pArrayListJugador,IdJugador,&indiceJugador)==1)
+			{
 
 				pJugador = (Jugador*) ll_get(pArrayListJugador, indiceJugador);
 
-				jug_getSIdSeleccion(pJugador, &idSeleccion);
-
 				//Me aseguro que la id que ingreso sea el de un jugador convocado
-				if(idSeleccion != 0){
+				if(jug_getSIdSeleccion(pJugador, &idSeleccion)==1 &&
+				   idSeleccion != 0){
 
-					jug_setIdSeleccion(pJugador, 0);
+					if(selec_BuscarId(pArrayListSeleccion,idSeleccion,&indiceSeleccion)==1){
 
-					selec_BuscarId(pArrayListSeleccion,idSeleccion,&indiceSeleccion);
+						pSeleccion = (Seleccion*) ll_get(pArrayListSeleccion, indiceSeleccion);
 
-					selec_getConvocados(pSeleccion, &JugadoresConvocados);
-					selec_setConvocados(pSeleccion,JugadoresConvocados -1);
-					retorno=1;
+						if(jug_setIdSeleccion(pJugador, 0)==1 &&
+						   selec_getConvocados(pSeleccion, &JugadoresConvocados)==1 &&
+						   selec_setConvocados(pSeleccion,JugadoresConvocados -1)==1)
+						{
+							retorno=1;
+						}
+					}
 				}
 			}
 		}
@@ -641,6 +660,7 @@ int controller_quitarSeleccionJugador(LinkedList* pArrayListJugador,LinkedList* 
  */
 int controller_menuConvocarQuitar(LinkedList* pArrayListJugador,LinkedList* pArrayListSeleccion){
 	int retorno=0;
+	int retornoFunc;
 	int opcion=0;
 	if(pArrayListJugador != NULL && pArrayListSeleccion != NULL){
 
@@ -650,8 +670,21 @@ int controller_menuConvocarQuitar(LinkedList* pArrayListJugador,LinkedList* pArr
 		{
 			switch(opcion){
 			case 1:
-				if(controller_convocarJugadores(pArrayListJugador, pArrayListSeleccion)==1){
+				retornoFunc = controller_convocarJugadores(pArrayListJugador, pArrayListSeleccion);
+
+				switch(retornoFunc){
+				case 1:
+					printf("Convocacion exitosa\n");
 					retorno=1;
+					break;
+				case 2:
+					printf("La seleccion que ingresa ya tiene sus 22 jugadores convocados, regresando al menu\n");
+					retorno=0;
+					break;
+				case 3:
+					printf("El jugador ya pertenece a una seleccion\n");
+					retorno=0;
+					break;
 				}
 				break;
 			case 2:

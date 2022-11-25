@@ -87,12 +87,15 @@ int selec_ListarUnaSeleccion(Seleccion* this){
 	int auxConvocados;
 
 	if(this != NULL){
-		selec_getId(this, &auxId);
-		selec_getPais(this, auxPais);
-		selec_getConfederacion(this, auxConfederacion);
-		selec_getConvocados(this, &auxConvocados);
-		printf("| %-5d | %-30s | %-30s | %-20d |\n",auxId,auxPais,auxConfederacion,auxConvocados);
-		retorno=1;
+
+		if(selec_getId(this, &auxId)==1 &&
+		   selec_getPais(this, auxPais)==1 &&
+		   selec_getConfederacion(this, auxConfederacion)==1 &&
+		   selec_getConvocados(this, &auxConvocados)==1)
+		{
+			printf("| %-5d | %-30s | %-30s | %-20d |\n",auxId,auxPais,auxConfederacion,auxConvocados);
+			retorno=1;
+		}
 	}
 	return retorno;
 }
@@ -107,13 +110,15 @@ int selec_BuscarId(LinkedList* this,int idBuscar,int* indiceEncontrado){
 		while(i < ll_len(this)){
 
 			pAuxSeleccion = (Seleccion*) ll_get(this, i);
-			selec_getId(pAuxSeleccion,&auxIdBuscar);
+			if(selec_getId(pAuxSeleccion,&auxIdBuscar)==1){
 
-			if(auxIdBuscar == idBuscar){
-				*indiceEncontrado = i;
-				retorno=1;
-				break;
+				if(auxIdBuscar == idBuscar){
+					*indiceEncontrado = i;
+					retorno=1;
+					break;
+				}
 			}
+
 			i++;
 		}
 	}
@@ -259,7 +264,8 @@ int selec_nombreSeleccion(int idSeleccion,char* pNombreSeleccion){
 		case 3:
 			strcpy(auxNombreSeleccion,"Argentina");
 			break;
-		case 4:strcpy(auxNombreSeleccion,"Australia");
+		case 4:
+			strcpy(auxNombreSeleccion,"Australia");
 			break;
 		case 5:
 			strcpy(auxNombreSeleccion,"Belgica");

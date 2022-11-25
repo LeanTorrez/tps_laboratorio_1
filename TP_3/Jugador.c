@@ -150,6 +150,55 @@ int jug_getSIdSeleccion(Jugador* this,int* idSeleccion){
 	return retorno;
 }
 
+int jug_elegirPosicion(char* pPosicion){
+	int retorno = 0;
+	int opcionPos;
+	char auxPosicion[50];
+	if(utn_getNumeroINT(&opcionPos,"1.Portero\n2.Defensa Central\n3.Lateral Izquierdo\n4.Lateral derecho\n5.Pivote\n6.Mediocentro\n7.Mediocentro ofensivo\n8.Extremo izquierdo\n9.Extremo derecho\n10.Mediopunta\n11.Delantero centro\n"
+								   "Ingrese el numero de la posicion de su jugador\n",
+									"Error/ ingrese un numero de una posicion valida (1 a 11)",1,11,20)==1)
+	{
+
+		switch(opcionPos){
+			case 1:
+				strcpy(auxPosicion,"Portero");
+				break;
+			case 2:
+				strcpy(auxPosicion,"Defensa central");
+				break;
+			case 3:
+				strcpy(auxPosicion,"Lateral izquierdo");
+				break;
+			case 4:
+				strcpy(auxPosicion,"Lateral derecho");
+				break;
+			case 5:
+				strcpy(auxPosicion,"Pivote");
+				break;
+			case 6:
+				strcpy(auxPosicion,"Mediocentro");
+				break;
+			case 7:
+				strcpy(auxPosicion,"Mediocentro ofensivo");
+				break;
+			case 8:
+				strcpy(auxPosicion,"Extremo izquierdo");
+				break;
+			case 9:
+				strcpy(auxPosicion,"Extremo derecho");
+				break;
+			case 10:
+				strcpy(auxPosicion,"Mediopunta");
+				break;
+			case 11:
+				strcpy(auxPosicion,"Delantero centro");
+				break;
+		}
+		strcpy(pPosicion,auxPosicion);
+		retorno = 1;
+	}
+	return retorno;
+}
 
 int jug_ListarUnJugador(Jugador* this){
 	int retorno=0;
@@ -166,22 +215,24 @@ int jug_ListarUnJugador(Jugador* this){
 
 
 	if(this != NULL){
-		jug_getId(this, &auxID);
-		jug_getNombreCompleto(this, auxNombre);
-		jug_getEdad(this, &auxEdad);
-		jug_getPosicion(this, auxPosicion);
-		jug_getNacionalidad(this, auxNacionalidad);
-		jug_getSIdSeleccion(this,&auxIdSeleccion);
 
-		//En caso de que el jugador este en la seleccion el id sera reemplazado por el nombre de la misma
-		if(auxIdSeleccion == 0){
-			strcpy(auxNombreSeleccion,"No convocado");
-		}else{
-			selec_nombreSeleccion(auxIdSeleccion, auxNombreSeleccion);
+		if(jug_getId(this, &auxID)==1 &&
+		   jug_getNombreCompleto(this, auxNombre)==1 &&
+		   jug_getEdad(this, &auxEdad)== 1 &&
+		   jug_getPosicion(this, auxPosicion)==1 &&
+		   jug_getNacionalidad(this, auxNacionalidad)==1 &&
+		   jug_getSIdSeleccion(this,&auxIdSeleccion)==1)
+		{
+			//En caso de que el jugador este en la seleccion el id sera reemplazado por el nombre de la misma
+			if(auxIdSeleccion == 0){
+				strcpy(auxNombreSeleccion,"No convocado");
+			}else{
+				selec_nombreSeleccion(auxIdSeleccion, auxNombreSeleccion);
+			}
+
+			printf("| %-4d | %-30s | %-4d | %-20s | %-20s | %-20s |\n",auxID,auxNombre,auxEdad,auxPosicion,auxNacionalidad,auxNombreSeleccion);
+			retorno=1;
 		}
-
-		printf("| %-4d | %-30s | %-4d | %-20s | %-20s | %-20s |\n",auxID,auxNombre,auxEdad,auxPosicion,auxNacionalidad,auxNombreSeleccion);
-		retorno=1;
 	}
 	return retorno;
 }
@@ -246,7 +297,7 @@ int jug_MenuEditarJugador(Jugador* pJugador){
 	char auxPosicion[30];
 	char auxNacionalidad[30];
 
-	int menuOpciones = 0;
+	int menuOpciones = -1;
 
 	utn_getNumeroINT(&menuOpciones,"1.Nombre Completo\n"
 								   "2.Edad\n"
@@ -255,29 +306,29 @@ int jug_MenuEditarJugador(Jugador* pJugador){
 								   "Ingrese el numero de la opcion que desea modificar\n","Error/ Ingrese una opcion valida (1 al 4)\n",1,4,20);
 	switch(menuOpciones){
 	case 1:
-		printf(" %-60s \n","Modificar Nombre Completo");
+		printf("%-60s \n","Modificar Nombre Completo");
 		if(utn_getDescripcion(auxNombre,sizeof(auxNombre),"Ingrese el nombre completo del jugador\n","Error/ asegurese de ingresar algo\n",20)==0){
 			jug_setNombreCompleto(pJugador, auxNombre);
 			retorno=1;
 		}
 		break;
 	case 2:
-		printf(" %-60s \n","Modificar Edad");
+		printf("%-60s \n","Modificar Edad");
 		if(utn_getNumeroINT(&auxEdad,"Ingrese la edad del jugador\n","Error/ La edad no puede ser menor a 16 o mayor a 40\n",16,40,20)==1){
 			jug_setEdad(pJugador, auxEdad);
 			retorno=1;
 		}
 		break;
 	case 3:
-		printf(" %-60s \n","Modificar Posicion");
-		if(utn_getDescripcion(auxPosicion,sizeof(auxPosicion),"Ingrese la posicion del jugador","Error/ asegures de ingresar algo\n",20) == 0){
+		printf("%-60s \n","Modificar Posicion");
+		if(jug_elegirPosicion(auxPosicion)==1){
 			jug_setPosicion(pJugador, auxPosicion);
 			retorno=1;
 		}
 		break;
 	case 4:
-		printf(" %-60s \n","Modificar Nacionalidad");
-		if(utn_getString(auxNacionalidad, sizeof(auxNacionalidad),"Ingrese la nacionalidad del Jugador\n","Asegurese de ingresar algo\n",20) == 0){
+		printf("%-60s \n","Modificar Nacionalidad");
+		if(utn_getDescripcion(auxNacionalidad, sizeof(auxNacionalidad),"Ingrese la nacionalidad del Jugador\n","Asegurese de ingresar algo\n",20) == 0){
 			jug_setNacionalidad(pJugador, auxNacionalidad);
 			retorno=1;
 		}

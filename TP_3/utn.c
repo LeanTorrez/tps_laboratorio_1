@@ -185,7 +185,7 @@ static int getDescripcion(char* pResultado, int longitud)
 
     if(pResultado != NULL)
     {
-    	if(	getString(buffer,sizeof(buffer))==0 &&
+    	if(	getString(buffer,sizeof(buffer))==1 &&
     		esDescripcion(buffer,sizeof(buffer))==1 &&
 			strnlen(buffer,sizeof(buffer))<longitud)
     	{
